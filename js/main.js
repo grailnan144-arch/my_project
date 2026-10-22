@@ -1335,9 +1335,9 @@
     /* the flight ring follows the size of the picture area */
     var margin = 34;
     st.rx = Math.max(40, w / 2 - margin);
-    st.ry = Math.max(20, h * 0.34);
-    /* the plane flies across the upper part of the picture */
-    st.cy = h * 0.24;
+    st.ry = Math.max(20, h * 0.28);
+    /* the plane flies right along the top edge of the picture */
+    st.cy = h * 0.16;
     st.scale = Math.max(22, Math.min(34, h * 0.10));
     /* a longer lens keeps the near/far size difference believable */
     st.focal = Math.max(210, st.ry * 3.4);
