@@ -368,13 +368,16 @@
   function openSubject(id) {
     var subject = findSubject(id);
     if (!subject) return;
-    activeSubjectId = id;
-    activeItemId = null;
-    clearDisplay();
-    renderSubjects();
-    renderGallery();
-    showView('gallery');
-    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+    /* the gallery opens behind the loading screen */
+    showLoader(LOADER_SUBJECT, function () {
+      activeSubjectId = id;
+      activeItemId = null;
+      clearDisplay();
+      renderSubjects();
+      renderGallery();
+      showView('gallery');
+      window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+    });
   }
 
   function backToSubjects() {
@@ -693,6 +696,11 @@
 
   function gpOpen(subject, index) {
     if (!subject || !subject.portfolio || !subject.portfolio.length) return;
+    /* the picture opens behind the loading screen */
+    showLoader(LOADER_ITEM, function () { gpOpenNow(subject, index); });
+  }
+
+  function gpOpenNow(subject, index) {
     gpSubject = subject;
     gpItems = subject.portfolio.slice();
     gpIndex = Math.max(0, Math.min(index, gpItems.length - 1));
@@ -995,6 +1003,7 @@
   var PLANE_GLASS = '#2b3a4a';
 
   var PLANE_BANK = 0.42;      /* bank angle while turning (radians) */
+  var PLANE_VIEW = 0.30;      /* tip towards the viewer (radians)   */
 
   /* ---------- tiny vector helpers ---------- */
   function vAdd(a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; }
@@ -1341,15 +1350,15 @@
       var picW = Math.max(1, st.pic.r - st.pic.l);
       st.rx = Math.max(40, picW / 2 - 10);
       st.ry = Math.max(16, h * 0.085);
-      st.cy = st.pic.t + st.ry * 0.35;
-      st.scale = Math.max(26, Math.min(46, h * 0.15));
+      st.cy = st.pic.t + st.ry * 0.45;
+      st.scale = Math.max(26, Math.min(50, h * 0.16));
       st.depth = Math.max(18, h * 0.09);
       st.zc = -0.78 * st.depth;
     } else {
       st.rx = Math.max(30, w * 0.36);
       st.ry = Math.max(14, h * 0.26);
       st.cy = h * 0.5;
-      st.scale = Math.max(14, Math.min(30, h * 0.17));
+      st.scale = Math.max(18, Math.min(36, h * 0.22));
       st.depth = st.ry * Math.cos(cfg.tilt || 0.5);
       st.zc = 0;
     }
@@ -1393,9 +1402,15 @@
 
     /* bank into the turn */
     var cb = Math.cos(PLANE_BANK), sb = Math.sin(PLANE_BANK);
+    var br = vAdd(vScale(right, cb), vScale(up, sb));
+    var bu = vSub(vScale(up, cb), vScale(right, sb));
+
+    /* tip the plane a little towards the viewer, so its wings are
+       visible instead of a thin line */
+    var cv = Math.cos(PLANE_VIEW), sv = Math.sin(PLANE_VIEW);
     var basis = {
-      r: vAdd(vScale(right, cb), vScale(up, sb)),
-      u: vSub(vScale(up, cb), vScale(right, sb)),
+      r: vAdd(vScale(br, cv), vScale(bu, sv)),
+      u: vSub(vScale(bu, cv), vScale(br, sv)),
       f: f
     };
 
@@ -1414,9 +1429,8 @@
     drawPlaneMesh(ctx, cam, st.mesh, pos, basis, depthFade(pos[2]), st.scale, occlude, st.pic);
   }
 
-  function sceneLoop(st) {
+  function sceneLoop(st, now) {
     if (!st) return;
-    var now = arguments[0];
     var dt = st.last ? Math.min(0.05, (now - st.last) / 1000) : 0.016;
     st.last = now;
     sceneSync(st);
@@ -1432,6 +1446,13 @@
       window.cancelAnimationFrame(st.raf);
     }
     st.raf = 0;
+  }
+
+  /* starts the animation again after sceneStop() */
+  function sceneResume(st) {
+    if (!st || st.raf) return;
+    st.last = 0;
+    st.raf = window.requestAnimationFrame(function (t) { sceneLoop(st, t); });
   }
 
   function sceneStart(st) {
@@ -1452,7 +1473,7 @@
       sceneFrame(st, 0);
       return;
     }
-    st.raf = window.requestAnimationFrame(function (t) { sceneLoop(st, t); });
+    sceneResume(st);
   }
 
   /* ============================================================
@@ -1472,6 +1493,21 @@
     sceneStart(previewScene);
   }
 
+  /* ============================================================
+     THE LOADING SCREEN
+     ------------------------------------------------------------
+     A full screen overlay with the same 3D airplane flying in it.
+     It is used when the page starts, when a subject is opened and
+     when a portfolio item is opened. If two of those happen at
+     once, the second one simply waits for the first to finish.
+     ============================================================ */
+  var LOADER_DELAY = 2500;      /* the first load of the page */
+  var LOADER_SUBJECT = 1200;    /* opening a subject          */
+  var LOADER_ITEM = 1000;       /* opening a portfolio item   */
+
+  var loaderBusy = false;
+  var loaderQueue = [];
+
   function startLoaderScene() {
     loaderScene = createPlaneScene(document.getElementById('loaderPlane'), {
       tilt: 0.5,
@@ -1481,37 +1517,56 @@
     sceneStart(loaderScene);
   }
 
-  /* ---------- the loading screen ---------- */
-  var LOADER_DELAY = 2500;
-
-  function runLoader() {
+  /* shows the loading screen for `delay` ms, then calls `done` */
+  function showLoader(delay, done) {
     var loader = document.getElementById('loader');
-    var fill = document.getElementById('loaderFill');
+    if (!loader) { if (done) done(); return; }
 
-    if (reducedMotion) {
-      if (loader) loader.classList.add('is-done');
+    if (loaderBusy) {                 /* one after the other */
+      loaderQueue.push({ delay: delay, done: done });
+      return;
+    }
+    if (reducedMotion) {              /* no animation, no waiting */
+      if (done) done();
       return;
     }
 
-    startLoaderScene();
+    loaderBusy = true;
+    loader.classList.remove('hidden');
+    loader.classList.remove('is-done');
 
-    var start = (window.performance && performance.now) ? performance.now() : Date.now();
+    var fill = document.getElementById('loaderFill');
+    if (fill) fill.style.width = '0%';
+
+    if (!loaderScene) {
+      startLoaderScene();
+    } else {
+      loaderScene.phase = 0;
+      loaderScene.trail.length = 0;
+      sceneResume(loaderScene);
+    }
+
+    var now = function () {
+      return (window.performance && performance.now) ? performance.now() : Date.now();
+    };
+    var start = now();
+
     function tick() {
-      var now = (window.performance && performance.now) ? performance.now() : Date.now();
-      var p = Math.min(1, (now - start) / LOADER_DELAY);
+      var p = Math.min(1, (now() - start) / delay);
       if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
       if (p < 1) {
         window.requestAnimationFrame(tick);
-      } else {
-        if (loader) {
-          loader.classList.add('is-done');
-          window.setTimeout(function () {
-            loader.classList.add('hidden');
-          }, 500);
-        }
-        sceneStop(loaderScene);
-        document.body.classList.add('is-ready');
+        return;
       }
+      loader.classList.add('is-done');
+      window.setTimeout(function () {
+        loader.classList.add('hidden');
+      }, 500);
+      sceneStop(loaderScene);
+      loaderBusy = false;
+      if (done) done();
+      var next = loaderQueue.shift();
+      if (next) window.setTimeout(function () { showLoader(next.delay, next.done); }, 260);
     }
     window.requestAnimationFrame(tick);
   }
@@ -1521,5 +1576,5 @@
   showView('home');
   clearDisplay();
   startPreviewScene();
-  runLoader();
+  showLoader(LOADER_DELAY, null);
 })();
