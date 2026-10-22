@@ -14,6 +14,14 @@
     logoPath: 'logo.png'
   };
 
+  /* ---------- the picture that fills the preview area at first ---------- */
+  var DEFAULT_PREVIEW = {
+    image: 'images/plane.jpg',
+    alt: 'Preview: an airplane in the sky',
+    title: 'Your preview area is ready',
+    sub: 'Choose a subject on the right, then pick an item to preview it here.'
+  };
+
   /* ---------- subject icons (inline SVG) ---------- */
   var ICONS = {
     english: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"></path><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5A2.5 2.5 0 0 1 4 20.5z"></path><path d="M9 8h7M9 11.5h5"></path></svg>',
@@ -207,7 +215,6 @@
     searchItemsList: document.getElementById('searchItemsList'),
     searchEmpty: document.getElementById('searchEmpty'),
     exploreBtn: document.getElementById('exploreBtn'),
-    displayEmpty: document.getElementById('displayEmpty'),
     displayContent: document.getElementById('displayContent'),
     displayStage: document.getElementById('displayStage'),
     displayTitle: document.getElementById('displayTitle'),
@@ -382,8 +389,6 @@
   /* ---------- home display panel ---------- */
   function showInDisplay(subject, item) {
     activeItemId = item.id;
-    el.displayEmpty.classList.add('hidden');
-    el.displayContent.classList.remove('hidden');
 
     var stageHtml;
     if (item.image) {
@@ -398,13 +403,17 @@
     el.displayStage.innerHTML = stageHtml;
     el.displayTitle.textContent = item.title;
     el.displaySub.textContent = subject.title;
+    el.clearDisplayBtn.classList.remove('hidden');
   }
 
   function clearDisplay() {
     activeItemId = null;
-    el.displayStage.innerHTML = '';
-    el.displayContent.classList.add('hidden');
-    el.displayEmpty.classList.remove('hidden');
+    /* back to the default preview picture */
+    el.displayStage.innerHTML =
+      '<img src="' + esc(DEFAULT_PREVIEW.image) + '" alt="' + esc(DEFAULT_PREVIEW.alt) + '">';
+    el.displayTitle.textContent = DEFAULT_PREVIEW.title;
+    el.displaySub.textContent = DEFAULT_PREVIEW.sub;
+    el.clearDisplayBtn.classList.add('hidden');
   }
 
   /* ============================================================
@@ -1106,14 +1115,14 @@
     return { V: V, F: F };
   }
 
-  /* ---------- the flight path: a tilted ring around the box ---------- */
-  function previewPath(t, tilt, radius) {
+  /* ---------- the flight path: a tilted ring across the sky ---------- */
+  function previewPath(t, tilt, rx, ry) {
     var a = t * Math.PI * 2;
     var s = Math.sin(a), c = Math.cos(a);
     return [
-      c * radius,
-      s * radius * Math.sin(tilt),
-      s * radius * Math.cos(tilt)
+      c * rx,
+      s * ry * Math.sin(tilt),
+      s * ry * Math.cos(tilt)
     ];
   }
 
@@ -1252,7 +1261,7 @@
   function previewFrame(st, dt) {
     var ctx = st.ctx;
     var w = st.w, h = st.h;
-    if (!w || !h || !st.radius) return;
+    if (!w || !h || !st.rx) return;
 
     ctx.clearRect(0, 0, w, h);
 
@@ -1272,8 +1281,8 @@
     /* the ring slowly rocks, which makes the depth easier to read */
     var tilt = PREVIEW_CFG.tilt + Math.sin(st.time * 0.45) * 0.10;
 
-    var pos = previewPath(st.phase, tilt, st.radius);
-    var ahead = previewPath(st.phase + 0.004, tilt, st.radius);
+    var pos = previewPath(st.phase, tilt, st.rx, st.ry);
+    var ahead = previewPath(st.phase + 0.004, tilt, st.rx, st.ry);
     var f = vNorm(vSub(ahead, pos));
     var right = vNorm(vCross([0, 1, 0], f));
     var up = vCross(f, right);
@@ -1289,14 +1298,14 @@
     st.trail.push(pos);
     if (st.trail.length > PREVIEW_CFG.trailMax) st.trail.shift();
 
-    var zSpan = st.radius * Math.cos(tilt);
+    var zSpan = st.ry * Math.cos(tilt);
     function depthFade(z) {
       var far = (z + zSpan) / (2 * zSpan);       /* 0 near .. 1 far */
       return 1 - 0.45 * far;
     }
 
     drawTrail(ctx, cam, st.trail, depthFade);
-    drawPlaneMesh(ctx, cam, st.mesh, pos, basis, depthFade(pos[2]), PREVIEW_CFG.scale);
+    drawPlaneMesh(ctx, cam, st.mesh, pos, basis, depthFade(pos[2]), st.scale);
   }
 
   function previewLoop(now) {
@@ -1311,32 +1320,10 @@
     st.raf = window.requestAnimationFrame(previewLoop);
   }
 
-  /* keeps the drawing buffer and the flight box in step */
+  /* keeps the drawing buffer in step with the sky strip */
   function previewSyncSize() {
     var st = previewState;
     if (!st || !previewCanvas) return;
-
-    var box = document.getElementById('previewIcon');
-    if (box) {
-      var bw = box.clientWidth;
-      var bh = box.clientHeight;
-      if (bw && bh) {
-        /* the ring is sized to the box it flies around */
-        st.radius = bw / 2 + PREVIEW_CFG.gap;
-        var cw = Math.round(bw + (PREVIEW_CFG.gap + PREVIEW_CFG.pad) * 2);
-        var ch = Math.round(cw * PREVIEW_CFG.ratio);
-        if (previewCanvas.style.width !== cw + 'px') {
-          previewCanvas.style.width = cw + 'px';
-          previewCanvas.style.height = ch + 'px';
-        }
-        /* centre the canvas on the box (the canvas is positioned
-           inside the box, so the origin is its padding box) */
-        var left = (bw / 2 - cw / 2).toFixed(1) + 'px';
-        var top = (bh / 2 - ch / 2).toFixed(1) + 'px';
-        if (previewCanvas.style.left !== left) previewCanvas.style.left = left;
-        if (previewCanvas.style.top !== top) previewCanvas.style.top = top;
-      }
-    }
 
     var w = previewCanvas.clientWidth;
     var h = previewCanvas.clientHeight;
@@ -1344,6 +1331,13 @@
     st.w = w;
     st.h = h;
     if (!w || !h) return;
+
+    /* the flight ring follows the size of the sky strip */
+    var margin = 26;
+    st.rx = Math.max(30, w / 2 - margin);
+    st.ry = Math.max(16, h / 2 - margin * 0.55);
+    st.scale = Math.max(11, Math.min(17, h * 0.12));
+
     var dpr = Math.min(2, window.devicePixelRatio || 1);
     previewCanvas.width = Math.round(w * dpr);
     previewCanvas.height = Math.round(h * dpr);
@@ -1360,7 +1354,9 @@
       h: 0,
       time: 0,
       phase: 0,
-      radius: 0,
+      rx: 0,
+      ry: 0,
+      scale: 14,
       last: 0,
       raf: 0,
       trail: [],
@@ -1372,8 +1368,6 @@
     if (window.ResizeObserver) {
       var ro = new ResizeObserver(previewSyncSize);
       ro.observe(previewCanvas);
-      var boxEl = document.getElementById('previewIcon');
-      if (boxEl) ro.observe(boxEl);
     }
 
     if (reducedMotion) {
@@ -1381,7 +1375,7 @@
       previewState.phase = 0.18;
       for (var i = 0; i < PREVIEW_CFG.trailMax; i++) {
         previewState.trail.push(
-          previewPath(previewState.phase - 0.0055 * i, PREVIEW_CFG.tilt, previewState.radius)
+          previewPath(previewState.phase - 0.0055 * i, PREVIEW_CFG.tilt, previewState.rx, previewState.ry)
         );
       }
       previewFrame(previewState, 0);

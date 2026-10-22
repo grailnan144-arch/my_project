@@ -344,50 +344,26 @@ body {
   overflow: hidden;
 }
 
-.display-empty {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 30px;
-  text-align: center;
-  color: var(--muted);
-}
-.display-empty .empty-icon {
-  width: 74px; height: 74px;
-  border-radius: 24px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(145deg, var(--peach-soft), #fff);
-  border: 1px dashed rgba(47, 134, 199, 0.35);
-  color: var(--blue);
+/* ---------- sky strip with the 3D airplane ---------- */
+.display-sky {
   position: relative;
+  flex: 0 0 auto;
+  height: 132px;
+  overflow: hidden;
+  background:
+    radial-gradient(130px 40px at 16% 70%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 70%),
+    radial-gradient(170px 52px at 58% 80%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(120px 36px at 86% 36%, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 70%),
+    linear-gradient(180deg, #cfe6fa 0%, #e6f3fd 52%, #f7fbff 100%);
+  border-bottom: 1px solid var(--line);
 }
-
-/* ---------- 3D airplane flying over the preview box ---------- */
 .preview-plane {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 240px;
-  height: 136px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 2;
-}
-
-.display-empty h2 {
-  margin: 0;
-  font-size: 1.05rem;
-  color: var(--navy);
-  font-weight: 700;
-}
-.display-empty p {
-  margin: 0;
-  max-width: 320px;
-  font-size: 0.88rem;
-  line-height: 1.55;
 }
 
 .display-content {
@@ -1195,6 +1171,8 @@ body {
   }
   .display-empty p { font-size: 0.8rem; }
   .display-empty .empty-icon { width: 56px; height: 56px; border-radius: 18px; }
+  .display-sky { height: 92px; }
+  .display-caption { padding: 10px 14px; }
   .subject-list { max-height: none; overflow: visible; }
   .chrome-url { max-width: 240px; }
   .subject-hero { padding: 18px; gap: 14px; }
