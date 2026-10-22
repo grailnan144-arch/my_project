@@ -1222,9 +1222,43 @@
     ctx.globalAlpha = 1;
   }
 
-  /* ---------- the trail behind the plane ---------- */
-  function drawTrail(ctx, cam, trail, depthFade) {
+  /* ---------- the trail behind the plane ----------
+     `soft` gives the profile airplane a smooth vapour trail: a wide
+     faint halo plus a brighter core, both fading out towards the
+     far end. The loading screen keeps its own dotted trail. */
+  function drawTrail(ctx, cam, trail, depthFade, soft, mul) {
     if (trail.length < 2) return;
+    var m = mul === undefined ? 1 : mul;
+
+    if (soft) {
+      /* the soft halo */
+      for (var s = 1; s < trail.length; s++) {
+        var sa = planeProject(trail[s - 1], cam);
+        var sb = planeProject(trail[s], cam);
+        var sf = s / trail.length;
+        ctx.beginPath();
+        ctx.moveTo(sa.x, sa.y);
+        ctx.lineTo(sb.x, sb.y);
+        ctx.strokeStyle = 'rgba(255,255,255,' + (0.11 * sf * m).toFixed(3) + ')';
+        ctx.lineWidth = 1.5 + 6.5 * sf;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+      }
+      /* the bright core of the vapour */
+      for (var c = 1; c < trail.length; c++) {
+        var ca = planeProject(trail[c - 1], cam);
+        var cb2 = planeProject(trail[c], cam);
+        var cf = c / trail.length;
+        ctx.beginPath();
+        ctx.moveTo(ca.x, ca.y);
+        ctx.lineTo(cb2.x, cb2.y);
+        ctx.strokeStyle = 'rgba(255,255,255,' + (0.34 * cf * cf * m).toFixed(3) + ')';
+        ctx.lineWidth = 0.4 + 2.2 * cf;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+      }
+      return;
+    }
 
     for (var i = 1; i < trail.length; i++) {
       var a = trail[i - 1], b = trail[i];
@@ -1291,7 +1325,32 @@
 
     var cfg = st.cfg;
 
-
+    if (cfg.mode === 'flight') {
+      /* the profile airplane: a horizontal run across the picture */
+      var mobile = w < 700;
+      var halfPlane = st.scale * 0.62;          /* wings + tail */
+      var trailLen = mobile ? Math.min(150, w * 0.42) : 288;   /* ~3in on desktop */
+      st.cy = h * 0.5;
+      st.scale = Math.max(24, w * 0.088);
+      halfPlane = st.scale * 0.62;
+      st.focal = Math.max(300, w * 0.9);
+      st.fly = {
+        startX: -(halfPlane + 10),
+        endX: w + 150 + halfPlane + 10,
+        exit: 150,                 /* the trail fades out over this */
+        cx: w * 0.5,               /* the camera looks at the middle */
+        baseY: h * (mobile ? 0.35 : 0.38),
+        arc: h * (mobile ? 0.055 : 0.028),     /* how much it climbs   */
+        depth: h * (mobile ? 0.09 : 0.05),      /* depth wave           */
+        waves: mobile ? 1.5 : 1,
+        phase: 0,
+        trailLen: trailLen,
+        bankBase: mobile ? 0.32 : 0.22,
+        bankAmp: mobile ? 0.30 : 0.10,          /* banking while turning */
+        mobile: mobile
+      };
+      st.trailSoft = true;
+    } else {
       st.ry = Math.max(14, h * 0.26);
       st.cy = h * 0.5;
       st.scale = Math.max(18, Math.min(36, h * 0.22));
@@ -1301,11 +1360,30 @@
       var near2 = st.focal / (st.focal + (st.zc - st.depth));
       var room2 = w * 0.5 - st.scale * 0.8;
       st.rx = Math.max(30, Math.min(w * 0.38, room2 / near2));
+      st.trailSoft = false;
+    }
 
     var dpr = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = Math.round(w * dpr);
     canvas.height = Math.round(h * dpr);
     st.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  /* ---------- the profile flight path ----------
+     A straight run from outside the left edge to outside the right
+     edge, with a gentle arc and a small depth wave so the airplane
+     climbs, banks and breathes while it crosses the picture. */
+  function pathFlight(t, st) {
+    var c = st.fly;
+    /* the path is given in picture coordinates and shifted into the
+       camera space, whose origin sits in the middle of the picture */
+    var screenX = c.startX + (c.endX - c.startX) * t;
+    var a = t * Math.PI * 2 * c.waves + c.phase;
+    return [
+      screenX - c.cx,
+      c.baseY + c.arc * Math.sin(a),
+      c.depth * Math.sin(a + 0.9)
+    ];
   }
 
   function sceneFrame(st, dt) {
@@ -1328,18 +1406,29 @@
       unit: 1
     };
 
-    /* the ring slowly rocks, which makes the depth easier to read */
-    var tilt = (st.cfg.tilt || 0.5) + Math.sin(st.time * 0.45) * 0.10;
+    var flight = st.cfg.mode === 'flight';
+    var pos, ahead, bank;
 
-    var path = pathRing;
-    var pos = path(st.phase, tilt, st.rx, st.ry, st.depth, st.zc);
-    var ahead = path(st.phase + 0.004, tilt, st.rx, st.ry, st.depth, st.zc);
+    if (flight) {
+      pos = pathFlight(st.phase, st);
+      ahead = pathFlight(st.phase + 0.004, st);
+      /* the airplane leans into its turn */
+      bank = st.fly.bankBase + st.fly.bankAmp *
+             Math.sin(st.phase * Math.PI * 2 * st.fly.waves + 0.6);
+    } else {
+      /* the ring slowly rocks, which makes the depth easier to read */
+      var tilt = (st.cfg.tilt || 0.5) + Math.sin(st.time * 0.45) * 0.10;
+      pos = pathRing(st.phase, tilt, st.rx, st.ry, st.depth, st.zc);
+      ahead = pathRing(st.phase + 0.004, tilt, st.rx, st.ry, st.depth, st.zc);
+      bank = PLANE_BANK;
+    }
+
     var f = vNorm(vSub(ahead, pos));
     var right = vNorm(vCross([0, 1, 0], f));
     var up = vCross(f, right);
 
     /* bank into the turn */
-    var cb = Math.cos(PLANE_BANK), sb = Math.sin(PLANE_BANK);
+    var cb = Math.cos(bank), sb = Math.sin(bank);
     var br = vAdd(vScale(right, cb), vScale(up, sb));
     var bu = vSub(vScale(up, cb), vScale(right, sb));
 
@@ -1352,8 +1441,14 @@
       f: f
     };
 
-    st.trail.push(pos);
-    if (st.trail.length > st.cfg.trailMax) st.trail.shift();
+    if (flight) {
+      /* the contrail is rebuilt from the path behind the airplane, so
+         it keeps the wanted length whatever the frame rate is */
+      st.trail = buildFlightTrail(st, cam);
+    } else {
+      st.trail.push(pos);
+      if (st.trail.length > st.cfg.trailMax) st.trail.shift();
+    }
 
     var zSpan = Math.max(1, st.depth);
     function depthFade(z) {
@@ -1361,8 +1456,38 @@
       return 1 - 0.28 * far;
     }
 
-    drawTrail(ctx, cam, st.trail, depthFade);
+    /* the contrail fades away while the airplane leaves the picture */
+    var trailMul = 1;
+    if (flight) {
+      var out = (pos[0] + st.fly.cx) - w;
+      if (out > 0) trailMul = Math.max(0, 1 - out / st.fly.exit);
+    }
+
+    drawTrail(ctx, cam, st.trail, depthFade, st.trailSoft, trailMul);
     drawPlaneMesh(ctx, cam, st.mesh, pos, basis, depthFade(pos[2]), st.scale);
+  }
+
+  /* walks back along the flight path until the wanted trail length
+     is reached, oldest point first */
+  function buildFlightTrail(st, cam) {
+    var target = st.fly.trailLen;
+    var pts = [];
+    var ph = st.phase;
+    var prev = null;
+    var dist = 0;
+    var step = 0.006;
+    while (pts.length < 120 && dist < target) {
+      var p = pathFlight(ph, st);
+      var sc = planeProject(p, cam);
+      if (prev) {
+        dist += Math.sqrt((sc.x - prev.x) * (sc.x - prev.x) + (sc.y - prev.y) * (sc.y - prev.y));
+        if (dist > target) break;
+      }
+      pts.push(p);
+      prev = sc;
+      ph -= step;
+    }
+    return pts.reverse();
   }
 
   function sceneLoop(st, now) {
@@ -1402,14 +1527,35 @@
     if (reducedMotion) {
       /* one still frame of the very same scene */
       st.phase = st.cfg.phase || 0.18;
-      for (var i = 0; i < st.cfg.trailMax; i++) {
-    var path = pathRing;
-        st.trail.push(path(st.phase - 0.006 * i, st.cfg.tilt || 0.5, st.rx, st.ry, st.depth, st.zc));
+      if (st.cfg.mode === 'flight') {
+        st.trail = [];
+      } else {
+        for (var i = 0; i < st.cfg.trailMax; i++) {
+          st.trail.push(pathRing(st.phase - 0.006 * i, st.cfg.tilt || 0.5, st.rx, st.ry, st.depth, st.zc));
+        }
       }
       sceneFrame(st, 0);
       return;
     }
     sceneResume(st);
+  }
+
+  /* ============================================================
+     THE PROFILE AIRPLANE
+     ------------------------------------------------------------
+     Its own scene: the same 3D model as the loading screen, but
+     with its own canvas, its own path, timing and trail. It flies
+     from one end of the profile picture to the other.
+     ============================================================ */
+  var profileScene = null;
+
+  function startProfileScene() {
+    profileScene = createPlaneScene(document.getElementById('profilePlane'), {
+      mode: 'flight',
+      speed: 1 / 14,            /* one full crossing in 14 seconds */
+      trailMax: 40
+    });
+    sceneStart(profileScene);
   }
 
   /* ============================================================
@@ -1495,5 +1641,6 @@
   renderSubjects();
   showView('home');
   clearDisplay();
+  startProfileScene();
   showLoader(LOADER_DELAY, null);
 })();
