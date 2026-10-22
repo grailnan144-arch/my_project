@@ -976,36 +976,25 @@
   });
 
   /* ============================================================
-     3D AIRPLANE OVER THE PREVIEW BOX
+     3D AIRPLANE SCENES
      ------------------------------------------------------------
-     A miniature software renderer. A small plane flies a tilted
-     ring around the little box at the top of the preview area,
-     banks into the turn, drags a short fading trail behind it and
-     loops forever: it sweeps over the box and comes back around to
-     the left. The far side of the ring is drawn smaller and dimmer,
-     the near side passes in front of the box - that is what sells
-     the depth.
+     A miniature software renderer, used twice:
+       1. the preview picture - the plane loops around the top of
+          the picture and dives behind its left edge, so it
+          disappears for a moment and comes straight back out on
+          the left;
+       2. the loading screen - the same plane, always in front.
+     Points are rotated by a yaw + pitch camera and projected with
+     a simple perspective divide. No libraries, no build step.
      ============================================================ */
-
-  var previewCanvas = document.getElementById('previewPlane');
-  var previewState = null;
-
-  var PREVIEW_CFG = {
-    gap: 12,       /* how far the ring sits outside the box          */
-    pad: 10,       /* canvas padding around the flight path          */
-    tilt: 0.50,    /* radians: how far the ring is tipped back      */
-    speed: 0.17,   /* turns per second                               */
-    scale: 14,     /* px per model unit                              */
-    trailMax: 34,  /* trail samples kept behind the plane            */
-    focal: 170,    /* perspective strength                           */
-    ratio: 0.56    /* canvas height / canvas width                   */
-  };
 
   var PLANE_BODY  = '#f2f6fb';
   var PLANE_WING  = '#2f86c7';
   var PLANE_TAIL  = '#57a6e2';
   var PLANE_FIN   = '#e07b2a';
   var PLANE_GLASS = '#2b3a4a';
+
+  var PLANE_BANK = 0.42;      /* bank angle while turning (radians) */
 
   /* ---------- tiny vector helpers ---------- */
   function vAdd(a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; }
@@ -1115,15 +1104,19 @@
     return { V: V, F: F };
   }
 
-  /* ---------- the flight path: a tilted ring across the sky ---------- */
-  function previewPath(t, tilt, rx, ry) {
+  /* ---------- flight paths ---------- */
+  /* a plain tilted ring: the far side is up and behind */
+  function pathRing(t, tilt, rx, ry) {
     var a = t * Math.PI * 2;
     var s = Math.sin(a), c = Math.cos(a);
-    return [
-      c * rx,
-      s * ry * Math.sin(tilt),
-      s * ry * Math.cos(tilt)
-    ];
+    return [c * rx, s * ry * Math.sin(tilt), s * ry * Math.cos(tilt)];
+  }
+  /* a ring whose depth is shifted, so the plane dives behind the
+     picture exactly on the left side and pops out there again */
+  function pathSwoop(t, tilt, rx, ry, depth, zc) {
+    var a = t * Math.PI * 2;
+    var s = Math.sin(a), c = Math.cos(a);
+    return [c * rx, s * ry * Math.sin(tilt), zc - depth * c];
   }
 
   /* ---------- camera (straight on, small perspective) ---------- */
@@ -1165,7 +1158,7 @@
   }
 
   /* ---------- the airplane ---------- */
-  function drawPlaneMesh(ctx, cam, mesh, pos, basis, alpha, scale) {
+  function drawPlaneMesh(ctx, cam, mesh, pos, basis, alpha, scale, occlude, pic) {
     var S = scale;
     var world = [];
     for (var i = 0; i < mesh.V.length; i++) {
@@ -1204,22 +1197,31 @@
     ctx.globalAlpha = alpha;
     for (var d = 0; d < faces.length; d++) {
       var fc = faces[d];
-      var i0 = fc.idx[0], i1 = fc.idx[1], i2 = fc.idx[2];
 
-      /* clip the face against the picture: everything behind the
-         picture (z > 0) is hidden by it */
-      var poly = [];
-      for (var e = 0; e < 3; e++) {
-        var p0 = camV[fc.idx[e]];
-        var p1 = camV[fc.idx[(e + 1) % 3]];
-        var in0 = p0.z <= 0, in1 = p1.z <= 0;
-        if (in0) poly.push(p0);
-        if (in0 !== in1) {
-          var t = p0.z / (p0.z - p1.z);
-          poly.push({ x: p0.x + (p1.x - p0.x) * t, y: p0.y + (p1.y - p0.y) * t, z: 0 });
+      /* the picture hides whatever is behind it */
+      var poly = null;
+      if (occlude && pic) {
+        var over = false;
+        for (var m = 0; m < 3; m++) {
+          var pm = planeProject(world[fc.idx[m]], cam);
+          if (pm.x >= pic.l && pm.x <= pic.r && pm.y >= pic.t && pm.y <= pic.b) { over = true; break; }
+        }
+        if (over) {
+          poly = [];
+          for (var e = 0; e < 3; e++) {
+            var p0 = camV[fc.idx[e]];
+            var p1 = camV[fc.idx[(e + 1) % 3]];
+            var in0 = p0.z <= 0, in1 = p1.z <= 0;
+            if (in0) poly.push(p0);
+            if (in0 !== in1) {
+              var t = p0.z / (p0.z - p1.z);
+              poly.push({ x: p0.x + (p1.x - p0.x) * t, y: p0.y + (p1.y - p0.y) * t, z: 0 });
+            }
+          }
+          if (poly.length < 3) continue;             /* fully behind */
         }
       }
-      if (poly.length < 3) continue;                 /* fully behind */
+      if (!poly) poly = [camV[fc.idx[0]], camV[fc.idx[1]], camV[fc.idx[2]]];
 
       ctx.beginPath();
       for (var q = 0; q < poly.length; q++) {
@@ -1242,18 +1244,25 @@
   }
 
   /* ---------- the trail behind the plane ---------- */
-  function drawTrail(ctx, cam, trail, depthFade) {
+  function drawTrail(ctx, cam, trail, depthFade, occlude, pic) {
     if (trail.length < 2) return;
 
-    /* the trail follows the plane, but it is hidden where the plane
-       is behind the picture */
+    function overPicture(pt) {
+      if (!occlude || !pic) return false;
+      var p = planeProject(pt, cam);
+      return p.x >= pic.l && p.x <= pic.r && p.y >= pic.t && p.y <= pic.b;
+    }
+
     for (var i = 1; i < trail.length; i++) {
       var a = trail[i - 1], b = trail[i];
-      if (a[2] > 0 && b[2] > 0) continue;               /* fully behind */
-      if (a[2] > 0 || b[2] > 0) {
-        var t = a[2] / (a[2] - b[2]);                   /* cross the picture plane */
-        var cut = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, 0];
-        if (a[2] > 0) a = cut; else b = cut;
+      if (occlude && pic) {
+        var hidden = a[2] > 0 && b[2] > 0 && overPicture(a);
+        if (hidden) continue;                        /* behind the picture */
+        if ((a[2] > 0 || b[2] > 0) && (overPicture(a) || overPicture(b))) {
+          var t = a[2] / (a[2] - b[2]);              /* cross the picture plane */
+          var cut = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, 0];
+          if (a[2] > 0) a = cut; else b = cut;
+        }
       }
       var pa = planeProject(a, cam);
       var pb = planeProject(b, cam);
@@ -1267,7 +1276,7 @@
       ctx.stroke();
     }
     for (var j = 0; j < trail.length; j++) {
-      if (trail[j][2] > 0) continue;                    /* behind the picture */
+      if (occlude && pic && trail[j][2] > 0 && overPicture(trail[j])) continue;
       var g = (j + 1) / trail.length;
       var p = planeProject(trail[j], cam);
       var fade = depthFade ? depthFade(trail[j][2]) : 1;
@@ -1282,15 +1291,84 @@
     }
   }
 
-  /* ---------- animation loop ---------- */
-  function previewFrame(st, dt) {
+  /* ============================================================
+     A SCENE = one canvas with its own plane, path and timing
+     ============================================================ */
+  function createPlaneScene(canvas, cfg) {
+    if (!canvas) return null;
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    return {
+      canvas: canvas,
+      ctx: ctx,
+      cfg: cfg,
+      w: 0, h: 0,
+      time: 0,
+      phase: cfg.phase || 0,
+      last: 0,
+      raf: 0,
+      trail: [],
+      mesh: buildPlaneMesh(),
+      rx: 0, ry: 0, cy: 0, scale: 20, focal: 320,
+      depth: 0, zc: 0,
+      pic: { l: 0, t: 0, r: 0, b: 0 }
+    };
+  }
+
+  /* measures the canvas and works out where the plane has to fly */
+  function sceneSync(st) {
+    if (!st) return;
+    var canvas = st.canvas;
+    var w = canvas.clientWidth;
+    var h = canvas.clientHeight;
+    if (w === st.w && h === st.h) return;
+    st.w = w;
+    st.h = h;
+    if (!w || !h) return;
+
+    var cfg = st.cfg;
+
+    if (cfg.picture) {
+      /* the plane loops around the top of the picture and dives
+         behind its left edge */
+      var stage = document.getElementById(cfg.picture);
+      if (stage) {
+        st.pic.l = stage.offsetLeft;
+        st.pic.t = stage.offsetTop;
+        st.pic.r = stage.offsetLeft + stage.offsetWidth;
+        st.pic.b = stage.offsetTop + stage.offsetHeight;
+      }
+      var picW = Math.max(1, st.pic.r - st.pic.l);
+      st.rx = Math.max(40, picW / 2 - 10);
+      st.ry = Math.max(16, h * 0.085);
+      st.cy = st.pic.t + st.ry * 0.35;
+      st.scale = Math.max(26, Math.min(46, h * 0.15));
+      st.depth = Math.max(18, h * 0.09);
+      st.zc = -0.78 * st.depth;
+    } else {
+      st.rx = Math.max(30, w * 0.36);
+      st.ry = Math.max(14, h * 0.26);
+      st.cy = h * 0.5;
+      st.scale = Math.max(14, Math.min(30, h * 0.17));
+      st.depth = st.ry * Math.cos(cfg.tilt || 0.5);
+      st.zc = 0;
+    }
+    st.focal = Math.max(210, st.ry * 3.4);
+
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    st.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function sceneFrame(st, dt) {
     var ctx = st.ctx;
     var w = st.w, h = st.h;
-    if (!w || !h || !st.rx) return;
+    if (!w || !h) return;
 
     ctx.clearRect(0, 0, w, h);
 
-    st.phase += dt * PREVIEW_CFG.speed;
+    st.phase += dt * st.cfg.speed;
     if (st.phase >= 1) st.phase -= 1;
     st.time += dt;
 
@@ -1304,16 +1382,17 @@
     };
 
     /* the ring slowly rocks, which makes the depth easier to read */
-    var tilt = PREVIEW_CFG.tilt + Math.sin(st.time * 0.45) * 0.10;
+    var tilt = (st.cfg.tilt || 0.5) + Math.sin(st.time * 0.45) * 0.10;
 
-    var pos = previewPath(st.phase, tilt, st.rx, st.ry);
-    var ahead = previewPath(st.phase + 0.004, tilt, st.rx, st.ry);
+    var path = st.cfg.swoop ? pathSwoop : pathRing;
+    var pos = path(st.phase, tilt, st.rx, st.ry, st.depth, st.zc);
+    var ahead = path(st.phase + 0.004, tilt, st.rx, st.ry, st.depth, st.zc);
     var f = vNorm(vSub(ahead, pos));
     var right = vNorm(vCross([0, 1, 0], f));
     var up = vCross(f, right);
 
     /* bank into the turn */
-    var cb = Math.cos(0.42), sb = Math.sin(0.42);
+    var cb = Math.cos(PLANE_BANK), sb = Math.sin(PLANE_BANK);
     var basis = {
       r: vAdd(vScale(right, cb), vScale(up, sb)),
       u: vSub(vScale(up, cb), vScale(right, sb)),
@@ -1321,105 +1400,126 @@
     };
 
     st.trail.push(pos);
-    if (st.trail.length > PREVIEW_CFG.trailMax) st.trail.shift();
+    if (st.trail.length > st.cfg.trailMax) st.trail.shift();
 
-    var zSpan = st.ry * Math.cos(tilt);
+    var occlude = !!st.cfg.picture;
+    var zSpan = Math.max(1, st.depth);
     function depthFade(z) {
-      if (z > 0) return 0;                    /* behind the picture */
-      var far = (-z) / (2 * zSpan);           /* 0 at the front edge .. 0.5 at the front */
+      if (occlude && z > 0) return 0;          /* behind the picture */
+      var far = Math.max(0, -z) / (2 * zSpan);
       return 1 - 0.28 * far;
     }
 
-    drawTrail(ctx, cam, st.trail, depthFade);
-    drawPlaneMesh(ctx, cam, st.mesh, pos, basis, depthFade(pos[2]), st.scale);
+    drawTrail(ctx, cam, st.trail, depthFade, occlude, st.pic);
+    drawPlaneMesh(ctx, cam, st.mesh, pos, basis, depthFade(pos[2]), st.scale, occlude, st.pic);
   }
 
-  function previewLoop(now) {
-    var st = previewState;
+  function sceneLoop(st) {
     if (!st) return;
+    var now = arguments[0];
     var dt = st.last ? Math.min(0.05, (now - st.last) / 1000) : 0.016;
     st.last = now;
-    previewSyncSize();
+    sceneSync(st);
     if (!document.hidden && st.w && st.h) {
-      previewFrame(st, dt);
+      sceneFrame(st, dt);
     }
-    st.raf = window.requestAnimationFrame(previewLoop);
+    st.raf = window.requestAnimationFrame(function (t) { sceneLoop(st, t); });
   }
 
-  /* keeps the drawing buffer in step with the sky strip */
-  function previewSyncSize() {
-    var st = previewState;
-    if (!st || !previewCanvas) return;
-
-    var w = previewCanvas.clientWidth;
-    var h = previewCanvas.clientHeight;
-    if (w === st.w && h === st.h) return;
-    st.w = w;
-    st.h = h;
-    if (!w || !h) return;
-
-    /* the flight ring follows the size of the picture area */
-    var margin = 34;
-    st.rx = Math.max(40, w / 2 - margin);
-    st.ry = Math.max(20, h * 0.22);
-    /* the plane loops right along the top edge of the picture */
-    st.cy = h * 0.17;
-    st.scale = Math.max(26, Math.min(40, h * 0.13));
-    /* a longer lens keeps the near/far size difference believable */
-    st.focal = Math.max(210, st.ry * 3.4);
-
-    var dpr = Math.min(2, window.devicePixelRatio || 1);
-    previewCanvas.width = Math.round(w * dpr);
-    previewCanvas.height = Math.round(h * dpr);
-    st.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  function sceneStop(st) {
+    if (!st) return;
+    if (st.raf && window.cancelAnimationFrame) {
+      window.cancelAnimationFrame(st.raf);
+    }
+    st.raf = 0;
   }
 
-  function previewInit() {
-    if (!previewCanvas) return;
-    var ctx = previewCanvas.getContext('2d');
-    if (!ctx) return;
-    previewState = {
-      ctx: ctx,
-      w: 0,
-      h: 0,
-      time: 0,
-      phase: 0,
-      rx: 0,
-      ry: 0,
-      cy: 0,
-      scale: 14,
-      focal: 320,
-      last: 0,
-      raf: 0,
-      trail: [],
-      mesh: buildPlaneMesh()
-    };
-
-    previewSyncSize();
-    window.addEventListener('resize', previewSyncSize);
+  function sceneStart(st) {
+    if (!st) return;
+    sceneSync(st);
+    window.addEventListener('resize', function () { sceneSync(st); });
     if (window.ResizeObserver) {
-      var ro = new ResizeObserver(previewSyncSize);
-      ro.observe(previewCanvas);
+      var ro = new ResizeObserver(function () { sceneSync(st); });
+      ro.observe(st.canvas);
     }
-
     if (reducedMotion) {
       /* one still frame of the very same scene */
-      previewState.phase = 0.18;
-      for (var i = 0; i < PREVIEW_CFG.trailMax; i++) {
-        previewState.trail.push(
-          previewPath(previewState.phase - 0.0055 * i, PREVIEW_CFG.tilt, previewState.rx, previewState.ry)
-        );
+      st.phase = st.cfg.phase || 0.18;
+      for (var i = 0; i < st.cfg.trailMax; i++) {
+        var path = st.cfg.swoop ? pathSwoop : pathRing;
+        st.trail.push(path(st.phase - 0.006 * i, st.cfg.tilt || 0.5, st.rx, st.ry, st.depth, st.zc));
       }
-      previewFrame(previewState, 0);
+      sceneFrame(st, 0);
+      return;
+    }
+    st.raf = window.requestAnimationFrame(function (t) { sceneLoop(st, t); });
+  }
+
+  /* ============================================================
+     THE TWO SCENES
+     ============================================================ */
+  var previewScene = null;
+  var loaderScene = null;
+
+  function startPreviewScene() {
+    previewScene = createPlaneScene(document.getElementById('previewPlane'), {
+      picture: 'displayStage',     /* the picture hides what is behind it */
+      swoop: true,                /* dives behind the left edge          */
+      tilt: 0.5,
+      speed: 0.17,
+      trailMax: 34
+    });
+    sceneStart(previewScene);
+  }
+
+  function startLoaderScene() {
+    loaderScene = createPlaneScene(document.getElementById('loaderPlane'), {
+      tilt: 0.5,
+      speed: 0.22,
+      trailMax: 30
+    });
+    sceneStart(loaderScene);
+  }
+
+  /* ---------- the loading screen ---------- */
+  var LOADER_DELAY = 2500;
+
+  function runLoader() {
+    var loader = document.getElementById('loader');
+    var fill = document.getElementById('loaderFill');
+
+    if (reducedMotion) {
+      if (loader) loader.classList.add('is-done');
       return;
     }
 
-    previewState.raf = window.requestAnimationFrame(previewLoop);
+    startLoaderScene();
+
+    var start = (window.performance && performance.now) ? performance.now() : Date.now();
+    function tick() {
+      var now = (window.performance && performance.now) ? performance.now() : Date.now();
+      var p = Math.min(1, (now - start) / LOADER_DELAY);
+      if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
+      if (p < 1) {
+        window.requestAnimationFrame(tick);
+      } else {
+        if (loader) {
+          loader.classList.add('is-done');
+          window.setTimeout(function () {
+            loader.classList.add('hidden');
+          }, 500);
+        }
+        sceneStop(loaderScene);
+        document.body.classList.add('is-ready');
+      }
+    }
+    window.requestAnimationFrame(tick);
   }
 
   /* ---------- init ---------- */
   renderSubjects();
   showView('home');
   clearDisplay();
-  previewInit();
+  startPreviewScene();
+  runLoader();
 })();
