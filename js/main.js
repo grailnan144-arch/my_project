@@ -1205,13 +1205,27 @@
     for (var d = 0; d < faces.length; d++) {
       var fc = faces[d];
       var i0 = fc.idx[0], i1 = fc.idx[1], i2 = fc.idx[2];
-      var p0 = planeProject(world[i0], cam);
-      var p1 = planeProject(world[i1], cam);
-      var p2 = planeProject(world[i2], cam);
+
+      /* clip the face against the picture: everything behind the
+         picture (z > 0) is hidden by it */
+      var poly = [];
+      for (var e = 0; e < 3; e++) {
+        var p0 = camV[fc.idx[e]];
+        var p1 = camV[fc.idx[(e + 1) % 3]];
+        var in0 = p0.z <= 0, in1 = p1.z <= 0;
+        if (in0) poly.push(p0);
+        if (in0 !== in1) {
+          var t = p0.z / (p0.z - p1.z);
+          poly.push({ x: p0.x + (p1.x - p0.x) * t, y: p0.y + (p1.y - p0.y) * t, z: 0 });
+        }
+      }
+      if (poly.length < 3) continue;                 /* fully behind */
+
       ctx.beginPath();
-      ctx.moveTo(p0.x, p0.y);
-      ctx.lineTo(p1.x, p1.y);
-      ctx.lineTo(p2.x, p2.y);
+      for (var q = 0; q < poly.length; q++) {
+        var pp = planeProject([poly[q].x, poly[q].y, poly[q].z], cam);
+        if (q === 0) ctx.moveTo(pp.x, pp.y); else ctx.lineTo(pp.x, pp.y);
+      }
       ctx.closePath();
       ctx.fillStyle = fc.col;
       ctx.fill();
@@ -1230,19 +1244,30 @@
   /* ---------- the trail behind the plane ---------- */
   function drawTrail(ctx, cam, trail, depthFade) {
     if (trail.length < 2) return;
+
+    /* the trail follows the plane, but it is hidden where the plane
+       is behind the picture */
     for (var i = 1; i < trail.length; i++) {
-      var a = planeProject(trail[i - 1], cam);
-      var b = planeProject(trail[i], cam);
+      var a = trail[i - 1], b = trail[i];
+      if (a[2] > 0 && b[2] > 0) continue;               /* fully behind */
+      if (a[2] > 0 || b[2] > 0) {
+        var t = a[2] / (a[2] - b[2]);                   /* cross the picture plane */
+        var cut = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, 0];
+        if (a[2] > 0) a = cut; else b = cut;
+      }
+      var pa = planeProject(a, cam);
+      var pb = planeProject(b, cam);
       var f = i / trail.length;
       ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(b.x, b.y);
+      ctx.moveTo(pa.x, pa.y);
+      ctx.lineTo(pb.x, pb.y);
       ctx.strokeStyle = 'rgba(87,166,226,' + (0.30 * f).toFixed(3) + ')';
       ctx.lineWidth = 0.5 + 1.7 * f;
       ctx.lineCap = 'round';
       ctx.stroke();
     }
     for (var j = 0; j < trail.length; j++) {
+      if (trail[j][2] > 0) continue;                    /* behind the picture */
       var g = (j + 1) / trail.length;
       var p = planeProject(trail[j], cam);
       var fade = depthFade ? depthFade(trail[j][2]) : 1;
@@ -1300,8 +1325,9 @@
 
     var zSpan = st.ry * Math.cos(tilt);
     function depthFade(z) {
-      var far = (z + zSpan) / (2 * zSpan);       /* 0 near .. 1 far */
-      return 1 - 0.45 * far;
+      if (z > 0) return 0;                    /* behind the picture */
+      var far = (-z) / (2 * zSpan);           /* 0 at the front edge .. 0.5 at the front */
+      return 1 - 0.28 * far;
     }
 
     drawTrail(ctx, cam, st.trail, depthFade);
@@ -1335,10 +1361,10 @@
     /* the flight ring follows the size of the picture area */
     var margin = 34;
     st.rx = Math.max(40, w / 2 - margin);
-    st.ry = Math.max(20, h * 0.28);
-    /* the plane flies right along the top edge of the picture */
-    st.cy = h * 0.16;
-    st.scale = Math.max(22, Math.min(34, h * 0.10));
+    st.ry = Math.max(20, h * 0.22);
+    /* the plane loops right along the top edge of the picture */
+    st.cy = h * 0.17;
+    st.scale = Math.max(26, Math.min(40, h * 0.13));
     /* a longer lens keeps the near/far size difference believable */
     st.focal = Math.max(210, st.ry * 3.4);
 
