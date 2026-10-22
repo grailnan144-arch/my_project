@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" width="1400" height="760" role="img" aria-label="Pre-Colonial Map">
+  <defs>
+    <linearGradient id="g40bg" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#17375e"/>
+      <stop offset="0.42" stop-color="#5b9bd5"/>
+      <stop offset="0.82" stop-color="#5b9bd5"/>
+      <stop offset="1" stop-color="#f3e6d3"/>
+    </linearGradient>
+    <linearGradient id="g40sh" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#17375e" stop-opacity="0.35"/>
+    </linearGradient>
+    <radialGradient id="g40v" cx="0.5" cy="0.45" r="0.78">
+      <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.34"/>
+    </radialGradient>
+  </defs>
+  <rect width="1400" height="760" fill="url(#g40bg)"/>
+  <g>
+    <ellipse cx="252.0" cy="167.2" rx="336.0" ry="145.9" fill="#f3e6d3" fill-opacity="0.16"/>
+    <ellipse cx="1148.0" cy="121.6" rx="342.7" ry="148.8" fill="#f3e6d3" fill-opacity="0.16"/>
+    <ellipse cx="1064.0" cy="592.8" rx="590.2" ry="256.3" fill="#f3e6d3" fill-opacity="0.16"/>
+    <ellipse cx="336.0" cy="623.2" rx="449.7" ry="195.3" fill="#f3e6d3" fill-opacity="0.16"/>
+  </g>
+  <g>
+    <path d="M 154 598.88 L 336 428.64 L 518 598.88 Z" fill="#f3e6d3" fill-opacity="0.34"/>
+    <path d="M 536.2 598.88 L 718.2 294.88 L 900.2 598.88 Z" fill="#f3e6d3" fill-opacity="0.5"/>
+    <path d="M 918.4 598.88 L 1100.4 161.11999999999995 L 1282.4 598.88 Z" fill="#f3e6d3" fill-opacity="0.66"/>
+  </g>
+  <rect width="1400" height="760" fill="url(#g40sh)"/>
+  <rect width="1400" height="760" fill="url(#g40v)"/>
+</svg>

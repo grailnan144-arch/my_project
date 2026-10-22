@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Portfolio Gallery</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="bg-decor" aria-hidden="true">
+  <span class="blob blob-1" data-depth="14"></span>
+  <span class="blob blob-2" data-depth="-18"></span>
+  <span class="blob blob-3" data-depth="10"></span>
+</div>
+
+<div class="page-shell">
+  <div class="app-window" id="appWindow">
+
+    <div class="window-chrome" aria-hidden="true">
+      <div class="chrome-dots">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+      </div>
+      <div class="chrome-url">student-portfolio.gallery</div>
+    </div>
+
+    <div class="app-body">
+
+      <!-- ============ TOPBAR (always visible) ============ -->
+      <header class="topbar">
+        <div class="brand" id="brandHome" role="button" tabindex="0" title="Back to home">
+          <div class="logo-badge" id="brandLogo">
+            <span class="logo-fallback" aria-hidden="true">SPG</span>
+          </div>
+          <div class="brand-text">
+            <h1>Student Portfolio Gallery</h1>
+            <p>Showcasing student learning and creativity.</p>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="search-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-3.4-3.4"></path>
+            </svg>
+            <label class="sr-only" for="searchInput">Search subjects and portfolios</label>
+            <input id="searchInput" type="search" placeholder="Search subjects or portfolios…" autocomplete="off">
+            <button type="button" class="search-clear" id="searchClear" aria-label="Clear search">&times;</button>
+          </div>
+          <!-- decorative notification-style icon (no real notifications) -->
+          <span class="bell" aria-hidden="true" title="Notifications (decorative)">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 15V10a6 6 0 1 0-12 0v5l-1.6 2.2a1 1 0 0 0 .8 1.6h13.6a1 1 0 0 0 .8-1.6L18 15z"></path>
+              <path d="M10 20a2 2 0 0 0 4 0"></path>
+            </svg>
+          </span>
+          <div class="avatar" id="profileAvatar" title="Gallery profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="8.5" r="3.6"></circle>
+              <path d="M5.5 19.2a6.7 6.7 0 0 1 13 0"></path>
+            </svg>
+          </div>
+        </div>
+      </header>
+
+      <!-- ============ HOME VIEW ============ -->
+      <div class="view is-active" id="homeView">
+        <div class="home-grid">
+
+          <!-- left: empty preview display -->
+          <section class="display-panel" id="displayPanel" aria-label="Portfolio preview display">
+            <div class="display-empty" id="displayEmpty">
+              <div class="empty-icon" id="previewIcon" aria-hidden="true">
+                <canvas id="previewPlane" class="preview-plane" width="240" height="136"></canvas>
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="14" rx="3"></rect>
+                  <path d="M3 14l4.5-4.2a2 2 0 0 1 2.7-.1L14 13.5l1.8-1.6a2 2 0 0 1 2.7.1L21 14.8"></path>
+                  <circle cx="9" cy="9" r="1.4"></circle>
+                </svg>
+              </div>
+              <h2>Your preview area is ready</h2>
+              <p>Choose a subject on the right to open its gallery, then select a portfolio item to preview it here.</p>
+            </div>
+            <div class="display-content hidden" id="displayContent">
+              <div class="display-stage" id="displayStage"></div>
+              <div class="display-caption">
+                <div class="cap-text">
+                  <h3 id="displayTitle">Portfolio item</h3>
+                  <p id="displaySub">Subject</p>
+                </div>
+                <button type="button" class="btn btn-ghost btn-sm" id="clearDisplayBtn" title="Return display to empty state">
+                  Clear
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- right: subjects + featured -->
+          <aside class="sidebar">
+            <div class="view-head">
+              <div>
+                <h2>Explore Subjects</h2>
+                <p class="view-sub">Pick a subject to open its portfolio gallery.</p>
+              </div>
+            </div>
+            <ul class="subject-list" id="subjectList"></ul>
+
+            <section class="featured-card" id="featuredCard" aria-label="Featured portfolio">
+              <span class="featured-deco" aria-hidden="true"></span>
+              <span class="featured-deco-2" aria-hidden="true"></span>
+              <h2>Featured Portfolio</h2>
+              <p>Explore student creativity, projects, and learning achievements.</p>
+              <button type="button" class="btn btn-peach" id="exploreBtn">
+                Explore Subjects
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h13M13 6l6 6-6 6"></path>
+                </svg>
+              </button>
+            </section>
+          </aside>
+
+        </div>
+      </div>
+
+      <!-- ============ GALLERY VIEW (full width) ============ -->
+      <section class="view gallery-page" id="galleryView" aria-label="Subject gallery">
+        <div class="gallery-nav">
+          <button type="button" class="btn btn-secondary btn-sm" id="backBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 6l-6 6 6 6"></path>
+            </svg>
+            All Subjects
+          </button>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <button type="button" class="crumb-link" id="crumbHome">Subjects</button>
+            <span class="crumb-sep" aria-hidden="true">/</span>
+            <span class="crumb-current" id="crumbTitle">Subject</span>
+          </nav>
+        </div>
+
+        <header class="subject-hero">
+          <div class="hero-icon" id="heroIcon" aria-hidden="true"></div>
+          <div class="hero-text">
+            <p class="hero-kicker">Subject Gallery</p>
+            <h2 id="galleryTitle">Subject</h2>
+            <p id="galleryIntro"></p>
+          </div>
+          <div class="hero-side">
+            <span class="item-count" id="itemCount">No items yet</span>
+          </div>
+        </header>
+
+        <div class="gallery-grid hidden" id="galleryGrid"></div>
+
+        <div class="gallery-empty" id="galleryEmpty">
+          <div class="ge-icon" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5" width="18" height="14" rx="3"></rect>
+              <path d="M3 15l4.2-3.8a2 2 0 0 1 2.7-.1L13.5 14l1.6-1.4a2 2 0 0 1 2.7.1L21 15.5"></path>
+              <circle cx="9" cy="9.2" r="1.3"></circle>
+            </svg>
+          </div>
+          <h3>No portfolio items yet</h3>
+          <p>This gallery is ready for student work. Add entries to this subject's collection to fill it.</p>
+        </div>
+      </section>
+
+      <!-- ============ SEARCH VIEW (full width) ============ -->
+      <section class="view search-page" id="searchView" aria-label="Search results">
+        <div class="gallery-nav">
+          <button type="button" class="btn btn-secondary btn-sm" id="searchBackBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 6l-6 6 6 6"></path>
+            </svg>
+            Back
+          </button>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <span class="crumb-current" id="searchSummary">Matching subjects and portfolio items.</span>
+          </nav>
+        </div>
+
+        <div class="search-sections">
+          <div class="search-section hidden" id="searchSubjectsSection">
+            <h3>Subjects</h3>
+            <ul class="result-list result-grid" id="searchSubjectsList"></ul>
+          </div>
+          <div class="search-section hidden" id="searchItemsSection">
+            <h3>Portfolio Items</h3>
+            <ul class="result-list result-grid" id="searchItemsList"></ul>
+          </div>
+          <div class="search-empty hidden" id="searchEmpty">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-3.4-3.4"></path>
+            </svg>
+            <p>No matches found. Try a different keyword — for example <strong>English</strong>, <strong>Science</strong>, or <strong>project</strong>.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ GALLERY POPUP SLIDESHOW ============ -->
+<!-- Borderless, image-only viewer: active image centered with the previous
+     image peeking on the left and the next image peeking on the right.
+     Only three persistent controls: previous, next, close. -->
+<div class="gp-overlay hidden" id="galleryPopup" role="dialog" aria-modal="true" aria-label="Gallery image viewer">
+  <div class="gp-backdrop" data-close></div>
+  <div class="gp-popup" id="gpPopup">
+    <button type="button" class="gp-close" id="gpClose" aria-label="Close gallery viewer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"></path>
+      </svg>
+    </button>
+
+    <div class="gp-viewport" id="gpViewport">
+      <div class="gp-track" id="gpTrack"></div>
+    </div>
+
+    <button type="button" class="gp-nav gp-prev" id="gpPrev" aria-label="Previous image">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+    </button>
+    <button type="button" class="gp-nav gp-next" id="gpNext" aria-label="Next image">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+    </button>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Problem Set 04">
+  <defs>
+    <linearGradient id="g10bg" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#17375e"/>
+      <stop offset="0.42" stop-color="#2f86c7"/>
+      <stop offset="0.82" stop-color="#2f86c7"/>
+      <stop offset="1" stop-color="#a8d8f4"/>
+    </linearGradient>
+    <linearGradient id="g10sh" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#17375e" stop-opacity="0.35"/>
+    </linearGradient>
+    <radialGradient id="g10v" cx="0.5" cy="0.45" r="0.78">
+      <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.34"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g10bg)"/>
+  <g>
+    <ellipse cx="216.0" cy="176.0" rx="367.2" ry="195.8" fill="#a8d8f4" fill-opacity="0.16"/>
+    <ellipse cx="984.0" cy="128.0" rx="357.1" ry="190.5" fill="#a8d8f4" fill-opacity="0.16"/>
+    <ellipse cx="912.0" cy="624.0" rx="595.7" ry="317.7" fill="#a8d8f4" fill-opacity="0.16"/>
+    <ellipse cx="288.0" cy="656.0" rx="211.2" ry="112.6" fill="#a8d8f4" fill-opacity="0.16"/>
+  </g>
+  <g>
+    <path d="M 132 630.4 L 288 451.2 L 444 630.4 Z" fill="#a8d8f4" fill-opacity="0.34"/>
+    <path d="M 459.6 630.4 L 615.6 310.4 L 771.6 630.4 Z" fill="#a8d8f4" fill-opacity="0.5"/>
+    <path d="M 787.2 630.4 L 943.2 169.59999999999997 L 1099.2 630.4 Z" fill="#a8d8f4" fill-opacity="0.66"/>
+  </g>
+  <rect width="1200" height="800" fill="url(#g10sh)"/>
+  <rect width="1200" height="800" fill="url(#g10v)"/>
+</svg>

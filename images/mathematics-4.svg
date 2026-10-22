@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Calculus Notes">
+  <defs>
+    <linearGradient id="g13bg" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#17375e"/>
+      <stop offset="0.42" stop-color="#2f86c7"/>
+      <stop offset="0.82" stop-color="#2f86c7"/>
+      <stop offset="1" stop-color="#2f86c7"/>
+    </linearGradient>
+    <linearGradient id="g13sh" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#17375e" stop-opacity="0.35"/>
+    </linearGradient>
+    <radialGradient id="g13v" cx="0.5" cy="0.45" r="0.78">
+      <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.34"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g13bg)"/>
+  <g>
+    <ellipse cx="216.0" cy="176.0" rx="288.0" ry="153.6" fill="#2f86c7" fill-opacity="0.16"/>
+    <ellipse cx="984.0" cy="128.0" rx="293.8" ry="156.7" fill="#2f86c7" fill-opacity="0.16"/>
+    <ellipse cx="912.0" cy="624.0" rx="505.9" ry="269.8" fill="#2f86c7" fill-opacity="0.16"/>
+    <ellipse cx="288.0" cy="656.0" rx="385.4" ry="205.6" fill="#2f86c7" fill-opacity="0.16"/>
+  </g>
+  <g>
+    <circle cx="312" cy="256" r="12.8" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="312" cy="352" r="17.28" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="312" cy="448" r="21.76" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="312" cy="544" r="12.8" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="427.2" cy="256" r="17.28" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="427.2" cy="352" r="21.76" fill="#2f86c7" fill-opacity="0.44"/>
+    <circle cx="427.2" cy="448" r="12.8" fill="#2f86c7" fill-opacity="0.5800000000000001"/>
+    <circle cx="427.2" cy="544" r="17.28" fill="#2f86c7" fill-opacity="0.72"/>
+    <circle cx="542.4" cy="256" r="21.76" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="542.4" cy="352" r="12.8" fill="#2f86c7" fill-opacity="0.5800000000000001"/>
+    <circle cx="542.4" cy="448" r="17.28" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="542.4" cy="544" r="21.76" fill="#2f86c7" fill-opacity="0.5800000000000001"/>
+    <circle cx="657.6" cy="256" r="12.8" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="657.6" cy="352" r="17.28" fill="#2f86c7" fill-opacity="0.72"/>
+    <circle cx="657.6" cy="448" r="21.76" fill="#2f86c7" fill-opacity="0.5800000000000001"/>
+    <circle cx="657.6" cy="544" r="12.8" fill="#2f86c7" fill-opacity="0.44"/>
+    <circle cx="772.8" cy="256" r="17.28" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="772.8" cy="352" r="21.76" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="772.8" cy="448" r="12.8" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="772.8" cy="544" r="17.28" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="888" cy="256" r="21.76" fill="#2f86c7" fill-opacity="0.3"/>
+    <circle cx="888" cy="352" r="12.8" fill="#2f86c7" fill-opacity="0.44"/>
+    <circle cx="888" cy="448" r="17.28" fill="#2f86c7" fill-opacity="0.5800000000000001"/>
+    <circle cx="888" cy="544" r="21.76" fill="#2f86c7" fill-opacity="0.72"/>
+  </g>
+  <rect width="1200" height="800" fill="url(#g13sh)"/>
+  <rect width="1200" height="800" fill="url(#g13v)"/>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Still Life">
+  <defs>
+    <linearGradient id="g71bg" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#7a3b12"/>
+      <stop offset="0.42" stop-color="#e07b2a"/>
+      <stop offset="0.82" stop-color="#e07b2a"/>
+      <stop offset="1" stop-color="#e07b2a"/>
+    </linearGradient>
+    <linearGradient id="g71sh" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#7a3b12" stop-opacity="0.35"/>
+    </linearGradient>
+    <radialGradient id="g71v" cx="0.5" cy="0.45" r="0.78">
+      <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.34"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g71bg)"/>
+  <g>
+    <ellipse cx="216.0" cy="176.0" rx="288.0" ry="153.6" fill="#e07b2a" fill-opacity="0.16"/>
+    <ellipse cx="984.0" cy="128.0" rx="293.8" ry="156.7" fill="#e07b2a" fill-opacity="0.16"/>
+    <ellipse cx="912.0" cy="624.0" rx="505.9" ry="269.8" fill="#e07b2a" fill-opacity="0.16"/>
+    <ellipse cx="288.0" cy="656.0" rx="385.4" ry="205.6" fill="#e07b2a" fill-opacity="0.16"/>
+  </g>
+  <g>
+    <circle cx="472" cy="400" r="64" fill="none" stroke="#e07b2a" stroke-opacity="0.4" stroke-width="7.68"/>
+    <circle cx="543.6800000000001" cy="475.3958002387875" r="104.96000000000001" fill="none" stroke="#e07b2a" stroke-opacity="0.4" stroke-width="7.68"/>
+    <circle cx="615.36" cy="481.4730494435811" r="145.92000000000002" fill="none" stroke="#e07b2a" stroke-opacity="0.4" stroke-width="7.68"/>
+    <circle cx="687.04" cy="412.6443527221641" r="186.88" fill="none" stroke="#e07b2a" stroke-opacity="0.4" stroke-width="7.68"/>
+    <circle cx="758.72" cy="332.19049642040966" r="227.84" fill="none" stroke="#e07b2a" stroke-opacity="0.4" stroke-width="7.68"/>
+    <circle cx="830.4000000000001" cy="314.0803849901828" r="268.8" fill="none" stroke="#e07b2a" stroke-opacity="0.4" stroke-width="7.68"/>
+  </g>
+  <rect width="1200" height="800" fill="url(#g71sh)"/>
+  <rect width="1200" height="800" fill="url(#g71v)"/>
+</svg>

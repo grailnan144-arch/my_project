@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" role="img" aria-label="Fitness Record">
+  <defs>
+    <linearGradient id="g72bg" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#7a3b12"/>
+      <stop offset="0.42" stop-color="#e07b2a"/>
+      <stop offset="0.82" stop-color="#e07b2a"/>
+      <stop offset="1" stop-color="#f2994a"/>
+    </linearGradient>
+    <linearGradient id="g72sh" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#7a3b12" stop-opacity="0.35"/>
+    </linearGradient>
+    <radialGradient id="g72v" cx="0.5" cy="0.45" r="0.78">
+      <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.34"/>
+    </radialGradient>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#g72bg)"/>
+  <g>
+    <ellipse cx="180.0" cy="220.0" rx="306.0" ry="244.8" fill="#f2994a" fill-opacity="0.16"/>
+    <ellipse cx="820.0" cy="160.0" rx="297.6" ry="238.1" fill="#f2994a" fill-opacity="0.16"/>
+    <ellipse cx="760.0" cy="780.0" rx="496.4" ry="397.1" fill="#f2994a" fill-opacity="0.16"/>
+    <ellipse cx="240.0" cy="820.0" rx="176.0" ry="140.8" fill="#f2994a" fill-opacity="0.16"/>
+  </g>
+  <g>
+    <rect x="220" y="612" width="75" height="160" rx="16.5" fill="#f2994a" fill-opacity="0.28"/>
+    <rect x="313.75" y="449.0909090909091" width="75" height="322.9090909090909" rx="16.5" fill="#f2994a" fill-opacity="0.44000000000000006"/>
+    <rect x="407.5" y="286.18181818181824" width="75" height="485.81818181818176" rx="16.5" fill="#f2994a" fill-opacity="0.6000000000000001"/>
+    <rect x="501.25" y="571.2727272727273" width="75" height="200.7272727272727" rx="16.5" fill="#f2994a" fill-opacity="0.28"/>
+    <rect x="595" y="408.3636363636364" width="75" height="363.6363636363636" rx="16.5" fill="#f2994a" fill-opacity="0.44000000000000006"/>
+    <rect x="688.75" y="245.4545454545455" width="75" height="526.5454545454545" rx="16.5" fill="#f2994a" fill-opacity="0.6000000000000001"/>
+    <rect x="782.5" y="530.5454545454545" width="75" height="241.45454545454544" rx="16.5" fill="#f2994a" fill-opacity="0.28"/>
+  </g>
+  <rect width="1000" height="1000" fill="url(#g72sh)"/>
+  <rect width="1000" height="1000" fill="url(#g72v)"/>
+</svg>
