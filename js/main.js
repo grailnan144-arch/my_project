@@ -1120,13 +1120,6 @@
     var s = Math.sin(a), c = Math.cos(a);
     return [c * rx, s * ry * Math.sin(tilt), s * ry * Math.cos(tilt)];
   }
-  /* a ring whose depth is shifted, so the plane dives behind the
-     picture exactly on the left side and pops out there again */
-  function pathSwoop(t, tilt, rx, ry, depth, zc) {
-    var a = t * Math.PI * 2;
-    var s = Math.sin(a), c = Math.cos(a);
-    return [c * rx, s * ry * Math.sin(tilt), zc - depth * c];
-  }
 
   /* ---------- camera (straight on, small perspective) ---------- */
   function planeCamSpace(pt, cam) {
@@ -1167,7 +1160,7 @@
   }
 
   /* ---------- the airplane ---------- */
-  function drawPlaneMesh(ctx, cam, mesh, pos, basis, alpha, scale, occlude, pic) {
+  function drawPlaneMesh(ctx, cam, mesh, pos, basis, alpha, scale) {
     var S = scale;
     var world = [];
     for (var i = 0; i < mesh.V.length; i++) {
@@ -1207,30 +1200,7 @@
     for (var d = 0; d < faces.length; d++) {
       var fc = faces[d];
 
-      /* the picture hides whatever is behind it */
-      var poly = null;
-      if (occlude && pic) {
-        var over = false;
-        for (var m = 0; m < 3; m++) {
-          var pm = planeProject(world[fc.idx[m]], cam);
-          if (pm.x >= pic.l && pm.x <= pic.r && pm.y >= pic.t && pm.y <= pic.b) { over = true; break; }
-        }
-        if (over) {
-          poly = [];
-          for (var e = 0; e < 3; e++) {
-            var p0 = camV[fc.idx[e]];
-            var p1 = camV[fc.idx[(e + 1) % 3]];
-            var in0 = p0.z <= 0, in1 = p1.z <= 0;
-            if (in0) poly.push(p0);
-            if (in0 !== in1) {
-              var t = p0.z / (p0.z - p1.z);
-              poly.push({ x: p0.x + (p1.x - p0.x) * t, y: p0.y + (p1.y - p0.y) * t, z: 0 });
-            }
-          }
-          if (poly.length < 3) continue;             /* fully behind */
-        }
-      }
-      if (!poly) poly = [camV[fc.idx[0]], camV[fc.idx[1]], camV[fc.idx[2]]];
+      var poly = [camV[fc.idx[0]], camV[fc.idx[1]], camV[fc.idx[2]]];
 
       ctx.beginPath();
       for (var q = 0; q < poly.length; q++) {
@@ -1253,26 +1223,11 @@
   }
 
   /* ---------- the trail behind the plane ---------- */
-  function drawTrail(ctx, cam, trail, depthFade, occlude, pic) {
+  function drawTrail(ctx, cam, trail, depthFade) {
     if (trail.length < 2) return;
-
-    function overPicture(pt) {
-      if (!occlude || !pic) return false;
-      var p = planeProject(pt, cam);
-      return p.x >= pic.l && p.x <= pic.r && p.y >= pic.t && p.y <= pic.b;
-    }
 
     for (var i = 1; i < trail.length; i++) {
       var a = trail[i - 1], b = trail[i];
-      if (occlude && pic) {
-        var hidden = a[2] > 0 && b[2] > 0 && overPicture(a);
-        if (hidden) continue;                        /* behind the picture */
-        if ((a[2] > 0 || b[2] > 0) && (overPicture(a) || overPicture(b))) {
-          var t = a[2] / (a[2] - b[2]);              /* cross the picture plane */
-          var cut = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, 0];
-          if (a[2] > 0) a = cut; else b = cut;
-        }
-      }
       var pa = planeProject(a, cam);
       var pb = planeProject(b, cam);
       var f = i / trail.length;
@@ -1285,7 +1240,6 @@
       ctx.stroke();
     }
     for (var j = 0; j < trail.length; j++) {
-      if (occlude && pic && trail[j][2] > 0 && overPicture(trail[j])) continue;
       var g = (j + 1) / trail.length;
       var p = planeProject(trail[j], cam);
       var fade = depthFade ? depthFade(trail[j][2]) : 1;
@@ -1337,33 +1291,7 @@
 
     var cfg = st.cfg;
 
-    if (cfg.picture) {
-      /* the plane loops around the top of the picture and dives
-         behind its left edge */
-      var stage = document.getElementById(cfg.picture);
-      if (stage) {
-        st.pic.l = stage.offsetLeft;
-        st.pic.t = stage.offsetTop;
-        st.pic.r = stage.offsetLeft + stage.offsetWidth;
-        st.pic.b = stage.offsetTop + stage.offsetHeight;
-      }
-      var picW = Math.max(1, st.pic.r - st.pic.l);
-      st.ry = Math.max(16, h * 0.07);
-      st.scale = Math.max(26, Math.min(46, h * 0.13));
-      st.depth = Math.max(12, h * 0.05);
-      st.zc = -0.78 * st.depth;
-      st.focal = Math.max(280, st.ry * 7);
 
-      /* the perspective magnifies the near side of the ring, so the
-         whole flight is measured with it: the plane must never
-         leave the picture, not even for a frame */
-      var t0 = cfg.tilt || 0.5;
-      var sMax = st.focal / (st.focal + (st.zc - st.depth));
-      var sMin = st.focal / (st.focal + (st.zc + st.depth));
-      var half = st.scale * 0.8;                 /* the plane's own size */
-      st.rx = Math.max(40, Math.min(picW / 2 - 6, (w * 0.5 - 6 - half) / sMax - half));
-      st.cy = 4 + sMin * (st.ry * Math.sin(t0) + half);
-    } else {
       st.ry = Math.max(14, h * 0.26);
       st.cy = h * 0.5;
       st.scale = Math.max(18, Math.min(36, h * 0.22));
@@ -1373,7 +1301,6 @@
       var near2 = st.focal / (st.focal + (st.zc - st.depth));
       var room2 = w * 0.5 - st.scale * 0.8;
       st.rx = Math.max(30, Math.min(w * 0.38, room2 / near2));
-    }
 
     var dpr = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = Math.round(w * dpr);
@@ -1404,7 +1331,7 @@
     /* the ring slowly rocks, which makes the depth easier to read */
     var tilt = (st.cfg.tilt || 0.5) + Math.sin(st.time * 0.45) * 0.10;
 
-    var path = st.cfg.swoop ? pathSwoop : pathRing;
+    var path = pathRing;
     var pos = path(st.phase, tilt, st.rx, st.ry, st.depth, st.zc);
     var ahead = path(st.phase + 0.004, tilt, st.rx, st.ry, st.depth, st.zc);
     var f = vNorm(vSub(ahead, pos));
@@ -1428,16 +1355,14 @@
     st.trail.push(pos);
     if (st.trail.length > st.cfg.trailMax) st.trail.shift();
 
-    var occlude = !!st.cfg.picture;
     var zSpan = Math.max(1, st.depth);
     function depthFade(z) {
-      if (occlude && z > 0) return 0;          /* behind the picture */
       var far = Math.max(0, -z) / (2 * zSpan);
       return 1 - 0.28 * far;
     }
 
-    drawTrail(ctx, cam, st.trail, depthFade, occlude, st.pic);
-    drawPlaneMesh(ctx, cam, st.mesh, pos, basis, depthFade(pos[2]), st.scale, occlude, st.pic);
+    drawTrail(ctx, cam, st.trail, depthFade);
+    drawPlaneMesh(ctx, cam, st.mesh, pos, basis, depthFade(pos[2]), st.scale);
   }
 
   function sceneLoop(st, now) {
@@ -1478,30 +1403,13 @@
       /* one still frame of the very same scene */
       st.phase = st.cfg.phase || 0.18;
       for (var i = 0; i < st.cfg.trailMax; i++) {
-        var path = st.cfg.swoop ? pathSwoop : pathRing;
+    var path = pathRing;
         st.trail.push(path(st.phase - 0.006 * i, st.cfg.tilt || 0.5, st.rx, st.ry, st.depth, st.zc));
       }
       sceneFrame(st, 0);
       return;
     }
     sceneResume(st);
-  }
-
-  /* ============================================================
-     THE TWO SCENES
-     ============================================================ */
-  var previewScene = null;
-  var loaderScene = null;
-
-  function startPreviewScene() {
-    previewScene = createPlaneScene(document.getElementById('previewPlane'), {
-      picture: 'displayStage',     /* the picture hides what is behind it */
-      swoop: true,                /* dives behind the left edge          */
-      tilt: 0.5,
-      speed: 0.17,
-      trailMax: 34
-    });
-    sceneStart(previewScene);
   }
 
   /* ============================================================
@@ -1518,6 +1426,7 @@
 
   var loaderBusy = false;
   var loaderQueue = [];
+  var loaderScene = null;
 
   function startLoaderScene() {
     loaderScene = createPlaneScene(document.getElementById('loaderPlane'), {
@@ -1586,6 +1495,5 @@
   renderSubjects();
   showView('home');
   clearDisplay();
-  startPreviewScene();
   showLoader(LOADER_DELAY, null);
 })();

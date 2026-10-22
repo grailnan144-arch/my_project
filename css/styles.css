@@ -399,20 +399,48 @@ body {
   background: linear-gradient(90deg, var(--sky), var(--blue));
 }
 
-/* ---------- the 3D airplane flying over the picture ---------- */
+/* ---------- the small airplane flying across the hero picture ---------- */
 .display-frame {
   position: relative;
   flex: 1;
   min-height: 0;
   display: flex;
+  overflow: hidden;         /* keeps the airplane inside the picture */
 }
-.preview-plane {
+
+/* the track spans the whole picture, the plane rides on it */
+.hero-flight {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  left: 0;
+  right: 0;
+  top: 7%;
+  height: 0;
   pointer-events: none;
   z-index: 2;
+  animation: heroFly 15s linear infinite;
+  will-change: transform;
+}
+.hero-plane {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10.5%;
+  min-width: 48px;
+  max-width: 118px;
+  line-height: 0;
+  filter: drop-shadow(0 2px 3px rgba(23, 55, 94, 0.22));
+  animation: heroBob 4.2s ease-in-out infinite;
+  will-change: transform;
+}
+.hero-plane svg { width: 100%; height: auto; display: block; }
+
+@keyframes heroFly {
+  from { transform: translateX(-14%); }
+  to   { transform: translateX(100%); }
+}
+@keyframes heroBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-22%); }
 }
 
 .display-content {
@@ -1283,4 +1311,13 @@ body {
   .subject-btn,
   .featured-card,
   .btn { transform: none !important; }
+
+  /* the small airplane stops flying and simply rests in the sky */
+  .hero-flight,
+  .hero-plane { animation: none !important; }
+  .hero-flight { transform: none !important; }
+  .hero-plane {
+    left: 50%;
+    transform: translateX(-50%) !important;
+  }
 }
