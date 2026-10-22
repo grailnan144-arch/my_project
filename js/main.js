@@ -408,9 +408,9 @@
 
   function clearDisplay() {
     activeItemId = null;
-    /* back to the default preview picture */
+    /* back to the default preview picture, filling the whole area */
     el.displayStage.innerHTML =
-      '<img src="' + esc(DEFAULT_PREVIEW.image) + '" alt="' + esc(DEFAULT_PREVIEW.alt) + '">';
+      '<img class="is-full" src="' + esc(DEFAULT_PREVIEW.image) + '" alt="' + esc(DEFAULT_PREVIEW.alt) + '">';
     el.displayTitle.textContent = DEFAULT_PREVIEW.title;
     el.displaySub.textContent = DEFAULT_PREVIEW.sub;
     el.clearDisplayBtn.classList.add('hidden');
@@ -1272,7 +1272,7 @@
     var cam = {
       yaw: 0,
       pitch: 0,
-      focal: PREVIEW_CFG.focal,
+      focal: st.focal,
       cx: w * 0.5,
       cy: h * 0.5,
       unit: 1
@@ -1332,11 +1332,13 @@
     st.h = h;
     if (!w || !h) return;
 
-    /* the flight ring follows the size of the sky strip */
-    var margin = 26;
-    st.rx = Math.max(30, w / 2 - margin);
-    st.ry = Math.max(16, h / 2 - margin * 0.55);
-    st.scale = Math.max(11, Math.min(17, h * 0.12));
+    /* the flight ring follows the size of the picture area */
+    var margin = 34;
+    st.rx = Math.max(40, w / 2 - margin);
+    st.ry = Math.max(20, h / 2 - margin * 0.6);
+    st.scale = Math.max(18, Math.min(30, h * 0.085));
+    /* a longer lens keeps the near/far size difference believable */
+    st.focal = Math.max(210, st.ry * 3.4);
 
     var dpr = Math.min(2, window.devicePixelRatio || 1);
     previewCanvas.width = Math.round(w * dpr);
@@ -1357,6 +1359,7 @@
       rx: 0,
       ry: 0,
       scale: 14,
+      focal: 320,
       last: 0,
       raf: 0,
       trail: [],

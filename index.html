@@ -72,14 +72,13 @@
 
           <!-- left: preview display -->
           <section class="display-panel" id="displayPanel" aria-label="Portfolio preview display">
-            <!-- top: the 3D airplane flying over the sky -->
-            <div class="display-sky" aria-hidden="true">
-              <canvas id="previewPlane" class="preview-plane"></canvas>
-            </div>
-
             <div class="display-content" id="displayContent">
-              <div class="display-stage" id="displayStage">
-                <img src="images/plane.jpg" alt="Preview: an airplane in the sky">
+              <div class="display-frame">
+                <div class="display-stage" id="displayStage">
+                  <img class="is-full" src="images/plane.jpg" alt="Preview: an airplane in the sky">
+                </div>
+                <!-- the 3D airplane flying over the picture -->
+                <canvas id="previewPlane" class="preview-plane"></canvas>
               </div>
               <div class="display-caption">
                 <div class="cap-text">
