@@ -1348,21 +1348,32 @@
         st.pic.b = stage.offsetTop + stage.offsetHeight;
       }
       var picW = Math.max(1, st.pic.r - st.pic.l);
-      st.rx = Math.max(40, picW / 2 - 10);
-      st.ry = Math.max(16, h * 0.085);
-      st.cy = st.pic.t + st.ry * 0.45;
-      st.scale = Math.max(26, Math.min(50, h * 0.16));
-      st.depth = Math.max(18, h * 0.09);
+      st.ry = Math.max(16, h * 0.07);
+      st.scale = Math.max(26, Math.min(46, h * 0.13));
+      st.depth = Math.max(12, h * 0.05);
       st.zc = -0.78 * st.depth;
+      st.focal = Math.max(280, st.ry * 7);
+
+      /* the perspective magnifies the near side of the ring, so the
+         whole flight is measured with it: the plane must never
+         leave the picture, not even for a frame */
+      var t0 = cfg.tilt || 0.5;
+      var sMax = st.focal / (st.focal + (st.zc - st.depth));
+      var sMin = st.focal / (st.focal + (st.zc + st.depth));
+      var half = st.scale * 0.8;                 /* the plane's own size */
+      st.rx = Math.max(40, Math.min(picW / 2 - 6, (w * 0.5 - 6 - half) / sMax - half));
+      st.cy = 4 + sMin * (st.ry * Math.sin(t0) + half);
     } else {
-      st.rx = Math.max(30, w * 0.36);
       st.ry = Math.max(14, h * 0.26);
       st.cy = h * 0.5;
       st.scale = Math.max(18, Math.min(36, h * 0.22));
       st.depth = st.ry * Math.cos(cfg.tilt || 0.5);
       st.zc = 0;
+      st.focal = Math.max(260, st.ry * 6);
+      var near2 = st.focal / (st.focal + (st.zc - st.depth));
+      var room2 = w * 0.5 - st.scale * 0.8;
+      st.rx = Math.max(30, Math.min(w * 0.38, room2 / near2));
     }
-    st.focal = Math.max(210, st.ry * 3.4);
 
     var dpr = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = Math.round(w * dpr);
