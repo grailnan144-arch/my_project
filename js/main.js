@@ -1274,7 +1274,7 @@
       pitch: 0,
       focal: st.focal,
       cx: w * 0.5,
-      cy: h * 0.5,
+      cy: st.cy,
       unit: 1
     };
 
@@ -1335,8 +1335,10 @@
     /* the flight ring follows the size of the picture area */
     var margin = 34;
     st.rx = Math.max(40, w / 2 - margin);
-    st.ry = Math.max(20, h / 2 - margin * 0.6);
-    st.scale = Math.max(18, Math.min(30, h * 0.085));
+    st.ry = Math.max(20, h * 0.34);
+    /* the plane flies across the upper part of the picture */
+    st.cy = h * 0.24;
+    st.scale = Math.max(22, Math.min(34, h * 0.10));
     /* a longer lens keeps the near/far size difference believable */
     st.focal = Math.max(210, st.ry * 3.4);
 
@@ -1358,6 +1360,7 @@
       phase: 0,
       rx: 0,
       ry: 0,
+      cy: 0,
       scale: 14,
       focal: 320,
       last: 0,
