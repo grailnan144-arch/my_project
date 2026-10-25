@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Paint palette with brushes, musical notes and a ball">
+  <defs>
+    <linearGradient id="mpsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#CBE7F7"/>
+      <stop offset="1" stop-color="#8FC5E8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#mpsky)"/>
+  <ellipse cx="150" cy="105" rx="108" ry="40" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="650" cy="125" rx="112" ry="42" fill="#FFFFFF" opacity="0.62"/>
+  <path d="M40 478 Q400 442 760 478 L760 600 L40 600 Z" fill="#F7E7DA" opacity="0.9"/>
+  <g transform="translate(330 340) rotate(-8)">
+    <path d="M-140 -20 A150 150 0 1 1 40 128 q-40 -14 -34 -50 q6 -34 44 -34 h46 a120 120 0 0 0 -96 -164 z" fill="#FFF8F2" stroke="#704631" stroke-width="8"/>
+    <circle cx="-74" cy="-64" r="24" fill="#E0574B"/>
+    <circle cx="-16" cy="-92" r="24" fill="#F2C14E"/>
+    <circle cx="46" cy="-70" r="24" fill="#2F86C7"/>
+    <circle cx="-104" cy="10" r="24" fill="#3FA58C"/>
+    <circle cx="-38" cy="52" r="24" fill="#A96F54"/>
+    <circle cx="-8" cy="98" r="17" fill="#FFFFFF" stroke="#704631" stroke-width="5"/>
+  </g>
+  <g transform="translate(600 300) rotate(10)">
+    <rect x="-10" y="-40" width="20" height="180" rx="10" fill="#A96F54"/>
+    <path d="M0 -40 q-34 -40 -10 -86 q30 34 10 86" fill="#F6D3C1" stroke="#A96F54" stroke-width="5"/>
+    <path d="M0 -40 q34 -40 10 -86 q-30 34 -10 86" fill="#E39B72" stroke="#A96F54" stroke-width="5"/>
+  </g>
+  <g transform="translate(430 470)" fill="#244E75">
+    <path d="M-10 0 L60 -14 L60 8 L-10 22 Z"/>
+    <ellipse cx="-24" cy="26" rx="26" ry="20"/>
+    <ellipse cx="44" cy="14" rx="26" ry="20"/>
+    <path d="M56 -14 V-92 L112 -76 V-110 L56 -126 V-40 L112 -56 V-90 Z" transform="translate(0 -6)"/>
+  </g>
+  <g transform="translate(180 468)">
+    <circle cx="0" cy="0" r="42" fill="#FFFFFF" stroke="#244E75" stroke-width="6"/>
+    <path d="M-42 0 h84 M0 -42 v84 M-30 -30 q30 30 60 60 M30 -30 q-30 30 -60 60" stroke="#244E75" stroke-width="5" fill="none"/>
+    <path d="M-42 0 A42 42 0 0 1 0 -42 L0 0 Z" fill="#E0574B" opacity="0.85"/>
+  </g>
+  <path d="M120 235 q70 -30 140 4" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round" opacity="0.9"/>
+  <path d="M256 241 l16 -8 -5 17 z" fill="#A96F54"/>
+</svg>

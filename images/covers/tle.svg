@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Cooking pot with a whisk, rolling pin and utensils">
+  <defs>
+    <linearGradient id="tlesky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#CBE7F7"/>
+      <stop offset="1" stop-color="#8FC5E8"/>
+    </linearGradient>
+    <linearGradient id="tlepot" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F6D3C1"/>
+      <stop offset="1" stop-color="#E39B72"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#tlesky)"/>
+  <ellipse cx="150" cy="105" rx="108" ry="40" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="655" cy="125" rx="110" ry="40" fill="#FFFFFF" opacity="0.62"/>
+  <path d="M40 468 Q400 432 760 468 L760 600 L40 600 Z" fill="#F7E7DA" opacity="0.92"/>
+  <path d="M40 468 Q400 432 760 468" fill="none" stroke="#A96F54" stroke-opacity="0.3" stroke-width="4"/>
+  <g transform="translate(370 340)">
+    <ellipse cx="0" cy="150" rx="180" ry="24" fill="#244E75" opacity="0.16"/>
+    <path d="M-150 -10 h300 l-24 148 a46 46 0 0 1 -46 40 h-160 a46 46 0 0 1 -46 -40 z" fill="url(#tlepot)" stroke="#A96F54" stroke-width="7"/>
+    <ellipse cx="0" cy="-10" rx="150" ry="34" fill="#FFF8F2" stroke="#A96F54" stroke-width="7"/>
+    <ellipse cx="0" cy="-10" rx="124" ry="24" fill="#F2C14E"/>
+    <rect x="-196" y="-24" width="52" height="34" rx="14" fill="#704631"/>
+    <rect x="144" y="-24" width="52" height="34" rx="14" fill="#704631"/>
+    <path d="M-70 -50 q-14 -44 22 -66" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" opacity="0.85"/>
+    <path d="M6 -56 q-16 -48 20 -74" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" opacity="0.75"/>
+    <path d="M76 -50 q-12 -40 20 -60" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" opacity="0.6"/>
+    <rect x="-46" y="-96" width="92" height="24" rx="12" fill="#E39B72" stroke="#A96F54" stroke-width="5"/>
+    <circle cx="0" cy="-96" r="16" fill="#A96F54"/>
+  </g>
+  <g transform="translate(628 430) rotate(16)">
+    <rect x="-14" y="-110" width="28" height="150" rx="12" fill="#A96F54"/>
+    <path d="M0 -110 q-26 -30 -6 -62 q22 24 6 62" fill="#2F86C7"/>
+    <path d="M0 -110 q26 -30 6 -62 q-22 24 -6 62" fill="#2F86C7"/>
+    <path d="M0 -110 v-52" stroke="#244E75" stroke-width="6"/>
+  </g>
+  <g transform="translate(160 420) rotate(-14)">
+    <rect x="-70" y="-14" width="140" height="28" rx="14" fill="#E39B72" stroke="#A96F54" stroke-width="5"/>
+    <rect x="-96" y="-6" width="26" height="12" rx="6" fill="#704631"/>
+    <rect x="70" y="-6" width="26" height="12" rx="6" fill="#704631"/>
+  </g>
+  <path d="M120 230 q70 -30 140 4" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round" opacity="0.9"/>
+  <path d="M256 236 l16 -8 -5 17 z" fill="#A96F54"/>
+</svg>

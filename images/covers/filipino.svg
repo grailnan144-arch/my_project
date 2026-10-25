@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Filipino books with a sampaguita flower and a rising sun">
+  <defs>
+    <linearGradient id="fisky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#CBE7F7"/>
+      <stop offset="1" stop-color="#8FC5E8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#fisky)"/>
+  <ellipse cx="150" cy="105" rx="108" ry="40" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="655" cy="125" rx="112" ry="42" fill="#FFFFFF" opacity="0.62"/>
+  <g transform="translate(400 175)">
+    <circle cx="0" cy="0" r="66" fill="#F2C14E" opacity="0.95"/>
+    <g stroke="#E39B72" stroke-width="10" stroke-linecap="round">
+      <path d="M-110 0 h-34"/><path d="M110 0 h34"/>
+      <path d="M-78 -78 l-24 -24"/><path d="M78 -78 l24 -24"/>
+      <path d="M-78 78 l-24 24"/><path d="M78 78 l24 24"/>
+      <path d="M0 -110 v-34"/><path d="M0 110 v34"/>
+    </g>
+  </g>
+  <path d="M40 470 Q400 435 760 470 L760 600 L40 600 Z" fill="#F7E7DA" opacity="0.9"/>
+  <path d="M40 470 Q400 435 760 470" fill="none" stroke="#A96F54" stroke-opacity="0.25" stroke-width="3"/>
+  <g transform="translate(330 350)">
+    <rect x="-150" y="60" width="300" height="46" rx="8" fill="#244E75"/>
+    <rect x="-140" y="14" width="284" height="46" rx="8" fill="#E39B72"/>
+    <rect x="-130" y="-32" width="266" height="46" rx="8" fill="#F6D3C1"/>
+    <rect x="-130" y="-32" width="60" height="46" rx="8" fill="#A96F54"/>
+    <rect x="-140" y="14" width="56" height="46" rx="8" fill="#704631"/>
+    <rect x="-150" y="60" width="64" height="46" rx="8" fill="#5E9CC8"/>
+    <text x="14" y="-2" font-family="Georgia, serif" font-size="30" font-weight="700" fill="#244E75">Wika</text>
+    <text x="6" y="46" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#FFF8F2">Panitikan</text>
+    <text x="0" y="92" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#FFF8F2">Tula</text>
+  </g>
+  <g transform="translate(600 400)">
+    <path d="M0 96 C0 40 0 10 0 -10" stroke="#3FA58C" stroke-width="7" fill="none"/>
+    <g fill="#FFFFFF" stroke="#E8E2D2" stroke-width="2">
+      <ellipse cx="0" cy="-34" rx="15" ry="26"/>
+      <ellipse cx="34" cy="-6" rx="26" ry="15"/>
+      <ellipse cx="-34" cy="-6" rx="26" ry="15"/>
+      <ellipse cx="21" cy="-40" rx="17" ry="24" transform="rotate(45 21 -40)"/>
+      <ellipse cx="-21" cy="-40" rx="17" ry="24" transform="rotate(-45 -21 -40)"/>
+    </g>
+    <circle cx="0" cy="-14" r="13" fill="#F2C14E"/>
+    <path d="M0 40 q-34 -8 -44 -34 q34 -2 44 20" fill="#3FA58C"/>
+  </g>
+  <path d="M110 250 q70 -30 140 4" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round" opacity="0.9"/>
+  <path d="M246 256 l16 -8 -5 17 z" fill="#A96F54"/>
+</svg>

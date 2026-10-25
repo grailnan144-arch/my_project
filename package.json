@@ -1,0 +1,12 @@
+{
+  "name": "jarreds-digital-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static portfolio site with a small browser test suite.",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\""
+  },
+  "devDependencies": {
+    "playwright-core": "^1.56.0"
+  }
+}

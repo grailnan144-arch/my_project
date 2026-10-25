@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Globe with a location pin and a rolled scroll">
+  <defs>
+    <linearGradient id="apsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#CBE7F7"/>
+      <stop offset="1" stop-color="#8FC5E8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#apsky)"/>
+  <ellipse cx="150" cy="105" rx="108" ry="40" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="650" cy="125" rx="112" ry="42" fill="#FFFFFF" opacity="0.62"/>
+  <path d="M40 475 Q400 440 760 475 L760 600 L40 600 Z" fill="#F7E7DA" opacity="0.9"/>
+  <g transform="translate(340 320)">
+    <circle r="168" fill="#8FC5E8" stroke="#244E75" stroke-width="10"/>
+    <g fill="#3FA58C">
+      <path d="M-130 -60 q40 -50 96 -34 q30 8 20 40 q-8 26 -46 30 q-50 6 -70 -36z"/>
+      <path d="M-20 -10 q46 -34 92 -10 q34 18 20 52 q-14 34 -62 34 q-56 0 -50 -76z"/>
+      <path d="M-96 76 q34 -20 62 6 q20 18 4 42 q-16 24 -52 16 q-34 -8 -14 -64z"/>
+      <path d="M70 96 q36 -6 44 24 q6 24 -22 34 q-30 10 -44 -14 q-12 -24 22 -44z"/>
+    </g>
+    <g fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="4">
+      <ellipse rx="168" ry="66"/>
+      <ellipse rx="66" ry="168"/>
+      <path d="M-168 0 h336"/>
+    </g>
+    <path d="M110 -150 l-40 66" stroke="#A96F54" stroke-width="6" stroke-dasharray="3 12" stroke-linecap="round" fill="none"/>
+    <g transform="translate(126 -170)">
+      <path d="M0 60 C-34 22 -44 4 -44 -14 A44 44 0 1 1 44 -14 C44 4 34 22 0 60 z" fill="#E0574B"/>
+      <circle cx="0" cy="-14" r="17" fill="#FFF8F2"/>
+    </g>
+  </g>
+  <g transform="translate(610 440) rotate(-8)">
+    <rect x="-90" y="-34" width="180" height="68" rx="10" fill="#FFF8F2" stroke="#A96F54" stroke-width="5"/>
+    <g stroke="#74889E" stroke-width="6" stroke-linecap="round">
+      <path d="M-64 -8 h128"/><path d="M-64 14 h96"/>
+    </g>
+    <circle cx="-90" cy="-34" r="16" fill="#E39B72"/>
+    <circle cx="90" cy="34" r="16" fill="#E39B72"/>
+  </g>
+  <path d="M120 240 q70 -30 140 4" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round" opacity="0.9"/>
+  <path d="M256 246 l16 -8 -5 17 z" fill="#A96F54"/>
+</svg>

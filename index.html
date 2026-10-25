@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Portfolio Gallery</title>
+<title>Jarred's Digital Portfolio</title>
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
 <!-- ============ LOADING SCREEN ============ -->
-<div class="loader" id="loader" role="status" aria-live="polite">
+<div class="loader hidden" id="loader" role="status" aria-live="polite">
   <div class="loader-inner">
     <canvas id="loaderPlane" class="loader-plane" width="600" height="300"></canvas>
-    <h2 class="loader-title">Student Portfolio Gallery</h2>
+    <h2 class="loader-title">Jarred's Digital Portfolio</h2>
     <p class="loader-sub">Preparing the exhibits&hellip;</p>
     <div class="loader-bar"><span id="loaderFill"></span></div>
   </div>
@@ -24,216 +24,440 @@
   <span class="blob blob-3" data-depth="10"></span>
 </div>
 
-<div class="page-shell">
-  <div class="app-window" id="appWindow">
+<!-- ============ SKY SCRAPBOOK DECOR (behind all content) ============ -->
+<div class="sky-layer" aria-hidden="true">
+  <span class="sky-cloud cloud-s1"></span>
+  <span class="sky-cloud cloud-s2"></span>
+  <span class="sky-cloud cloud-s3"></span>
+  <span class="sky-cloud cloud-s4"></span>
 
-    <div class="window-chrome" aria-hidden="true">
-      <div class="chrome-dots">
-        <span class="dot dot-red"></span>
-        <span class="dot dot-yellow"></span>
-        <span class="dot dot-green"></span>
-      </div>
-      <div class="chrome-url">student-portfolio.gallery</div>
-    </div>
+  <svg class="sky-path sky-path-1" viewBox="0 0 420 160" fill="none">
+    <path d="M8 140 C120 140 170 40 300 34" stroke="rgba(255,255,255,0.85)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 14"/>
+    <path d="M316 22a11 11 0 0 0-15-10l-38 16-40-14a7 7 0 0 0-8 4l-6 16 30 17-2 24 14 10 1 8-19 2-13 10 1 7 17-2 15-11-1-23 41-17a7 7 0 0 0 4-8z" fill="rgba(169,111,84,0.65)" transform="translate(300 24) scale(0.85)"/>
+  </svg>
 
-    <div class="app-body">
+  <svg class="sky-path sky-path-2" viewBox="0 0 460 180" fill="none">
+    <path d="M452 36 C330 36 260 140 120 146" stroke="rgba(255,255,255,0.7)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 14"/>
+    <path d="M316 22a11 11 0 0 0-15-10l-38 16-40-14a7 7 0 0 0-8 4l-6 16 30 17-2 24 14 10 1 8-19 2-13 10 1 7 17-2 15-11-1-23 41-17a7 7 0 0 0 4-8z" fill="rgba(36,78,117,0.5)" transform="translate(120 110) scale(-0.7 0.7)"/>
+  </svg>
 
-      <!-- ============ TOPBAR (always visible) ============ -->
-      <header class="topbar">
-        <div class="brand" id="brandHome" role="button" tabindex="0" title="Back to home">
-          <div class="logo-badge" id="brandLogo">
-            <span class="logo-fallback" aria-hidden="true">SPG</span>
-          </div>
-          <div class="brand-text">
-            <h1>Student Portfolio Gallery</h1>
-            <p>Showcasing student learning and creativity.</p>
-          </div>
-        </div>
-
-        <div class="topbar-actions">
-          <div class="search-box">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="7"></circle>
-              <path d="M20 20l-3.4-3.4"></path>
-            </svg>
-            <label class="sr-only" for="searchInput">Search subjects and portfolios</label>
-            <input id="searchInput" type="search" placeholder="Search subjects or portfolios…" autocomplete="off">
-            <button type="button" class="search-clear" id="searchClear" aria-label="Clear search">&times;</button>
-          </div>
-          <!-- decorative notification-style icon (no real notifications) -->
-          <span class="bell" aria-hidden="true" title="Notifications (decorative)">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 15V10a6 6 0 1 0-12 0v5l-1.6 2.2a1 1 0 0 0 .8 1.6h13.6a1 1 0 0 0 .8-1.6L18 15z"></path>
-              <path d="M10 20a2 2 0 0 0 4 0"></path>
-            </svg>
-          </span>
-          <div class="avatar" id="profileAvatar" title="Gallery profile">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
-              <circle cx="12" cy="8.5" r="3.6"></circle>
-              <path d="M5.5 19.2a6.7 6.7 0 0 1 13 0"></path>
-            </svg>
-          </div>
-        </div>
-      </header>
-
-      <!-- ============ HOME VIEW ============ -->
-      <div class="view is-active" id="homeView">
-        <div class="home-grid">
-
-          <!-- left: preview display -->
-          <section class="display-panel" id="displayPanel" aria-label="Portfolio preview display">
-            <div class="display-content" id="displayContent">
-              <div class="display-frame" id="displayFrame">
-                <div class="display-stage" id="displayStage">
-                  <img class="is-full" src="images/plane.jpg" alt="Preview: an airplane in the sky">
-                </div>
-                <!-- the 3D airplane that flies across the profile picture -->
-                <canvas id="profilePlane" class="profile-plane"></canvas>
-              </div>
-              <div class="display-caption">
-                <div class="cap-text">
-                  <h3 id="displayTitle">Your preview area is ready</h3>
-                  <p id="displaySub">Choose a subject on the right, then pick an item to preview it here.</p>
-                </div>
-                <button type="button" class="btn btn-ghost btn-sm hidden" id="clearDisplayBtn" title="Return display to empty state">
-                  Clear
-                </button>
-              </div>
-            </div>
-          </section>
-
-          <!-- right: subjects + featured -->
-          <aside class="sidebar">
-            <div class="view-head">
-              <div>
-                <h2>Explore Subjects</h2>
-                <p class="view-sub">Pick a subject to open its portfolio gallery.</p>
-              </div>
-            </div>
-            <ul class="subject-list" id="subjectList"></ul>
-
-            <section class="featured-card" id="featuredCard" aria-label="Featured portfolio">
-              <span class="featured-deco" aria-hidden="true"></span>
-              <span class="featured-deco-2" aria-hidden="true"></span>
-              <h2>Featured Portfolio</h2>
-              <p>Explore student creativity, projects, and learning achievements.</p>
-              <button type="button" class="btn btn-peach" id="exploreBtn">
-                Explore Subjects
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M5 12h13M13 6l6 6-6 6"></path>
-                </svg>
-              </button>
-            </section>
-          </aside>
-
-        </div>
-      </div>
-
-      <!-- ============ GALLERY VIEW (full width) ============ -->
-      <section class="view gallery-page" id="galleryView" aria-label="Subject gallery">
-        <div class="gallery-nav">
-          <button type="button" class="btn btn-secondary btn-sm" id="backBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M15 6l-6 6 6 6"></path>
-            </svg>
-            All Subjects
-          </button>
-          <nav class="breadcrumb" aria-label="Breadcrumb">
-            <button type="button" class="crumb-link" id="crumbHome">Subjects</button>
-            <span class="crumb-sep" aria-hidden="true">/</span>
-            <span class="crumb-current" id="crumbTitle">Subject</span>
-          </nav>
-        </div>
-
-        <header class="subject-hero">
-          <div class="hero-icon" id="heroIcon" aria-hidden="true"></div>
-          <div class="hero-text">
-            <p class="hero-kicker">Subject Gallery</p>
-            <h2 id="galleryTitle">Subject</h2>
-            <p id="galleryIntro"></p>
-          </div>
-          <div class="hero-side">
-            <span class="item-count" id="itemCount">No items yet</span>
-          </div>
-        </header>
-
-        <div class="gallery-grid hidden" id="galleryGrid"></div>
-
-        <div class="gallery-empty" id="galleryEmpty">
-          <div class="ge-icon" aria-hidden="true">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="5" width="18" height="14" rx="3"></rect>
-              <path d="M3 15l4.2-3.8a2 2 0 0 1 2.7-.1L13.5 14l1.6-1.4a2 2 0 0 1 2.7.1L21 15.5"></path>
-              <circle cx="9" cy="9.2" r="1.3"></circle>
-            </svg>
-          </div>
-          <h3>No portfolio items yet</h3>
-          <p>This gallery is ready for student work. Add entries to this subject's collection to fill it.</p>
-        </div>
-      </section>
-
-      <!-- ============ SEARCH VIEW (full width) ============ -->
-      <section class="view search-page" id="searchView" aria-label="Search results">
-        <div class="gallery-nav">
-          <button type="button" class="btn btn-secondary btn-sm" id="searchBackBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M15 6l-6 6 6 6"></path>
-            </svg>
-            Back
-          </button>
-          <nav class="breadcrumb" aria-label="Breadcrumb">
-            <span class="crumb-current" id="searchSummary">Matching subjects and portfolio items.</span>
-          </nav>
-        </div>
-
-        <div class="search-sections">
-          <div class="search-section hidden" id="searchSubjectsSection">
-            <h3>Subjects</h3>
-            <ul class="result-list result-grid" id="searchSubjectsList"></ul>
-          </div>
-          <div class="search-section hidden" id="searchItemsSection">
-            <h3>Portfolio Items</h3>
-            <ul class="result-list result-grid" id="searchItemsList"></ul>
-          </div>
-          <div class="search-empty hidden" id="searchEmpty">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="7"></circle>
-              <path d="M20 20l-3.4-3.4"></path>
-            </svg>
-            <p>No matches found. Try a different keyword — for example <strong>English</strong>, <strong>Science</strong>, or <strong>project</strong>.</p>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  </div>
+  <svg class="sky-path sky-path-3" viewBox="0 0 340 120" fill="none">
+    <path d="M6 110 C100 108 150 26 260 24" stroke="rgba(255,255,255,0.75)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="1 12"/>
+    <path d="M276 14a9 9 0 0 0-12-8l-32 13-33-11a6 6 0 0 0-7 3l-5 14 25 14-2 20 12 8 1 7-16 2-11 8 1 6 14-2 13-9-1-19 34-14a6 6 0 0 0 3-7z" fill="rgba(169,111,84,0.55)" transform="translate(258 16) scale(0.7)"/>
+  </svg>
 </div>
 
-<!-- ============ GALLERY POPUP SLIDESHOW ============ -->
-<!-- Borderless, image-only viewer: active image centered with the previous
-     image peeking on the left and the next image peeking on the right.
-     Only three persistent controls: previous, next, close. -->
-<div class="gp-overlay hidden" id="galleryPopup" role="dialog" aria-modal="true" aria-label="Gallery image viewer">
-  <div class="gp-backdrop" data-close></div>
-  <div class="gp-popup" id="gpPopup">
-    <button type="button" class="gp-close" id="gpClose" aria-label="Close gallery viewer">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
-        <path d="M6 6l12 12M18 6L6 18"></path>
+<!-- ============ TOP NAVIGATION ============ -->
+<header class="site-nav">
+  <div class="nav-inner">
+    <button type="button" class="nav-brand" id="brandHome" title="Back to home">
+      <span class="nav-logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.2 3.3a1.6 1.6 0 0 1 3.1 0l.5 3.2 6.6 3.4a1 1 0 0 1 .6 1v1.1l-6.9-1.6-.4 4.3 2.4 1.9v1.2L13.4 17l-2.5 1.6L8.4 17l-2.2.6v-1.2l2.4-1.9-.4-4.3L1.3 12V10.9a1 1 0 0 1 .6-1l6.7-3.4z"></path>
+        </svg>
+      </span>
+      <span class="nav-brand-text">
+        <strong>Jarred's Digital Portfolio</strong>
+        <em>A student travel scrapbook</em>
+      </span>
+    </button>
+
+    <nav class="nav-links" aria-label="Primary">
+      <button type="button" class="nav-link is-active" data-nav="home">Home</button>
+      <button type="button" class="nav-link" data-nav="mygallery">My Gallery</button>
+      <button type="button" class="nav-link" data-nav="subjects">Subjects</button>
+    </nav>
+
+    <div class="nav-side">
+      <button type="button" class="nav-icon-btn" id="searchToggle" aria-label="Search subjects and portfolios" aria-expanded="false">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="M20 20l-3.4-3.4"></path>
+        </svg>
+      </button>
+      <span class="nav-plane-deco" aria-hidden="true">
+        <svg viewBox="0 0 120 46" fill="none">
+          <path class="nav-plane-trail" d="M2 40C22 40 34 28 52 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 7"></path>
+          <path d="M112 10.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z" fill="currentColor"></path>
+        </svg>
+      </span>
+    </div>
+  </div>
+
+  <div class="nav-search" id="navSearch" hidden>
+    <div class="search-box">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="M20 20l-3.4-3.4"></path>
       </svg>
-    </button>
+      <label class="sr-only" for="searchInput">Search subjects and portfolios</label>
+      <input id="searchInput" type="search" placeholder="Search subjects or portfolios…" autocomplete="off">
+      <button type="button" class="search-clear" id="searchClear" aria-label="Clear search">&times;</button>
+    </div>
+  </div>
+</header>
 
-    <div class="gp-viewport" id="gpViewport">
-      <div class="gp-track" id="gpTrack"></div>
+<main class="site-main">
+
+  <!-- ============ HOME VIEW ============ -->
+  <div class="view is-active" id="homeView">
+
+    <!-- ---- cinematic hero ---- -->
+    <section class="hero" id="hero" aria-label="Introduction">
+      <div class="hero-sky" aria-hidden="true">
+        <span class="sun-glow"></span>
+        <span class="cloud cloud-a"></span>
+        <span class="cloud cloud-b"></span>
+        <span class="cloud cloud-c"></span>
+        <span class="cloud cloud-d"></span>
+        <span class="cloud cloud-e"></span>
+
+        <div class="hero-map">
+          <svg viewBox="0 0 520 260" fill="none">
+            <g fill="currentColor" opacity="0.5">
+              <path d="M40 74c14-16 38-24 58-18 12 4 14 16 26 18 14 3 28-6 40 2 10 7 6 22-4 28-12 8-28 6-40 14-10 7-12 22-24 26-14 5-30-4-34-18-4-16 2-34-4-48-3-7 0-14  -18-4z"></path>
+              <path d="M150 150c8-4 18 0 22 8 4 10-2 22-10 28-8 5-20 2-24-6-5-10 0-24 12-30z"></path>
+              <path d="M240 60c22-10 50-8 70 2 14 7 24 20 40 22 18 3 38-6 54 4 12 8 10 26-2 34-14 9-34 6-48 14-12 7-16 22-30 26-16 4-34-6-40-20-6-16 0-34-8-50-6-12-22-24 -44-32z"></path>
+              <path d="M330 152c12-3 24 4 26 16 3 14-6 28-18 32-12 4-24-4-26-16-2-14 6-28 18-32z"></path>
+              <path d="M410 176c14-6 32 0 36 12 4 12-6 24-18 26-14 3-28-6-30-18-1-10 4-16 12-20z"></path>
+            </g>
+            <g stroke="currentColor" stroke-width="1" opacity="0.35" stroke-dasharray="4 8">
+              <path d="M0 65h520M0 130h520M0 195h520"></path>
+              <path d="M130 0v260M260 0v260M390 0v260"></path>
+            </g>
+            <circle cx="196" cy="126" r="6" fill="currentColor"></circle>
+            <path d="M196 126c26-22 62-24 92-8" stroke="currentColor" stroke-width="2" stroke-dasharray="3 6" fill="none"></path>
+          </svg>
+        </div>
+
+        <div class="compass">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <circle cx="50" cy="50" r="36" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 5"></circle>
+            <path d="M50 14l8 36-8 36-8-36z" fill="currentColor" opacity="0.85"></path>
+            <path d="M50 14l8 36-8 36" fill="currentColor" opacity="0.35"></path>
+            <text x="50" y="10" text-anchor="middle" font-size="11" fill="currentColor">N</text>
+          </svg>
+        </div>
+
+        <div class="ticket">
+          <div class="ticket-stub">BOARDING PASS</div>
+          <div class="ticket-body">
+            <span class="ticket-route">MNL <i>&#9992;</i> ANYWHERE</span>
+            <span class="ticket-meta">FLIGHT JD-2026 &middot; SEAT 12A</span>
+            <span class="ticket-barcode"></span>
+          </div>
+        </div>
+
+        <div class="passport-stamp">
+          <span>EXPLORE</span>
+          <small>2026 &middot; SECOND QUARTER</small>
+        </div>
+
+        <p class="hand-note note-a">the adventure begins&#33;</p>
+        <p class="hand-note note-b">take off &amp; explore</p>
+
+        <canvas id="heroPlane" class="hero-plane-canvas"></canvas>
+      </div>
+
+      <div class="hero-content">
+        <!-- LEFT: introduction -->
+        <div class="hero-left">
+          <p class="hero-kicker">Welcome to</p>
+          <h1 class="hero-title">
+            <span class="t-brown">Jarred's</span><br>
+            <span class="t-blue">Digital Portfolio&#33;</span>
+          </h1>
+
+          <div class="hero-intro" id="heroIntro">
+            <p>
+              Fasten your seatbelt and join me on an exciting journey through my world of discovery,
+              creativity, and learning. My name is <strong>Jarred Reinel C. Vivar</strong>, a young
+              enthusiast whose curiosity soars as high as the aircraft that inspire me. My passion for
+              <strong>aviation and travel</strong> fuels my dream of exploring new horizons, cultures,
+              and destinations around the globe.
+            </p>
+            <p>
+              Beyond the skies, I find joy in expressing myself through <strong>guitar playing</strong>,
+              embarking on delicious <strong>food adventures</strong>, immersing myself in captivating
+              <strong>animations and movies</strong>, and discovering new experiences that enrich my
+              imagination and creativity. Each interest helps shape who I am and inspires me to learn
+              something new every day.
+            </p>
+            <p>
+              This digital portfolio serves as a showcase of my achievements, experiences, and memorable
+              learning moments during the <strong>Second Quarter</strong>. Inside, you will find
+              highlights from my journey through Science, Mathematics, Language, Music, the Arts, and
+              Values Education. These subjects have helped me develop not only knowledge and skills but
+              also creativity, critical thinking, discipline, and character.
+            </p>
+            <p>
+              As you explore this portfolio, I invite you to discover the projects, activities, and
+              experiences that reflect my growth as a learner and as an individual. Thank you for
+              visiting, and I hope you enjoy this journey as much as I enjoyed creating it&#33;
+            </p>
+          </div>
+
+          <p class="hero-sign">Jarred Reinel C. Vivar</p>
+        </div>
+
+        <!-- RIGHT: scrapbook collage (photo + video) -->
+        <div class="hero-right">
+          <figure class="photo-frame display-frame">
+            <span class="tape tape-l" aria-hidden="true"></span>
+            <span class="tape tape-r" aria-hidden="true"></span>
+            <img class="profile-picture" src="images/profile.jpg" alt="Jarred's profile photograph taken inside an aircraft cockpit simulator">
+            <canvas id="profilePlane" class="profile-plane"></canvas>
+            <figcaption class="photo-label">Jarred Reinel C. Vivar</figcaption>
+          </figure>
+
+          <figure class="video-card">
+            <span class="tape tape-v" aria-hidden="true"></span>
+            <div class="video-frame">
+              <video class="hero-video" id="heroVideo" controls playsinline preload="metadata" poster="images/plane.jpg">
+                <source src="videos/SNK.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <figcaption class="video-caption">
+              <strong>Cockpit flight experience</strong>
+              <span>My aviation video &middot; plays with sound</span>
+            </figcaption>
+          </figure>
+
+          <figure class="mini-photo mini-1">
+            <span class="tape tape-m" aria-hidden="true"></span>
+            <img src="images/plane.jpg" alt="Airplane flying in a clear blue sky" loading="lazy">
+            <figcaption>skyward bound</figcaption>
+          </figure>
+
+          <figure class="mini-photo mini-2">
+            <span class="tape tape-m" aria-hidden="true"></span>
+            <img src="images/PROFILE_GALLERY/gallery (1).jpg" alt="Airline experience certificate" loading="lazy">
+            <figcaption>airline day</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- two large navigation cards ---- -->
+    <section class="home-cards" aria-label="Explore the portfolio">
+      <button type="button" class="hcard hcard-gallery" data-nav="mygallery">
+        <span class="hcard-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h2L9 4h6l1.5 2h2A2.5 2.5 0 0 1 21 8.5v9A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z"></path>
+            <circle cx="12" cy="13" r="3.6"></circle>
+          </svg>
+        </span>
+        <span class="hcard-body">
+          <h2>My Gallery</h2>
+          <p>Explore my personal photos, moments, and memorable experiences.</p>
+        </span>
+        <span class="hcard-arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
+        </span>
+        <span class="hcard-deco hcard-deco-camera" aria-hidden="true"></span>
+      </button>
+
+      <button type="button" class="hcard hcard-subjects" data-nav="subjects">
+        <span class="hcard-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 6.5C10.6 5 8.6 4.3 4.8 4.3A1.5 1.5 0 0 0 3.3 5.8v11.1c0 .8.7 1.5 1.5 1.5 3.8 0 5.8.7 7.2 2.1 1.4-1.4 3.4-2.1 7.2-2.1.8 0 1.5-.7 1.5-1.5V5.8c0-.8-.7-1.5-1.5-1.5-3.8 0-5.8.7-7.2 2.2z"></path>
+            <path d="M12 6.5v14"></path>
+          </svg>
+        </span>
+        <span class="hcard-body">
+          <h2>Subjects</h2>
+          <p>View my projects, activities, and outputs from each subject.</p>
+        </span>
+        <span class="hcard-arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
+        </span>
+        <span class="hcard-deco hcard-deco-books" aria-hidden="true"></span>
+      </button>
+    </section>
+
+    <footer class="site-footer">
+      <span class="foot-line" aria-hidden="true"></span>
+      <span class="foot-plane" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15.5l-8-4.5V4.8a1.5 1.5 0 0 0-3 0v6.2l-8 4.5v1.8l8-2.6v4l-2.4 1.6v1.4l3.9-1 3.9 1v-1.4L13 18.7v-4l8 2.6z"></path></svg>
+      </span>
+      <p class="foot-text">DREAM <i>&bull;</i> EXPLORE <i>&bull;</i> LEARN <i>&bull;</i> GROW</p>
+      <span class="foot-line" aria-hidden="true"></span>
+    </footer>
+  </div>
+
+  <!-- ============ SUBJECTS VIEW ============ -->
+  <section class="view subjects-view" id="subjectsView" aria-label="Subjects">
+    <header class="paper-banner">
+      <span class="pb-tape" aria-hidden="true"></span>
+      <span class="pb-plane" aria-hidden="true">
+        <svg viewBox="0 0 48 34" fill="none">
+          <path d="M2 30c14 0 22-8 34-14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 7"></path>
+          <path d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z" fill="currentColor" transform="translate(0 -1)"></path>
+        </svg>
+      </span>
+      <p class="pb-kicker">Second Quarter &middot; Portfolio</p>
+      <h2>My Subjects</h2>
+      <p class="pb-note">Learn today, build tomorrow.</p>
+      <p class="pb-sub">Pick a subject to open its gallery of projects, activities, and outputs.</p>
+    </header>
+    <div class="subject-cards" id="subjectCards"></div>
+  </section>
+
+  <!-- ============ SUBJECT GALLERY VIEW ============ -->
+  <section class="view gallery-page" id="galleryView" aria-label="Subject gallery">
+    <div class="gallery-nav">
+      <button type="button" class="btn btn-secondary btn-sm" id="backBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6"></path>
+        </svg>
+        Back to Subjects
+      </button>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <button type="button" class="crumb-link" id="crumbHome">Subjects</button>
+        <span class="crumb-sep" aria-hidden="true">/</span>
+        <span class="crumb-current" id="crumbTitle">Subject</span>
+      </nav>
     </div>
 
-    <button type="button" class="gp-nav gp-prev" id="gpPrev" aria-label="Previous image">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
-    </button>
-    <button type="button" class="gp-nav gp-next" id="gpNext" aria-label="Next image">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
-    </button>
+    <header class="subject-hero">
+      <span class="sh-tape" aria-hidden="true"></span>
+      <span class="sh-plane" aria-hidden="true">
+        <svg viewBox="0 0 48 34" fill="none">
+          <path d="M2 30c14 0 22-8 34-14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 7"></path>
+          <path d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z" fill="currentColor" transform="translate(0 -1)"></path>
+        </svg>
+      </span>
+      <div class="hero-icon" id="heroIcon" aria-hidden="true"></div>
+      <div class="hero-text">
+        <p class="hero-kicker">Subject Gallery</p>
+        <h2 id="galleryTitle">Subject</h2>
+        <p id="galleryIntro"></p>
+      </div>
+      <div class="hero-side">
+        <span class="item-count" id="itemCount">No items yet</span>
+      </div>
+    </header>
+
+    <div class="gallery-grid hidden" id="galleryGrid"></div>
+
+    <div class="gallery-empty" id="galleryEmpty">
+      <div class="ge-icon" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5" width="18" height="14" rx="3"></rect>
+          <path d="M3 15l4.2-3.8a2 2 0 0 1 2.7-.1L13.5 14l1.6-1.4a2 2 0 0 1 2.7.1L21 15.5"></path>
+          <circle cx="9" cy="9.2" r="1.3"></circle>
+        </svg>
+      </div>
+      <h3>Nothing pinned here yet</h3>
+      <p>This section is ready for student work. Add entries to this subject's collection to fill it.</p>
+    </div>
+  </section>
+
+  <!-- ============ MY GALLERY VIEW ============ -->
+  <section class="view my-gallery-view" id="myGalleryView" aria-label="My Gallery">
+    <header class="paper-banner">
+      <span class="pb-tape" aria-hidden="true"></span>
+      <span class="pb-plane" aria-hidden="true">
+        <svg viewBox="0 0 48 34" fill="none">
+          <path d="M2 30c14 0 22-8 34-14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 7"></path>
+          <path d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z" fill="currentColor" transform="translate(0 -1)"></path>
+        </svg>
+      </span>
+      <p class="pb-kicker">Personal scrapbook</p>
+      <h2>My Gallery</h2>
+      <p class="pb-note">Moments worth keeping.</p>
+      <p class="pb-sub">Aviation, travel, music, food, films, and memories from my own adventures.</p>
+    </header>
+
+    <div class="gallery-nav">
+      <button type="button" class="btn btn-secondary btn-sm" id="myGalleryBackBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6"></path>
+        </svg>
+        Back to Home
+      </button>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span class="crumb-current" id="myGalleryTitle">All memories</span>
+      </nav>
+    </div>
+
+    <div class="filter-bar" id="myGalleryFilters" role="tablist" aria-label="Gallery categories"></div>
+
+    <div class="my-gallery-grid" id="myGalleryGrid"></div>
+  </section>
+
+  <!-- ============ SEARCH VIEW ============ -->
+  <section class="view search-page" id="searchView" aria-label="Search results">
+    <div class="gallery-nav">
+      <button type="button" class="btn btn-secondary btn-sm" id="searchBackBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6"></path>
+        </svg>
+        Back
+      </button>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span class="crumb-current" id="searchSummary">Matching subjects and portfolio items.</span>
+      </nav>
+    </div>
+
+    <div class="search-sections">
+      <div class="search-section hidden" id="searchSubjectsSection">
+        <h3>Subjects</h3>
+        <ul class="result-list result-grid" id="searchSubjectsList"></ul>
+      </div>
+      <div class="search-section hidden" id="searchItemsSection">
+        <h3>Portfolio Items</h3>
+        <ul class="result-list result-grid" id="searchItemsList"></ul>
+      </div>
+      <div class="search-empty hidden" id="searchEmpty">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="M20 20l-3.4-3.4"></path>
+        </svg>
+        <p>No matches found. Try a different keyword &mdash; for example <strong>English</strong>, <strong>Science</strong>, or <strong>project</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ UNIFIED MEDIA VIEWER (images + videos) ============ -->
+<div class="lightbox-overlay hidden" id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="Media viewer">
+  <div class="lightbox-backdrop" data-close></div>
+
+  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close viewer">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 6l12 12M18 6L6 18"></path>
+    </svg>
+  </button>
+
+  <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous item">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+  </button>
+
+  <div class="lightbox-content" id="lightboxContent">
+    <div class="lightbox-frame" id="lightboxFrame">
+      <img class="lightbox-image hidden" id="lightboxImage" alt="">
+      <div class="lightbox-slide hidden" id="lightboxSlide" aria-hidden="true"></div>
+    </div>
+    <video class="lightbox-video hidden" id="lightboxVideo" controls playsinline preload="metadata"></video>
+    <p class="lightbox-error hidden" id="lightboxError">This file could not be loaded.</p>
+    <div class="lightbox-meta">
+      <span class="lightbox-caption" id="lightboxCaption"></span>
+      <span class="lightbox-counter" id="lightboxCounter"></span>
+    </div>
   </div>
+
+  <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next item">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+  </button>
 </div>
+
+<audio id="bgMusic" loop preload="metadata">
+    <source src="mp3/bgmusic.mp3" type="audio/mpeg">
+</audio>
 
 <script src="js/main.js"></script>
 </body>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Open book with reading glasses and stacked books">
+  <defs>
+    <linearGradient id="ensky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#CBE7F7"/>
+      <stop offset="0.7" stop-color="#9FCFEA"/>
+      <stop offset="1" stop-color="#8FC5E8"/>
+    </linearGradient>
+    <linearGradient id="enpage" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFDF8"/>
+      <stop offset="1" stop-color="#FBEFE0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#ensky)"/>
+  <ellipse cx="150" cy="110" rx="110" ry="42" fill="#FFFFFF" opacity="0.75"/>
+  <ellipse cx="210" cy="96" rx="70" ry="34" fill="#FFFFFF" opacity="0.75"/>
+  <ellipse cx="640" cy="140" rx="120" ry="44" fill="#FFFFFF" opacity="0.6"/>
+  <ellipse cx="700" cy="124" rx="70" ry="32" fill="#FFFFFF" opacity="0.6"/>
+  <path d="M40 470 Q400 430 760 470 L760 600 L40 600 Z" fill="#F7E7DA" opacity="0.9"/>
+  <path d="M40 470 Q400 430 760 470" fill="none" stroke="#A96F54" stroke-opacity="0.25" stroke-width="3"/>
+  <g transform="translate(400 330)">
+    <path d="M-170 60 L0 20 L170 60 L170 -80 L0 -120 L-170 -80 Z" fill="#244E75"/>
+    <path d="M-158 50 L0 12 L158 50 L158 -72 L0 -108 L-158 -72 Z" fill="#2F86C7"/>
+    <path d="M0 12 L0 -108 L-158 -72 L-158 50 Z" fill="url(#enpage)"/>
+    <path d="M0 12 L0 -108 L158 -72 L158 50 Z" fill="#FFF8F2"/>
+    <path d="M0 12 L0 -108" stroke="#A96F54" stroke-opacity="0.5" stroke-width="4"/>
+    <g stroke="#74889E" stroke-opacity="0.55" stroke-width="6" stroke-linecap="round">
+      <path d="M-130 -50 L-30 -32"/><path d="M-130 -20 L-30 -4"/><path d="M-130 10 L-40 24"/>
+      <path d="M30 -32 L130 -50"/><path d="M30 -4 L130 -20"/><path d="M40 24 L130 10"/>
+    </g>
+  </g>
+  <g transform="translate(180 460)">
+    <rect x="-70" y="-16" width="140" height="26" rx="6" fill="#A96F54"/>
+    <rect x="-62" y="-42" width="126" height="26" rx="6" fill="#E39B72"/>
+    <rect x="-54" y="-68" width="112" height="26" rx="6" fill="#F6D3C1"/>
+  </g>
+  <g transform="translate(600 430) rotate(-18)">
+    <rect x="-6" y="-90" width="12" height="150" rx="6" fill="#704631"/>
+    <path d="M-6 60 Q0 96 6 60 Z" fill="#F6D3C1"/>
+  </g>
+  <g transform="translate(640 470) rotate(14)">
+    <circle cx="0" cy="0" r="26" fill="none" stroke="#244E75" stroke-width="8"/>
+    <circle cx="66" cy="6" r="26" fill="none" stroke="#244E75" stroke-width="8"/>
+    <path d="M26 -4 Q33 -14 40 -4" fill="none" stroke="#244E75" stroke-width="7"/>
+  </g>
+  <path d="M90 200 q60 -30 120 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round" opacity="0.9"/>
+  <path d="M214 196 l16 -6 -6 16 z" fill="#A96F54"/>
+</svg>

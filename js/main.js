@@ -11,15 +11,7 @@
      a generic avatar fallback is shown automatically.
      ============================================================ */
   var CONFIG = {
-    logoPath: 'logo.png'
-  };
-
-  /* ---------- the picture that fills the preview area at first ---------- */
-  var DEFAULT_PREVIEW = {
-    image: 'images/plane.jpg',
-    alt: 'Preview: an airplane in the sky',
-    title: 'Your preview area is ready',
-    sub: 'Choose a subject on the right, then pick an item to preview it here.'
+    logoPath: 'images/logo.jpg'
   };
 
   /* ---------- subject icons (inline SVG) ---------- */
@@ -57,10 +49,14 @@
      SUBJECT DATA
      Each subject owns its own portfolio collection. To add more
      work later, push objects into `portfolio`:
-       { id: 'p1', title: 'Title', description: 'Note',
-         image: 'images/file.svg' }   // image optional
-     The gallery grid and the gallery popup both read straight
-     from these collections.
+        { id: 'p1', title: 'Title', description: 'Note',
+          image: 'images/file.svg', section: 'projects' }
+     `section` is one of: gallery, projects, activities, outputs
+     and is shown as a small tag on the card. An item may carry
+     an `images` array to show several pictures of one project,
+     or a `video` source to play inside the shared viewer. The
+     gallery grid and the media viewer both read straight from
+     these collections.
      ============================================================ */
   var subjects = [
     {
@@ -68,11 +64,12 @@
       desc: 'Reading, writing, and communication works.',
       intro: 'Language arts outputs — essays, speeches, and creative writing from class activities.',
       icon: ICONS.english,
+      cover: 'images/covers/english.svg',
       portfolio: [
-        { id: 'en-1', title: 'Read-In Report', description: 'Reaction paper for the class reading.', image: 'images/english-1.svg' },
-        { id: 'en-2', title: 'Poem of the Rain', description: 'Original poem submitted for the recital.', image: 'images/english-2.svg' },
-        { id: 'en-3', title: 'Speech Draft', description: 'Draft and final delivery notes.', image: 'images/english-3.svg' },
-        { id: 'en-4', title: 'Character Sketch', description: 'Analysis of the protagonist.', image: 'images/english-4.svg' }
+        { id: 'en-1', title: 'Read-In Report', description: 'Reaction paper for the class reading.', image: 'images/english-1.svg', section: 'activities' },
+        { id: 'en-2', title: 'Poem of the Rain', description: 'Original poem submitted for the recital.', image: 'images/english-2.svg', section: 'outputs' },
+        { id: 'en-3', title: 'Speech Draft', description: 'Draft and final delivery notes.', image: 'images/english-3.svg', section: 'projects' },
+        { id: 'en-4', title: 'Character Sketch', description: 'Analysis of the protagonist.', image: 'images/english-4.svg', section: 'outputs' }
       ]
     },
     {
@@ -80,11 +77,12 @@
       desc: 'Problem solving and numeracy projects.',
       intro: 'Mathematical reasoning shown through solutions, models, and project work.',
       icon: ICONS.mathematics,
+      cover: 'images/covers/mathematics.svg',
       portfolio: [
-        { id: 'ma-1', title: 'Problem Set 04', description: 'Solutions with complete working.', image: 'images/mathematics-1.svg' },
-        { id: 'ma-2', title: 'Geometry Model', description: 'Built model of the solid figures.', image: 'images/mathematics-2.svg' },
-        { id: 'ma-3', title: 'Data Report', description: 'Interpretation of collected data.', image: 'images/mathematics-3.svg' },
-        { id: 'ma-4', title: 'Calculus Notes', description: 'Summary of the differentiation topic.', image: 'images/mathematics-4.svg' }
+        { id: 'ma-1', title: 'Problem Set 04', description: 'Solutions with complete working.', image: 'images/mathematics-1.svg', section: 'activities' },
+        { id: 'ma-2', title: 'Geometry Model', description: 'Built model of the solid figures.', image: 'images/mathematics-2.svg', section: 'projects' },
+        { id: 'ma-3', title: 'Data Report', description: 'Interpretation of collected data.', image: 'images/mathematics-3.svg', section: 'outputs' },
+        { id: 'ma-4', title: 'Calculus Notes', description: 'Summary of the differentiation topic.', image: 'images/mathematics-4.svg', section: 'activities' }
       ]
     },
     {
@@ -92,11 +90,12 @@
       desc: 'Experiments, reports, and discoveries.',
       intro: 'Investigations, lab reports, and science fair outputs collected in one place.',
       icon: ICONS.science,
+      cover: 'images/covers/science.svg',
       portfolio: [
-        { id: 'sc-1', title: 'Volcano Experiment', description: 'Model eruption and observations.', image: 'images/science-1.svg' },
-        { id: 'sc-2', title: 'Lab Report', description: 'Write-up of the approved experiment.', image: 'images/science-2.svg' },
-        { id: 'sc-3', title: 'Plant Growth Log', description: 'Two-week growth measurements.', image: 'images/science-3.svg' },
-        { id: 'sc-4', title: 'Circuit Model', description: 'Working series-parallel circuit.', image: 'images/science-4.svg' }
+        { id: 'sc-1', title: 'Volcano Experiment', description: 'Model eruption and observations.', image: 'images/science-1.svg', section: 'activities' },
+        { id: 'sc-2', title: 'Lab Report', description: 'Write-up of the approved experiment.', image: 'images/science-2.svg', section: 'outputs' },
+        { id: 'sc-3', title: 'Plant Growth Log', description: 'Two-week growth measurements.', image: 'images/science-3.svg', section: 'projects' },
+        { id: 'sc-4', title: 'Circuit Model', description: 'Working series-parallel circuit.', image: 'images/science-4.svg', section: 'projects' }
       ]
     },
     {
@@ -104,11 +103,12 @@
       desc: 'Wika, panitikan, at pagsulat.',
       intro: 'Mga gawaing pamp Filipino — sanaysay, tula, ulat, at proyekto sa wika.',
       icon: ICONS.filipino,
+      cover: 'images/covers/filipino.svg',
       portfolio: [
-        { id: 'fi-1', title: 'Sanaysay', description: 'Pagsusulat tungkol sa aking karanasan.', image: 'images/filipino-1.svg' },
-        { id: 'fi-2', title: 'Tula ng Pag-asa', description: 'Tula inilathala sa panitikan ng klase.', image: 'images/filipino-2.svg' },
-        { id: 'fi-3', title: 'Ulat sa Klase', description: 'Ulat kinalam na ulat-panayam.', image: 'images/filipino-3.svg' },
-        { id: 'fi-4', title: 'Batasang Pambansa', description: 'Balangkas ng isang panukalang batas.', image: 'images/filipino-4.svg' }
+        { id: 'fi-1', title: 'Sanaysay', description: 'Pagsulat tungkol sa aking karanasan.', image: 'images/filipino-1.svg', section: 'outputs' },
+        { id: 'fi-2', title: 'Tula ng Pag-asa', description: 'Tula inilathala sa panitikan ng klase.', image: 'images/filipino-2.svg', section: 'outputs' },
+        { id: 'fi-3', title: 'Ulat sa Klase', description: 'Ulat kinalam na ulat-panayam.', image: 'images/filipino-3.svg', section: 'activities' },
+        { id: 'fi-4', title: 'Batasang Pambansa', description: 'Balangkas ng isang panukalang batas.', image: 'images/filipino-4.svg', section: 'projects' }
       ]
     },
     {
@@ -116,11 +116,12 @@
       desc: 'History, society, and civics outputs.',
       intro: 'Research, maps, and community studies that explore people and society.',
       icon: ICONS.araling,
+      cover: 'images/covers/araling-panlipunan.svg',
       portfolio: [
-        { id: 'ap-1', title: 'Pre-Colonial Map', description: 'Mapa ng mga sinaunang kabayanan.', image: 'images/araling-panlipunan-1.svg' },
-        { id: 'ap-2', title: 'Community Survey', description: 'Pag-aaral ng komunidad ng aming barangay.', image: 'images/araling-panlipunan-2.svg' },
-        { id: 'ap-3', title: 'Timeline Poster', description: 'Timeline ng mga panahonang kasaysayan.', image: 'images/araling-panlipunan-3.svg' },
-        { id: 'ap-4', title: 'Economic Report', description: 'Ulat sa kalagayan ng ekonomiya.', image: 'images/araling-panlipunan-4.svg' }
+        { id: 'ap-1', title: 'Pre-Colonial Map', description: 'Mapa ng mga sinaunang kabayanan.', image: 'images/araling-panlipunan-1.svg', section: 'projects' },
+        { id: 'ap-2', title: 'Community Survey', description: 'Pag-aaral ng komunidad ng aming barangay.', image: 'images/araling-panlipunan-2.svg', section: 'activities' },
+        { id: 'ap-3', title: 'Timeline Poster', description: 'Timeline ng mga panahonang kasaysayan.', image: 'images/araling-panlipunan-3.svg', section: 'projects' },
+        { id: 'ap-4', title: 'Economic Report', description: 'Ulat sa kalagayan ng ekonomiya.', image: 'images/araling-panlipunan-4.svg', section: 'outputs' }
       ]
     },
     {
@@ -128,23 +129,48 @@
       desc: 'Character reflections and good-citizenship work.',
       intro: 'Reflections, action plans, and service-learning outputs about values in practice.',
       icon: ICONS.values,
+      cover: 'images/covers/values-education.svg',
       portfolio: [
-        { id: 'va-1', title: 'Reflection Paper', description: 'Pagninilay sa mga aral ng klase.', image: 'images/values-education-1.svg' },
-        { id: 'va-2', title: 'Action Plan', description: 'Plano para sa isang linggong pagpapabuti.', image: 'images/values-education-2.svg' },
-        { id: 'va-3', title: 'Service Diary', description: 'Talaan ng pagtutulong sa komunidad.', image: 'images/values-education-3.svg' },
-        { id: 'va-4', title: 'Good Citizenship', description: 'Poster tungkol sa mabuting mamamayan.', image: 'images/values-education-4.svg' }
+        { id: 'va-1', title: 'Reflection Paper', description: 'Pagninilay sa mga aral ng klase.', image: 'images/values-education-1.svg', section: 'outputs' },
+        { id: 'va-2', title: 'Action Plan', description: 'Plano para sa isang linggong pagpapabuti.', image: 'images/values-education-2.svg', section: 'projects' },
+        { id: 'va-3', title: 'Service Diary', description: 'Talaan ng pagtutulong sa komunidad.', image: 'images/values-education-3.svg', section: 'activities' },
+        { id: 'va-4', title: 'Good Citizenship', description: 'Poster tungkol sa mabuting mamamayan.', image: 'images/values-education-4.svg', section: 'projects' }
       ]
     },
     {
-      id: 'tle', title: 'T.L.E.', tone: 2,
+      id: 'tle', title: 'TLE', tone: 2,
       desc: 'Technology and livelihood skills projects.',
-      intro: 'Practical creations, livelihood demos, and technology projects from T.L.E. class.',
+      intro: 'Practical creations, livelihood demos, and technology projects from TLE class.',
       icon: ICONS.tle,
+      cover: 'images/covers/tle.svg',
       portfolio: [
-        { id: 'tl-1', title: 'Chair Build', description: 'Ginawa at pinatag na istruktura ng Upuan.', image: 'images/tle-1.svg' },
-        { id: 'tl-2', title: 'PowerPoint Deck', description: 'Presentasyon para sa livelihood project.', image: 'images/tle-2.svg' },
-        { id: 'tl-3', title: 'Knife Handling', description: 'Tamang paghawak ng kutseryo.', image: 'images/tle-3.svg' },
-        { id: 'tl-4', title: 'Cable Organiser', description: 'Proyektong praktikal na organizer.', image: 'images/tle-4.svg' }
+        {
+          id: 'tl-1',
+          title: 'My Signature Salad',
+          description: 'Personal salad recipe presented for the cook-off.',
+          image: 'images/TLE/my_salad/2.png',
+          /* a slide deck, browsed left and right like a presentation */
+          images: [
+            'images/TLE/my_salad/2.png',
+            'images/TLE/my_salad/3.png',
+            'images/TLE/my_salad/4.png',
+            'images/TLE/my_salad/5.png',
+            'images/TLE/my_salad/6.png',
+            'images/TLE/my_salad/7.png',
+            'images/TLE/my_salad/8.png',
+            'images/TLE/my_salad/9.png',
+            'images/TLE/my_salad/10.png'
+          ],
+          section: 'outputs',
+          /* 3.png carries an animated salad photo laid exactly over its
+             own photo panel; the printed caption stays on top */
+          overlay: {
+            image: 'images/TLE/my_salad/3.png',
+            media: 'images/TLE/my_salad/salad.gif',
+            box: { x: 62.59, y: 10.03, w: 31.77, h: 79.95 },
+            lines: ['FRESH GARDEN SALAD', 'Green Salad / Tossed Salad']
+          }
+        }
       ]
     },
     {
@@ -152,14 +178,57 @@
       desc: 'Music, arts, PE, and health outputs.',
       intro: 'Performances, artwork, fitness records, and health projects in one gallery.',
       icon: ICONS.mapeh,
+      cover: 'images/covers/mapeh.svg',
       portfolio: [
-        { id: 'ma-1', title: 'Acoustic Piece', description: 'Performance notes for the recital.', image: 'images/mapeh-1.svg' },
-        { id: 'ma-2', title: 'Still Life', description: 'Likhang sining na ginawa sa klase.', image: 'images/mapeh-2.svg' },
-        { id: 'ma-3', title: 'Fitness Record', description: 'Talaan ng mga benisyaryong ehersisyo.', image: 'images/mapeh-3.svg' },
-        { id: 'ma-4', title: 'Health Poster', description: 'Poster tungkol sa malusog na pamumuhay.', image: 'images/mapeh-4.svg' }
+        { id: 'mp-1', title: 'Acoustic Piece', description: 'Performance notes for the recital.', image: 'images/mapeh-1.svg', section: 'projects' },
+        { id: 'mp-2', title: 'Still Life', description: 'Likhang sining na ginawa sa klase.', image: 'images/mapeh-2.svg', section: 'outputs' },
+        { id: 'mp-3', title: 'Fitness Record', description: 'Talaan ng mga benisyaryong ehersisyo.', image: 'images/mapeh-3.svg', section: 'activities' },
+        { id: 'mp-4', title: 'Health Poster', description: 'Poster tungkol sa malusog na pamumuhay.', image: 'images/mapeh-4.svg', section: 'projects' }
       ]
     }
   ];
+
+  /* subject sections, in the order the tabs appear */
+  var SECTIONS = [
+    { id: 'gallery', label: 'Gallery' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'activities', label: 'Activities' },
+    { id: 'outputs', label: 'Outputs' }
+  ];
+
+  var SUBJECT_TINTS = [
+    'linear-gradient(150deg, #8FC5E8, #244E75)',
+    'linear-gradient(150deg, #F6D3C1, #A96F54)',
+    'linear-gradient(150deg, #A5D2EF, #2F86C7)',
+    'linear-gradient(150deg, #EDBB9E, #704631)'
+  ];
+
+  /* ---------- My Gallery: personal scrapbook manifest ---------- */
+  var GALLERY_CATEGORIES = [
+    { id: 'all', label: 'All memories' },
+    { id: 'aviation', label: 'Aviation and Airplanes' },
+    { id: 'travel', label: 'Travel and Places' },
+    { id: 'music', label: 'Guitar and Music' },
+    { id: 'food', label: 'Food Adventures' },
+    { id: 'movies', label: 'Animations and Movies' },
+    { id: 'memories', label: 'Personal Memories' }
+  ];
+
+  var EMPTY_CATEGORY_NOTE = {
+    food: 'Food adventures will be pinned here soon — new dishes, cafés, and family recipes.',
+    movies: 'Animations and movie favourites will be pinned here soon.',
+    travel: 'Travel photos will be pinned here soon.'
+  };
+
+  var PROFILE_GALLERY = [
+    { id: 'pg-1', title: 'Gallery Image 1', image: 'images/PROFILE_GALLERY/gallery (1).jpg' },
+    { id: 'pg-2', title: 'Gallery Image 2', image: 'images/PROFILE_GALLERY/gallery (2).jpg' },
+    { id: 'pg-3', title: 'Gallery Image 3', image: 'images/PROFILE_GALLERY/gallery (3).jpg' },
+    { id: 'pg-4', title: 'Gallery Image 4', image: 'images/PROFILE_GALLERY/gallery (4).jpg' },
+    { id: 'pg-5', title: 'Gallery Image 5', image: 'images/PROFILE_GALLERY/gallery (5).jpg' },
+    { id: 'pg-6', title: 'Gallery Image 6', image: 'images/PROFILE_GALLERY/gallery (6).jpg' }
+  ];
+
 
   /* hero accent gradients per tone */
   var TONES = [
@@ -172,20 +241,23 @@
   /* ---------- state ---------- */
   var activeSubjectId = null;
   var activeItemId = null;
+  var activeCategory = 'all';
   var currentView = 'home';
   var returnView = 'home';
   var searchQuery = '';
 
-  /* gallery popup slideshow */
-  var gpItems = [];
-  var gpIndex = 0;
-  var gpSubject = null;
-  var gpActiveEl = null;
-  var gpLastFocused = null;
-  var gpAnimating = false;
-  var gpSlot = 0;
-  var gpCenter = 0;
-  var gpScrollY = 0;
+  /* unified media viewer state */
+  var lbItems = [];
+  var lbIndex = 0;
+  var lbScrollY = 0;
+  var lbLastFocused = null;
+  /* direction of the last slide change, drives the transition animation */
+  var lbDir = 0;
+  /* pixel box of the slide artwork overlay currently on screen */
+  var lbOverlayBox = null;
+  /* true when the open set comes from My Gallery: those photos must
+     always fit whole in the viewport, never the scrollable long layout */
+  var lbWholeFit = false;
 
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -193,9 +265,11 @@
   /* ---------- dom refs ---------- */
   var el = {
     homeView: document.getElementById('homeView'),
+    subjectsView: document.getElementById('subjectsView'),
     galleryView: document.getElementById('galleryView'),
     searchView: document.getElementById('searchView'),
-    subjectList: document.getElementById('subjectList'),
+    myGalleryView: document.getElementById('myGalleryView'),
+    subjectCards: document.getElementById('subjectCards'),
     galleryTitle: document.getElementById('galleryTitle'),
     galleryIntro: document.getElementById('galleryIntro'),
     galleryGrid: document.getElementById('galleryGrid'),
@@ -214,22 +288,28 @@
     searchItemsSection: document.getElementById('searchItemsSection'),
     searchItemsList: document.getElementById('searchItemsList'),
     searchEmpty: document.getElementById('searchEmpty'),
-    exploreBtn: document.getElementById('exploreBtn'),
-    displayContent: document.getElementById('displayContent'),
-    displayStage: document.getElementById('displayStage'),
-    displayTitle: document.getElementById('displayTitle'),
-    displaySub: document.getElementById('displaySub'),
-    clearDisplayBtn: document.getElementById('clearDisplayBtn'),
-    brandLogo: document.getElementById('brandLogo'),
+    searchToggle: document.getElementById('searchToggle'),
+    navSearch: document.getElementById('navSearch'),
     brandHome: document.getElementById('brandHome'),
-    profileAvatar: document.getElementById('profileAvatar'),
-    gpOverlay: document.getElementById('galleryPopup'),
-    gpPopup: document.getElementById('gpPopup'),
-    gpViewport: document.getElementById('gpViewport'),
-    gpTrack: document.getElementById('gpTrack'),
-    gpClose: document.getElementById('gpClose'),
-    gpPrev: document.getElementById('gpPrev'),
-    gpNext: document.getElementById('gpNext'),
+    navLinks: Array.prototype.slice.call(document.querySelectorAll('.nav-link')),
+    navTargets: Array.prototype.slice.call(document.querySelectorAll('[data-nav]')),
+    myGalleryBackBtn: document.getElementById('myGalleryBackBtn'),
+    myGalleryGrid: document.getElementById('myGalleryGrid'),
+    myGalleryFilters: document.getElementById('myGalleryFilters'),
+    myGalleryTitle: document.getElementById('myGalleryTitle'),
+    lightboxOverlay: document.getElementById('lightboxOverlay'),
+    lightboxContent: document.getElementById('lightboxContent'),
+    lightboxClose: document.getElementById('lightboxClose'),
+    lightboxPrev: document.getElementById('lightboxPrev'),
+    lightboxNext: document.getElementById('lightboxNext'),
+    lightboxImage: document.getElementById('lightboxImage'),
+    lightboxFrame: document.getElementById('lightboxFrame'),
+    lightboxSlide: document.getElementById('lightboxSlide'),
+    lightboxVideo: document.getElementById('lightboxVideo'),
+    lightboxError: document.getElementById('lightboxError'),
+    lightboxCaption: document.getElementById('lightboxCaption'),
+    lightboxCounter: document.getElementById('lightboxCounter'),
+    heroVideo: document.getElementById('heroVideo'),
     blobs: Array.prototype.slice.call(document.querySelectorAll('.blob'))
   };
 
@@ -263,7 +343,7 @@
   function setupLogo(container, path, mode) {
     if (!container) return;
     var img = document.createElement('img');
-    img.alt = mode === 'brand' ? 'Student Portfolio Gallery logo' : 'Gallery logo';
+    img.alt = mode === 'brand' ? 'Jarred\'s Digital Portfolio logo' : 'Gallery logo';
     img.addEventListener('error', function () {
       if (img.parentNode) img.parentNode.removeChild(img);
     });
@@ -280,42 +360,86 @@
     }
   }
 
-  setupLogo(el.brandLogo, CONFIG.logoPath, 'brand');
-  setupLogo(el.profileAvatar, CONFIG.logoPath, 'avatar');
+  setupLogo(
+    el.brandHome ? el.brandHome.querySelector('.nav-logo') : null,
+    CONFIG.logoPath,
+    'avatar'
+  );
 
   /* ---------- view switching ---------- */
+  var VIEW_NODES = {
+    home: function () { return el.homeView; },
+    subjects: function () { return el.subjectsView; },
+    gallery: function () { return el.galleryView; },
+    mygallery: function () { return el.myGalleryView; },
+    search: function () { return el.searchView; }
+  };
+
   function showView(name) {
     currentView = name;
+    /* home is where the music belongs: it comes back automatically
+       whenever the visitor returns to this view */
+    if (name === 'home') startBackgroundMusic();
     el.homeView.classList.toggle('is-active', name === 'home');
+    el.subjectsView.classList.toggle('is-active', name === 'subjects');
     el.galleryView.classList.toggle('is-active', name === 'gallery');
     el.searchView.classList.toggle('is-active', name === 'search');
+    el.myGalleryView.classList.toggle('is-active', name === 'mygallery');
+
+    /* keep the top navigation highlight in sync */
+    var linkView = name === 'gallery' ? 'subjects' : name;
+    for (var i = 0; i < el.navLinks.length; i++) {
+      el.navLinks[i].classList.toggle('is-active', el.navLinks[i].getAttribute('data-nav') === linkView);
+    }
+
     /* restart view animation */
-    var active = name === 'home' ? el.homeView
-      : name === 'gallery' ? el.galleryView
-      : el.searchView;
+    var active = (VIEW_NODES[name] || VIEW_NODES.home)();
     active.style.animation = 'none';
     void active.offsetWidth;
     active.style.animation = '';
   }
 
-  /* ---------- home: subject list ---------- */
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+  }
+
+  /* ---------- subjects page: printed-photo cards ---------- */
   function renderSubjects() {
+    if (!el.subjectCards) return;
     var html = '';
     for (var i = 0; i < subjects.length; i++) {
       var s = subjects[i];
+      var cover = s.cover || (s.portfolio[0] && s.portfolio[0].image);
       html +=
-        '<li class="subject-item" style="--i:' + i + '">' +
-          '<button type="button" class="subject-btn" data-subject="' + esc(s.id) + '">' +
-            '<span class="subject-icon" aria-hidden="true">' + sizeIcon(s.icon, 21) + '</span>' +
-            '<span class="subject-copy">' +
-              '<strong>' + esc(s.title) + '</strong>' +
-              '<span>' + esc(s.desc) + '</span>' +
+        '<button type="button" class="subject-card" style="--i:' + i + '" data-subject="' + esc(s.id) + '" ' +
+          'aria-label="Open the ' + esc(s.title) + ' gallery">' +
+          '<span class="sc-photo">' +
+            '<span class="sc-tape sc-tape-l" aria-hidden="true"></span>' +
+            '<span class="sc-tape sc-tape-r" aria-hidden="true"></span>' +
+            '<span class="sc-img-wrap">' +
+              /* covers load eagerly: a lazy image is only fetched once it is
+                 painted, so off-screen covers would load late and make any
+                 "all cover photos loaded" check race. There are only 8 small
+                 SVGs, so eager is cheap and deterministic. */
+              '<img src="' + esc(cover) + '" alt="' + esc(s.title) + ' subject cover photo" loading="eager">' +
             '</span>' +
-            '<span class="subject-arrow" aria-hidden="true">' + ICONS.arrow + '</span>' +
-          '</button>' +
-        '</li>';
+            '<span class="sc-icon" aria-hidden="true">' + sizeIcon(s.icon, 24) + '</span>' +
+          '</span>' +
+          '<span class="sc-body">' +
+            '<h3>' + esc(s.title) + '</h3>' +
+            '<p>' + esc(s.desc) + '</p>' +
+          '</span>' +
+          '<span class="sc-arrow" aria-hidden="true">' + ICONS.arrow + '</span>' +
+        '</button>';
     }
-    el.subjectList.innerHTML = html;
+    el.subjectCards.innerHTML = html;
+  }
+
+  function sectionLabel(id) {
+    for (var i = 0; i < SECTIONS.length; i++) {
+      if (SECTIONS[i].id === id) return SECTIONS[i].label;
+    }
+    return 'Gallery';
   }
 
   /* ---------- gallery page ---------- */
@@ -323,14 +447,16 @@
     var subject = findSubject(activeSubjectId);
     if (!subject) return;
 
+    var items = subject.portfolio;
+
     el.galleryTitle.textContent = subject.title;
     el.galleryIntro.textContent = subject.intro;
     el.crumbTitle.textContent = subject.title;
     el.heroIcon.innerHTML = subject.icon;
-    el.heroIcon.style.background = TONES[subject.tone % TONES.length];
-    el.itemCount.textContent = itemCountLabel(subject.portfolio.length);
+    el.heroIcon.style.background = SUBJECT_TINTS[subject.tone % SUBJECT_TINTS.length];
+    el.itemCount.textContent = itemCountLabel(items.length);
 
-    if (!subject.portfolio.length) {
+    if (!items.length) {
       el.galleryGrid.innerHTML = '';
       el.galleryGrid.classList.add('hidden');
       el.galleryEmpty.classList.remove('hidden');
@@ -341,19 +467,20 @@
     el.galleryGrid.classList.remove('hidden');
 
     var html = '';
-    for (var i = 0; i < subject.portfolio.length; i++) {
-      var item = subject.portfolio[i];
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
       var thumb = item.image
         ? '<img src="' + esc(item.image) + '" alt="' + esc(item.title) + '" loading="lazy">'
         : sizeIcon(ICONS.doc, 40);
       html +=
         '<button type="button" class="g-card" style="--i:' + i + '" data-item="' + esc(item.id) + '" ' +
-          'aria-label="Open ' + esc(item.title) + ' in preview">' +
+          'aria-label="Open ' + esc(item.title) + ' in viewer">' +
+          '<span class="g-tape" aria-hidden="true"></span>' +
           '<span class="g-thumb" aria-hidden="true">' + thumb + '</span>' +
           '<span class="g-body">' +
             '<h3>' + esc(item.title) + '</h3>' +
             '<p>' + esc(subject.title) + '</p>' +
-            '<span class="g-tag">Portfolio</span>' +
+            '<span class="g-tag">' + esc(sectionLabel(item.section || 'gallery')) + '</span>' +
           '</span>' +
         '</button>';
     }
@@ -365,390 +492,455 @@
     }
   }
 
-  function openSubject(id) {
+  function openSubject(id, afterOpen) {
     var subject = findSubject(id);
     if (!subject) return;
     /* the gallery opens behind the loading screen */
     showLoader(LOADER_SUBJECT, function () {
+      stopMusic();
       activeSubjectId = id;
       activeItemId = null;
-      clearDisplay();
       renderSubjects();
       renderGallery();
       showView('gallery');
-      window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+      scrollToTop();
+      if (afterOpen) afterOpen(subject);
     });
   }
 
   function backToSubjects() {
-    gpClose();
+    closeLightbox();
+    stopMusic();
     activeSubjectId = null;
     activeItemId = null;
-    clearDisplay();
     renderSubjects();
-    showView('home');
+    showView('subjects');
+    scrollToTop();
   }
 
-  /* ---------- home display panel ---------- */
-  function showInDisplay(subject, item) {
-    activeItemId = item.id;
-
-    var stageHtml;
-    if (item.image) {
-      stageHtml = '<img src="' + esc(item.image) + '" alt="' + esc(item.title) + '">';
-    } else {
-      stageHtml =
-        '<div class="display-doc">' +
-          '<span class="doc-icon" aria-hidden="true">' + sizeIcon(ICONS.doc, 28) + '</span>' +
-          '<strong>' + esc(item.title) + '</strong>' +
-        '</div>';
-    }
-    el.displayStage.innerHTML = stageHtml;
-    el.displayTitle.textContent = item.title;
-    el.displaySub.textContent = subject.title;
-    el.clearDisplayBtn.classList.remove('hidden');
-  }
-
-  function clearDisplay() {
+  function goHome() {
+    el.searchInput.value = '';
+    runSearch('');
+    closeLightbox();
+    stopMusic();
+    activeSubjectId = null;
     activeItemId = null;
-    /* back to the default preview picture, filling the whole area */
-    el.displayStage.innerHTML =
-      '<img class="is-full" src="' + esc(DEFAULT_PREVIEW.image) + '" alt="' + esc(DEFAULT_PREVIEW.alt) + '">';
-    el.displayTitle.textContent = DEFAULT_PREVIEW.title;
-    el.displaySub.textContent = DEFAULT_PREVIEW.sub;
-    el.clearDisplayBtn.classList.add('hidden');
+    showView('home');
+    scrollToTop();
+  }
+
+  /* ---------- music control ---------- */
+  function getBgMusic() {
+    return document.getElementById('bgMusic');
+  }
+
+  function stopMusic() {
+    var m = getBgMusic();
+    if (m && !m.paused) {
+      m.pause();
+    }
+  }
+
+  /*     The music starts by itself as soon as the site opens, stops again
+     whenever the visitor moves into a focused view (subjects, my
+     gallery, the media viewer) or starts the hero video, and comes
+     back by itself when they return to the home view.
+
+     Browsers normally block autoplay with sound before any user
+     interaction, so the rejected play() promise is caught and the
+     start is retried on the visitor's very first click or key press.
+     That way the music still comes on automatically, and no error is
+     ever thrown. */
+  function startBackgroundMusic() {
+    var m = getBgMusic();
+    if (!m) return;
+    /* never talk over the hero video while it is still running */
+    if (el.heroVideo && !el.heroVideo.paused && !el.heroVideo.ended) return;
+
+    var unlockersRemoved = false;
+    function removeUnlockers() {
+      if (unlockersRemoved) return;
+      unlockersRemoved = true;
+      window.removeEventListener('pointerdown', begin, true);
+      window.removeEventListener('touchstart', begin, true);
+      window.removeEventListener('keydown', begin, true);
+    }
+    function begin() {
+      removeUnlockers();
+      var retry = m.play();
+      if (retry && typeof retry.catch === 'function') {
+        retry.catch(function () { /* still blocked - nothing to do */ });
+      }
+    }
+
+    var attempt = m.play();
+    if (attempt && typeof attempt.then === 'function') {
+      attempt.then(removeUnlockers, function () {
+        window.addEventListener('pointerdown', begin, true);
+        window.addEventListener('touchstart', begin, true);
+        window.addEventListener('keydown', begin, true);
+      });
+    }
+  }
+
+  /* ---------- my gallery ---------- */
+  function renderMyGalleryFilters() {
+    if (!el.myGalleryFilters) return;
+    var html = '';
+    for (var i = 0; i < GALLERY_CATEGORIES.length; i++) {
+      var c = GALLERY_CATEGORIES[i];
+      html +=
+        '<button type="button" class="chip' + (c.id === activeCategory ? ' is-active' : '') + '" ' +
+          'data-category="' + esc(c.id) + '" role="tab" aria-selected="' + (c.id === activeCategory) + '">' +
+          esc(c.label) +
+        '</button>';
+    }
+    el.myGalleryFilters.innerHTML = html;
+  }
+
+  function categoryLabel(id) {
+    for (var i = 0; i < GALLERY_CATEGORIES.length; i++) {
+      if (GALLERY_CATEGORIES[i].id === id) return GALLERY_CATEGORIES[i].label;
+    }
+    return 'All memories';
+  }
+
+  function itemsForCategory(cat) {
+    if (!cat || cat === 'all') return PROFILE_GALLERY.slice();
+    var out = [];
+    for (var i = 0; i < PROFILE_GALLERY.length; i++) {
+      if (PROFILE_GALLERY[i].cat === cat) out.push(PROFILE_GALLERY[i]);
+    }
+    return out;
+  }
+
+  var SCRAP_TILTS = ['-1.6deg', '1.2deg', '-0.8deg', '1.8deg', '-1.2deg', '0.9deg'];
+
+  function renderMyGallery() {
+    if (!el.myGalleryGrid) return;
+    var items = itemsForCategory(activeCategory);
+    if (el.myGalleryTitle) el.myGalleryTitle.textContent = categoryLabel(activeCategory);
+
+    if (!items.length) {
+      var note = EMPTY_CATEGORY_NOTE[activeCategory] ||
+        'New memories will be pinned to this page soon.';
+      el.myGalleryGrid.innerHTML =
+        '<div class="note-card"><strong>Coming soon&#33;</strong><p>' + esc(note) + '</p></div>';
+      return;
+    }
+
+    var html = '';
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var media;
+      if (item.video) {
+        media =
+          '<video src="' + esc(item.video) + '" poster="' + esc(item.poster || '') + '" ' +
+          'muted playsinline preload="metadata"></video>' +
+          '<span class="play-badge">&#9658; Video</span>';
+      } else {
+        media = '<img src="' + esc(item.image) + '" alt="' + esc(item.title) + '" loading="lazy">';
+      }
+      html +=
+        '<button type="button" class="my-gallery-card" style="--i:' + i + ';--tilt:' + SCRAP_TILTS[i % SCRAP_TILTS.length] + '" ' +
+          'data-index="' + i + '" aria-label="Open ' + esc(item.title) + '">' +
+          '<span class="tape-strip" aria-hidden="true"></span>' +
+          '<span class="mg-img">' + media +
+            '<span class="card-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></span>' +
+          '</span>' +
+          '<span class="mg-meta">' +
+            '<strong>' + esc(item.title) + '</strong>' +
+            '<span>' + esc(item.caption || categoryLabel(item.cat)) + '</span>' +
+          '</span>' +
+        '</button>';
+    }
+    el.myGalleryGrid.innerHTML = html;
+  }
+
+  function openMyGallery() {
+    stopMusic();
+    activeCategory = 'all';
+    renderMyGalleryFilters();
+    renderMyGallery();
+    showView('mygallery');
+    scrollToTop();
+  }
+
+  function backToHomeFromMyGallery() {
+    closeLightbox();
+    showView('home');
+    scrollToTop();
   }
 
   /* ============================================================
-     GALLERY POPUP SLIDESHOW
-
-     A borderless, image-only viewer built on a horizontal track.
-
-     The track holds three real gallery images: the previous one
-     peeking on the left, the active one in the middle and the next
-     one peeking on the right. Navigating physically moves the slide
-     elements (append on forward, prepend on backward) and animates
-     the track with a CSS transform transition, so the images
-     themselves slide instead of being swapped in place.
-
-     Track geometry (viewport width V, slide width W, gap G):
-       slot    = W + G
-       center  = (V - W) / 2          left offset of the centred slide
-       T(idle) = center - slot        child 1 sits in the middle
-       T(left) = center - 2 * slot    child 2 sits in the middle
+     UNIFIED MEDIA VIEWER
+     ------------------------------------------------------------
+     One implementation shared by My Gallery and every subject
+     gallery.
+       - normal photos keep their aspect ratio and use the screen
+         space effectively, never stretched
+       - tall images / infographics from a subject gallery render at
+         their full usable width and the overlay itself scrolls
+         vertically from top to bottom, so no part of the picture is
+         ever cut off
+       - My Gallery photos are the exception: they always fit whole
+         inside the viewport and the overlay never scrolls
+       - videos keep their aspect ratio and pause on close
      ============================================================ */
-
-  var GP_SLIDE_RATIO = 0.6;   /* active slide = 60% of the viewport width */
-  var GP_DURATION = 450;      /* keep in sync with the CSS transition      */
-
-  function gpWrap(i) {
-    var n = gpItems.length;
-    return ((i % n) + n) % n;
-  }
-
-  function gpSlideNode(item, index) {
-    var slide = document.createElement('div');
-    slide.className = 'gp-slide';
-    slide.setAttribute('data-index', String(index));
-    if (item.image) {
-      var img = document.createElement('img');
-      img.alt = item.title || 'Portfolio image';
-      img.decoding = 'async';
-      slide.appendChild(img);
-      img.addEventListener('load', function () { gpOnImageReady(slide); });
-      img.src = item.image;
-      if (img.complete && img.naturalWidth) gpOnImageReady(slide);
-    } else {
-      var ph = document.createElement('div');
-      ph.className = 'gp-placeholder';
-      ph.setAttribute('aria-hidden', 'true');
-      ph.innerHTML = sizeIcon(ICONS.doc, 68);
-      slide.appendChild(ph);
-    }
-    return slide;
-  }
-
-  /* Sizes the active picture to its natural aspect ratio inside the
-     slide box. The image is then rendered with object-fit: cover on a
-     perfectly matching box, so it is never cropped and never
-     stretched - and switching between slides never changes the
-     object-fit, which keeps the transition free of popping. */
-  function gpFitImage(slide, snap) {
-    var img = slide.querySelector('img');
-    if (!img || !img.naturalWidth || !img.naturalHeight) return;
-    var cs = getComputedStyle(slide);
-    var boxW = slide.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-    var boxH = slide.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-    if (boxW <= 0 || boxH <= 0) return;
-
-    var ar = img.naturalWidth / img.naturalHeight;
-    var w = boxW;
-    var h = w / ar;
-    if (h > boxH) { h = boxH; w = h * ar; }
-
-    if (snap) {
-      var prev = img.style.transition;
-      img.style.transition = 'none';
-      img.style.width = w + 'px';
-      img.style.height = h + 'px';
-      img.getBoundingClientRect();
-      img.style.transition = prev;
-      return;
-    }
-    img.style.width = w + 'px';
-    img.style.height = h + 'px';
-  }
-
-  function gpOnImageReady(slide) {
-    if (!slide.classList.contains('is-active')) return;
-    gpFitImage(slide, true);
-  }
-
-  /* the active slide is tracked by node identity so that subjects
-     with only two images never highlight the same picture twice */
-  function gpMarkActive() {
-    var slides = el.gpTrack.children;
-    for (var i = 0; i < slides.length; i++) {
-      var slide = slides[i];
-      var isActive = slide === gpActiveEl;
-      if (slide.classList.contains('is-active') === isActive) continue;
-      slide.classList.toggle('is-active', isActive);
-      var img = slide.querySelector('img');
-      if (!img) continue;
-      if (isActive) {
-        /* the incoming picture settles into its own proportions */
-        gpFitImage(slide, false);
-      } else {
-        /* the outgoing picture returns to the cropped neighbour box */
-        img.style.width = '';
-        img.style.height = '';
-      }
-    }
-  }
-
-  function gpFindNode(index, preferRight) {
-    var slides = el.gpTrack.children;
-    var found = null;
-    for (var i = 0; i < slides.length; i++) {
-      if (parseInt(slides[i].getAttribute('data-index'), 10) !== index) continue;
-      if (preferRight) found = slides[i];
-      else if (!found) found = slides[i];
-    }
-    return found;
-  }
-
-  function gpMeasure() {
-    var vw = el.gpViewport.clientWidth;
-    if (!vw) return;
-    var slideW = Math.round(vw * GP_SLIDE_RATIO);
-    var gap = vw < 640 ? 10 : 16;
-    el.gpViewport.style.setProperty('--gp-slide-w', slideW + 'px');
-    el.gpViewport.style.setProperty('--gp-gap', gap + 'px');
-    gpSlot = slideW + gap;
-    gpCenter = (vw - slideW) / 2;
-  }
-
-  function gpIdleT() { return gpCenter - gpSlot; }
-  function gpLeftT() { return gpCenter - 2 * gpSlot; }
-
-  function gpSetTrack(px, animate) {
-    if (animate) {
-      /* make sure the transition is live before the value changes */
-      if (el.gpTrack.classList.contains('no-anim')) {
-        el.gpTrack.classList.remove('no-anim');
-        el.gpTrack.getBoundingClientRect();
-      }
-      el.gpTrack.style.transform = 'translateX(' + px + 'px)';
-    } else {
-      el.gpTrack.classList.add('no-anim');
-      el.gpTrack.style.transform = 'translateX(' + px + 'px)';
-      el.gpTrack.getBoundingClientRect();
-    }
-  }
-
-  function gpBuild() {
-    el.gpTrack.innerHTML = '';
-    gpActiveEl = null;
-    var n = gpItems.length;
-    if (!n) return;
-    if (n === 1) {
-      el.gpTrack.appendChild(gpSlideNode(gpItems[0], 0));
-      gpActiveEl = el.gpTrack.firstElementChild;
-    } else {
-      var prev = gpWrap(gpIndex - 1);
-      var next = gpWrap(gpIndex + 1);
-      el.gpTrack.appendChild(gpSlideNode(gpItems[prev], prev));
-      el.gpTrack.appendChild(gpSlideNode(gpItems[gpIndex], gpIndex));
-      el.gpTrack.appendChild(gpSlideNode(gpItems[next], next));
-      gpActiveEl = el.gpTrack.children[1];
-    }
-    gpMarkActive();
-  }
-
-  /* warm the neighbouring images so the slide never pops in */
-  function gpPreload() {
-    if (gpItems.length < 2) return;
-    var targets = [gpWrap(gpIndex - 1), gpWrap(gpIndex + 1)];
-    for (var i = 0; i < targets.length; i++) {
-      var item = gpItems[targets[i]];
-      if (!item || !item.image) continue;
-      var pre = new Image();
-      pre.src = item.image;
-    }
-  }
-
-  /* runs `done` once the track transition finished (timeout fallback).
-     The fallback is deliberately generous: transitionend is only
-     dispatched on the next rendered frame, so on a slow device a tight
-     timeout would cancel the running transition and snap the carousel
-     instead of letting it settle. */
-  function gpAfterMove(done) {
-    var fired = false;
-    function finish() {
-      if (fired) return;
-      fired = true;
-      el.gpTrack.removeEventListener('transitionend', onEnd);
-      window.clearTimeout(timer);
-      done();
-      gpAnimating = false;
-    }
-    function onEnd(e) {
-      if (e.target !== el.gpTrack || e.propertyName !== 'transform') return;
-      finish();
-    }
-    el.gpTrack.addEventListener('transitionend', onEnd);
-    var timer = window.setTimeout(finish, GP_DURATION + 450);
-  }
-
-  /* keeps the home preview panel in sync with the popup selection */
-  function gpSyncSelection() {
-    if (!gpSubject || !gpItems[gpIndex]) return;
-    activeItemId = gpItems[gpIndex].id;
-    showInDisplay(gpSubject, gpItems[gpIndex]);
-  }
-
-  function gpGoNext() {
-    var n = gpItems.length;
-    if (gpAnimating || n < 2) return;
-    gpAnimating = true;
-    gpIndex = (gpIndex + 1) % n;
-
-    /* the incoming slide is the current right neighbour */
-    gpActiveEl = gpFindNode(gpIndex, true);
-    if (!gpActiveEl) { gpBuild(); gpSetTrack(gpIdleT(), false); gpAnimating = false; return; }
-
-    var newRight = (gpIndex + 1) % n;
-    el.gpTrack.appendChild(gpSlideNode(gpItems[newRight], newRight));
-    el.gpTrack.getBoundingClientRect();   /* commit the new slide */
-
-    gpMarkActive();
-    gpSetTrack(gpLeftT(), true);
-    gpSyncSelection();
-
-    gpAfterMove(function () {
-      if (el.gpTrack.children.length > 3) {
-        el.gpTrack.removeChild(el.gpTrack.firstElementChild);
-      }
-      gpSetTrack(gpIdleT(), false);
-    });
-  }
-
-  function gpGoPrev() {
-    var n = gpItems.length;
-    if (gpAnimating || n < 2) return;
-    gpAnimating = true;
-    gpIndex = (gpIndex - 1 + n) % n;
-
-    /* the incoming slide is the current left neighbour */
-    gpActiveEl = gpFindNode(gpIndex, false);
-    if (!gpActiveEl) { gpBuild(); gpSetTrack(gpIdleT(), false); gpAnimating = false; return; }
-
-    var newLeft = (gpIndex - 1 + n) % n;
-    el.gpTrack.insertBefore(
-      gpSlideNode(gpItems[newLeft], newLeft),
-      el.gpTrack.firstElementChild
-    );
-    /* compensate for the inserted slide so the picture does not jump */
-    gpSetTrack(gpLeftT(), false);
-
-    gpMarkActive();
-    gpSetTrack(gpIdleT(), true);
-    gpSyncSelection();
-
-    gpAfterMove(function () {
-      if (el.gpTrack.children.length > 3) {
-        el.gpTrack.removeChild(el.gpTrack.lastElementChild);
-      }
-      gpSetTrack(gpIdleT(), false);
-    });
-  }
-
-  function gpLockScroll() {
+  function lockPageScroll() {
     var gap = window.innerWidth - document.documentElement.clientWidth;
     if (gap > 0) document.body.style.paddingRight = gap + 'px';
     document.body.style.overflow = 'hidden';
   }
 
-  function gpUnlockScroll() {
+  function unlockPageScroll() {
     document.body.style.overflow = '';
     document.body.style.paddingRight = '';
   }
 
-  function gpOpen(subject, index) {
-    if (!subject || !subject.portfolio || !subject.portfolio.length) return;
-    /* the picture opens behind the loading screen */
-    showLoader(LOADER_ITEM, function () { gpOpenNow(subject, index); });
+  function pauseLightboxVideo() {
+    var v = el.lightboxVideo;
+    if (!v) return;
+    if (!v.paused) v.pause();
+    if (v.getAttribute('src')) {
+      v.removeAttribute('src');
+      try { v.load(); } catch (err) { /* media reset unsupported */ }
+    }
   }
 
-  function gpOpenNow(subject, index) {
-    gpSubject = subject;
-    gpItems = subject.portfolio.slice();
-    gpIndex = Math.max(0, Math.min(index, gpItems.length - 1));
-    gpLastFocused = document.activeElement;
-    gpScrollY = window.scrollY;
-    gpAnimating = false;
-
-    gpBuild();
-    el.gpOverlay.classList.remove('hidden');
-    gpLockScroll();
-
-    gpMeasure();
-    gpSetTrack(gpIdleT(), false);
-    if (gpActiveEl) gpFitImage(gpActiveEl, true);
-
-    var multi = gpItems.length > 1;
-    el.gpPrev.classList.toggle('hidden', !multi);
-    el.gpNext.classList.toggle('hidden', !multi);
-
-    /* commit the hidden state before playing the entrance animation */
-    el.gpPopup.getBoundingClientRect();
-    el.gpOverlay.classList.add('is-visible');
-
-    gpSyncSelection();
-    gpPreload();
+  function openLightbox(index, items, wholeFit) {
+    if (!items || !items.length) return;
+    lbItems = items;
+    lbIndex = Math.max(0, Math.min(index, items.length - 1));
+    lbWholeFit = !!wholeFit;
+    lbDir = 0;
+    lbLastFocused = document.activeElement;
+    lbScrollY = window.scrollY;
+    updateLightbox();
+    el.lightboxOverlay.classList.remove('hidden');
+    stopMusic();
+    lockPageScroll();
     window.setTimeout(function () {
-      if (!el.gpOverlay.classList.contains('hidden')) el.gpClose.focus();
+      if (!el.lightboxOverlay.classList.contains('hidden')) el.lightboxClose.focus();
     }, 40);
   }
 
-  function gpClose() {
-    if (el.gpOverlay.classList.contains('hidden')) return;
-    el.gpOverlay.classList.remove('is-visible');
-    window.setTimeout(function () {
-      if (el.gpOverlay.classList.contains('is-visible')) return;
-      el.gpOverlay.classList.add('hidden');
-      el.gpTrack.innerHTML = '';
-      gpItems = [];
-      gpSubject = null;
-      gpActiveEl = null;
-      gpAnimating = false;
-      gpUnlockScroll();
-      if (window.scrollY !== gpScrollY) window.scrollTo(0, gpScrollY);
-      if (gpLastFocused && gpLastFocused.focus) {
-        try { gpLastFocused.focus(); } catch (err) { /* element gone */ }
+  function closeLightbox() {
+    if (el.lightboxOverlay.classList.contains('hidden')) return;
+    pauseLightboxVideo();
+    el.lightboxOverlay.classList.add('hidden');
+    el.lightboxContent.classList.remove('is-long');
+    el.lightboxImage.classList.add('hidden');
+    el.lightboxFrame.classList.add('hidden');
+    clearSlideOverlay();
+    el.lightboxVideo.classList.add('hidden');
+    el.lightboxError.classList.add('hidden');
+    unlockPageScroll();
+    if (window.scrollY !== lbScrollY) window.scrollTo(0, lbScrollY);
+    if (lbLastFocused && lbLastFocused.focus) {
+      try { lbLastFocused.focus(); } catch (err) { /* element gone */ }
+    }
+    lbLastFocused = null;
+    lbItems = [];
+    lbWholeFit = false;
+  }
+
+  function lightboxIsOpen() {
+    return !el.lightboxOverlay.classList.contains('hidden');
+  }
+
+  function updateLightbox() {
+    var item = lbItems[lbIndex];
+    if (!item) return;
+
+    var caption = item.title || '';
+    if (item.caption) caption += ' — ' + item.caption;
+    el.lightboxCaption.textContent = caption;
+    el.lightboxCounter.textContent = (lbIndex + 1) + ' of ' + lbItems.length;
+
+    var multi = lbItems.length > 1;
+    el.lightboxPrev.classList.toggle('hidden', !multi);
+    el.lightboxNext.classList.toggle('hidden', !multi);
+
+    el.lightboxContent.classList.remove('is-long');
+    el.lightboxError.classList.add('hidden');
+
+    if (item.video) {
+      el.lightboxImage.classList.add('hidden');
+      el.lightboxFrame.classList.add('hidden');
+      clearSlideOverlay();
+      el.lightboxError.classList.add('hidden');
+      el.lightboxVideo.classList.remove('hidden');
+      var poster = item.poster || '';
+      if (poster) el.lightboxVideo.setAttribute('poster', poster);
+      else el.lightboxVideo.removeAttribute('poster');
+      if (el.lightboxVideo.getAttribute('src') !== item.video) {
+        pauseLightboxVideo();
+        el.lightboxVideo.setAttribute('src', item.video);
       }
-      gpLastFocused = null;
-    }, reducedMotion ? 40 : 340);
+      return;
+    }
+
+    pauseLightboxVideo();
+    el.lightboxVideo.classList.add('hidden');
+    el.lightboxError.classList.add('hidden');
+    el.lightboxImage.classList.remove('hidden');
+    el.lightboxFrame.classList.remove('hidden');
+    el.lightboxImage.alt = item.title || 'Gallery image';
+
+    function imageReady() {
+      el.lightboxImage.classList.remove('hidden');
+      el.lightboxFrame.classList.remove('hidden');
+      el.lightboxError.classList.add('hidden');
+      /* "long" only ever applies to subject images; My Gallery photos
+         keep the contained, whole-image layout (never scrollable) */
+      var long = !lbWholeFit &&
+        el.lightboxImage.naturalWidth > 0 &&
+        (el.lightboxImage.naturalHeight / el.lightboxImage.naturalWidth) > 1.3;
+      el.lightboxContent.classList.toggle('is-long', long);
+      el.lightboxOverlay.scrollTop = 0;
+      /* slide artwork + printed caption sit exactly over the photo */
+      applySlideOverlay(item);
+      playSlideAnimation();
+    }
+    function imageFailed() {
+      el.lightboxImage.classList.add('hidden');
+      el.lightboxFrame.classList.add('hidden');
+      clearSlideOverlay();
+      el.lightboxContent.classList.remove('is-long');
+      el.lightboxError.classList.remove('hidden');
+    }
+
+    el.lightboxImage.onload = imageReady;
+    el.lightboxImage.onerror = imageFailed;
+
+    var src = item.image;
+    if (!src) { imageFailed(); return; }
+    if (el.lightboxImage.getAttribute('src') === src && el.lightboxImage.complete) {
+      if (el.lightboxImage.naturalWidth) imageReady();
+      else imageFailed();
+    } else {
+      el.lightboxImage.setAttribute('src', src);
+    }
+  }
+
+  function lightboxNext() {
+    if (!lbItems.length) return;
+    lbDir = 1;
+    lbIndex = (lbIndex + 1) % lbItems.length;
+    updateLightbox();
+  }
+
+  function lightboxPrev() {
+    if (!lbItems.length) return;
+    lbDir = -1;
+    lbIndex = (lbIndex - 1 + lbItems.length) % lbItems.length;
+    updateLightbox();
+  }
+
+  /* ============================================================
+     SLIDE ARTWORK OVERLAY
+     ------------------------------------------------------------
+     Some presentation slides carry extra artwork (an animated gif)
+     laid exactly over the photo printed on the slide, while the
+     slide's own caption stays readable on top of it. The box is
+     stored as percentages of the slide and converted to pixels
+     against the rendered photo, so the artwork never overflows the
+     picture it belongs to, whatever the window size.
+     ============================================================ */
+  function clearSlideOverlay() {
+    lbOverlayBox = null;
+    el.lightboxSlide.classList.add('hidden');
+    el.lightboxSlide.innerHTML = '';
+  }
+
+  function layoutSlideOverlay() {
+    if (!lbOverlayBox || el.lightboxSlide.classList.contains('hidden')) return;
+    var photo = el.lightboxImage.getBoundingClientRect();
+    var frame = el.lightboxFrame.getBoundingClientRect();
+    if (!photo.width || !photo.height) return;
+
+    var b = lbOverlayBox;
+    var s = el.lightboxSlide;
+    s.style.left = ((photo.left - frame.left) + photo.width * b.x / 100) + 'px';
+    s.style.top = ((photo.top - frame.top) + photo.height * b.y / 100) + 'px';
+    s.style.width = (photo.width * b.w / 100) + 'px';
+    s.style.height = (photo.height * b.h / 100) + 'px';
+    /* the caption is typeset for a 1366px-wide slide (32px heading) */
+    s.style.fontSize = (photo.width * 32 / 1366) + 'px';
+  }
+
+  function applySlideOverlay(item) {
+    var ov = item && item.overlay;
+    if (!ov || !ov.media || ov.image !== item.image) {
+      clearSlideOverlay();
+      return;
+    }
+    var lines = ov.lines || [];
+    var s = el.lightboxSlide;
+    s.innerHTML =
+      '<img class="lb-slide-media" src="' + esc(ov.media) + '" alt="" aria-hidden="true">' +
+      '<span class="lb-slide-text">' +
+        '<strong>' + esc(lines[0] || '') + '</strong>' +
+        (lines[1] ? '<span>' + esc(lines[1]) + '</span>' : '') +
+      '</span>';
+    s.classList.remove('hidden');
+    lbOverlayBox = ov.box;
+    layoutSlideOverlay();
+  }
+
+  /* gentle slide/fade whenever the viewer moves to another picture */
+  function playSlideAnimation() {
+    if (reducedMotion) return;
+    var f = el.lightboxFrame;
+    f.classList.remove('lb-anim', 'lb-fade', 'lb-next', 'lb-prev');
+    void f.offsetWidth; /* force a restart when the same class is reused */
+    f.classList.add('lb-anim');
+    f.classList.add(lbDir < 0 ? 'lb-prev' : (lbDir > 0 ? 'lb-next' : 'lb-fade'));
+  }
+
+  window.addEventListener('resize', layoutSlideOverlay);
+
+  /* opens a subject portfolio item — an item with its own `images`
+     array shows its own pictures; otherwise the whole subject set
+     becomes browsable from the clicked card (previous behaviour). */
+  function openSubjectItem(subject, index) {
+    if (!subject || !subject.portfolio || !subject.portfolio.length) return;
+    index = Math.max(0, Math.min(index, subject.portfolio.length - 1));
+    var item = subject.portfolio[index];
+    var items = [];
+    var start = 0;
+
+    if (item && item.images && item.images.length) {
+      for (var p = 0; p < item.images.length; p++) {
+        var built = {
+          id: item.id + '-p' + p,
+          title: item.title,
+          image: item.images[p],
+          caption: item.description
+        };
+        if (item.overlay && item.overlay.image === item.images[p]) built.overlay = item.overlay;
+        items.push(built);
+      }
+      start = 0;
+    } else {
+      for (var i = 0; i < subject.portfolio.length; i++) {
+        var it = subject.portfolio[i];
+        if (!it.image && !it.video) continue;
+        var builtItem = {
+          id: it.id,
+          title: it.title,
+          image: it.image,
+          video: it.video,
+          poster: it.poster,
+          caption: it.description
+        };
+        if (it.overlay && it.overlay.image === it.image) builtItem.overlay = it.overlay;
+        items.push(builtItem);
+        if (i === index) start = items.length - 1;
+      }
+    }
+    openLightbox(start, items);
   }
 
   /* ---------- search ---------- */
@@ -868,7 +1060,8 @@
   }
 
   /* ---------- events ---------- */
-  el.subjectList.addEventListener('click', function (e) {
+  /* subject cards (subjects page) */
+  el.subjectCards.addEventListener('click', function (e) {
     var btn = e.target.closest('[data-subject]');
     if (!btn) return;
     openSubject(btn.getAttribute('data-subject'));
@@ -880,12 +1073,41 @@
     var subject = findSubject(activeSubjectId);
     if (!subject) return;
     var index = findItemIndex(subject, btn.getAttribute('data-item'));
-    if (index >= 0) gpOpen(subject, index);
+    if (index >= 0) openSubjectItem(subject, index);
   });
 
   el.backBtn.addEventListener('click', backToSubjects);
   el.crumbHome.addEventListener('click', backToSubjects);
-  el.clearDisplayBtn.addEventListener('click', clearDisplay);
+
+  /* top navigation + hero cards */
+  el.navTargets.forEach(function (node) {
+    node.addEventListener('click', function () {
+      var target = node.getAttribute('data-nav');
+      if (target === 'home') goHome();
+      else if (target === 'subjects') {
+        closeLightbox();
+        stopMusic();
+        renderSubjects();
+        showView('subjects');
+        scrollToTop();
+      } else if (target === 'mygallery') openMyGallery();
+    });
+  });
+
+  /* collapsible search inside the navigation */
+  if (el.searchToggle && el.navSearch) {
+    el.searchToggle.addEventListener('click', function () {
+      var open = el.navSearch.hasAttribute('hidden');
+      if (open) {
+        el.navSearch.removeAttribute('hidden');
+        el.searchToggle.setAttribute('aria-expanded', 'true');
+        el.searchInput.focus();
+      } else {
+        el.navSearch.setAttribute('hidden', '');
+        el.searchToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 
   el.searchInput.addEventListener('input', function () {
     runSearch(el.searchInput.value);
@@ -908,31 +1130,51 @@
     var subjectId = btn.getAttribute('data-subject');
     var itemId = btn.getAttribute('data-item');
     el.searchInput.value = '';
-    openSubject(subjectId);
     if (itemId) {
-      var subject = findSubject(subjectId);
-      var index = subject ? findItemIndex(subject, itemId) : -1;
-      if (index >= 0) gpOpen(subject, index);
+      openSubject(subjectId, function (subject) {
+        var index = findItemIndex(subject, itemId);
+        if (index >= 0) openSubjectItem(subject, index);
+      });
+    } else {
+      openSubject(subjectId);
     }
   });
 
-  el.exploreBtn.addEventListener('click', function () {
-    el.searchInput.value = '';
-    runSearch('');
-    if (currentView !== 'home') showView('home');
-    var target = el.subjectList;
-    if (target.scrollIntoView) {
-      target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'nearest' });
-    }
-    var first = el.subjectList.querySelector('.subject-btn');
-    if (first) first.focus({ preventScroll: true });
-  });
+  el.myGalleryBackBtn.addEventListener('click', backToHomeFromMyGallery);
 
-  function goHome() {
-    el.searchInput.value = '';
-    runSearch('');
-    backToSubjects();
+  /* stop music when the hero video is clicked or starts playing */
+  if (el.heroVideo) {
+    el.heroVideo.addEventListener('click', stopMusic);
+    el.heroVideo.addEventListener('play', stopMusic);
   }
+
+  el.myGalleryFilters.addEventListener('click', function (e) {
+    var chip = e.target.closest('[data-category]');
+    if (!chip) return;
+    activeCategory = chip.getAttribute('data-category');
+    renderMyGalleryFilters();
+    renderMyGallery();
+  });
+
+  el.myGalleryGrid.addEventListener('click', function (e) {
+    var card = e.target.closest('[data-index]');
+    if (!card) return;
+    var index = parseInt(card.getAttribute('data-index'), 10);
+    /* third argument: My Gallery always shows the whole photo */
+    if (!isNaN(index)) openLightbox(index, itemsForCategory(activeCategory), true);
+  });
+
+  /* viewer controls */
+  el.lightboxClose.addEventListener('click', closeLightbox);
+  el.lightboxPrev.addEventListener('click', lightboxPrev);
+  el.lightboxNext.addEventListener('click', lightboxNext);
+  el.lightboxOverlay.addEventListener('click', function (e) {
+    if (e.target === el.lightboxOverlay ||
+        (e.target.hasAttribute && e.target.hasAttribute('data-close'))) {
+      closeLightbox();
+    }
+  });
+
   el.brandHome.addEventListener('click', goHome);
   el.brandHome.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -941,35 +1183,19 @@
     }
   });
 
-  /* gallery popup controls */
-  el.gpClose.addEventListener('click', gpClose);
-  el.gpPrev.addEventListener('click', gpGoPrev);
-  el.gpNext.addEventListener('click', gpGoNext);
-  el.gpOverlay.addEventListener('click', function (e) {
-    if (e.target.hasAttribute && e.target.hasAttribute('data-close')) gpClose();
-  });
-
-  /* keep the carousel centred when the viewport is resized */
-  window.addEventListener('resize', function () {
-    if (el.gpOverlay.classList.contains('hidden')) return;
-    gpMeasure();
-    gpSetTrack(gpIdleT(), false);
-    if (gpActiveEl) gpFitImage(gpActiveEl, true);
-  });
-
   document.addEventListener('keydown', function (e) {
-    if (el.gpOverlay.classList.contains('hidden')) return;
+    if (!lightboxIsOpen()) return;
     if (e.key === 'Escape') {
-      gpClose();
+      closeLightbox();
     } else if (e.key === 'ArrowLeft') {
       e.preventDefault();
-      gpGoPrev();
+      lightboxPrev();
     } else if (e.key === 'ArrowRight') {
       e.preventDefault();
-      gpGoNext();
+      lightboxNext();
     } else if (e.key === 'Tab') {
-      /* keep focus inside the popup */
-      var focusables = el.gpOverlay.querySelectorAll('button:not(.hidden)');
+      /* keep focus inside the viewer */
+      var focusables = el.lightboxOverlay.querySelectorAll('button:not(.hidden)');
       if (!focusables.length) return;
       var first = focusables[0];
       var last = focusables[focusables.length - 1];
@@ -1350,6 +1576,26 @@
         mobile: mobile
       };
       st.trailSoft = true;
+    } else if (cfg.mode === 'hero') {
+      /* the hero airplane: a smooth circuit around the outer edges
+         of the sky, always behind the scrapbook collage */
+      var hm = Math.max(44, Math.min(110, w * 0.06));
+      var hTop = Math.max(38, Math.min(90, h * 0.08));
+      var hBot = Math.max(38, Math.min(84, h * 0.075));
+      st.cy = h * 0.5;
+      st.scale = Math.max(22, Math.min(48, Math.min(w, h) * 0.058));
+      st.focal = Math.max(420, w * 1.05);
+      st.fly = {
+        w: w, h: h,
+        mx: hm, myTop: hTop, myBot: hBot,
+        r: Math.max(38, Math.min(96, Math.min(w, h) * 0.12)),
+        cx: w * 0.5,
+        cy: h * 0.5,
+        zAmp: Math.min(34, h * 0.05),
+        trailLen: w < 760 ? Math.min(150, w * 0.42) : 288,
+        exit: 0
+      };
+      st.trailSoft = true;
     } else {
       st.ry = Math.max(14, h * 0.26);
       st.cy = h * 0.5;
@@ -1386,6 +1632,52 @@
     ];
   }
 
+  /* ---------- the hero flight path ----------
+     A rounded-rectangle circuit around the outer edges of the sky,
+     so the airplane never flies over the heading, the introduction,
+     the profile face or the video controls. */
+  function pathHero(t, st) {
+    var c = st.fly;
+    var x0 = c.mx, y0 = c.myTop;
+    var x1 = c.w - c.mx, y1 = c.h - c.myBot;
+    var r = Math.max(8, Math.min(c.r, (x1 - x0) / 2, (y1 - y0) / 2));
+    var lw = x1 - x0 - 2 * r;
+    var lh = y1 - y0 - 2 * r;
+    var arc = Math.PI * r / 2;
+    var total = 2 * lw + 2 * lh + 4 * arc;
+    var d = (((t % 1) + 1) % 1) * total;
+    var x, y, a;
+
+    if (d < lw) {                                   /* top edge, left to right */
+      x = x0 + r + d; y = y0;
+    } else if ((d -= lw) < arc) {                   /* top-right corner */
+      a = d / arc * Math.PI / 2;
+      x = x1 - r + Math.sin(a) * r; y = y0 + r - Math.cos(a) * r;
+    } else if ((d -= arc) < lh) {                   /* right edge, down */
+      x = x1; y = y0 + r + d;
+    } else if ((d -= lh) < arc) {                   /* bottom-right corner */
+      a = d / arc * Math.PI / 2;
+      x = x1 - r + Math.cos(a) * r; y = y1 - r + Math.sin(a) * r;
+    } else if ((d -= arc) < lw) {                   /* bottom edge, right to left */
+      x = x1 - r - d; y = y1;
+    } else if ((d -= lw) < arc) {                   /* bottom-left corner */
+      a = d / arc * Math.PI / 2;
+      x = x0 + r - Math.sin(a) * r; y = y1 - r + Math.cos(a) * r;
+    } else if ((d -= arc) < lh) {                   /* left edge, up */
+      x = x0; y = y1 - r - d;
+    } else {                                        /* top-left corner */
+      d -= lh;
+      a = Math.max(0, Math.min(1, d / arc)) * Math.PI / 2;
+      x = x0 + r - Math.cos(a) * r; y = y0 + r - Math.sin(a) * r;
+    }
+
+    return [
+      x - c.cx,
+      c.cy - y,
+      c.zAmp * Math.sin(t * Math.PI * 4)
+    ];
+  }
+
   function sceneFrame(st, dt) {
     var ctx = st.ctx;
     var w = st.w, h = st.h;
@@ -1407,6 +1699,7 @@
     };
 
     var flight = st.cfg.mode === 'flight';
+    var hero = st.cfg.mode === 'hero';
     var pos, ahead, bank;
 
     if (flight) {
@@ -1415,6 +1708,15 @@
       /* the airplane leans into its turn */
       bank = st.fly.bankBase + st.fly.bankAmp *
              Math.sin(st.phase * Math.PI * 2 * st.fly.waves + 0.6);
+    } else if (hero) {
+      /* a smooth circuit around the sky, banking into every corner */
+      pos = pathHero(st.phase, st);
+      ahead = pathHero(st.phase + 0.002, st);
+      var p2 = pathHero(st.phase + 0.006, st);
+      var h0 = Math.atan2(ahead[1] - pos[1], ahead[0] - pos[0]);
+      var h1 = Math.atan2(p2[1] - ahead[1], p2[0] - ahead[0]);
+      var turn = Math.atan2(Math.sin(h1 - h0), Math.cos(h1 - h0));
+      bank = Math.max(-0.55, Math.min(0.55, turn * 4.2)) + 0.08;
     } else {
       /* the ring slowly rocks, which makes the depth easier to read */
       var tilt = (st.cfg.tilt || 0.5) + Math.sin(st.time * 0.45) * 0.10;
@@ -1441,7 +1743,7 @@
       f: f
     };
 
-    if (flight) {
+    if (flight || hero) {
       /* the contrail is rebuilt from the path behind the airplane, so
          it keeps the wanted length whatever the frame rate is */
       st.trail = buildFlightTrail(st, cam);
@@ -1470,14 +1772,15 @@
   /* walks back along the flight path until the wanted trail length
      is reached, oldest point first */
   function buildFlightTrail(st, cam) {
+    var pathFn = st.cfg.mode === 'hero' ? pathHero : pathFlight;
     var target = st.fly.trailLen;
     var pts = [];
     var ph = st.phase;
     var prev = null;
     var dist = 0;
-    var step = 0.006;
-    while (pts.length < 120 && dist < target) {
-      var p = pathFlight(ph, st);
+    var step = st.cfg.mode === 'hero' ? 0.004 : 0.006;
+    while (pts.length < 140 && dist < target) {
+      var p = pathFn(ph, st);
       var sc = planeProject(p, cam);
       if (prev) {
         dist += Math.sqrt((sc.x - prev.x) * (sc.x - prev.x) + (sc.y - prev.y) * (sc.y - prev.y));
@@ -1527,7 +1830,7 @@
     if (reducedMotion) {
       /* one still frame of the very same scene */
       st.phase = st.cfg.phase || 0.18;
-      if (st.cfg.mode === 'flight') {
+      if (st.cfg.mode === 'flight' || st.cfg.mode === 'hero') {
         st.trail = [];
       } else {
         for (var i = 0; i < st.cfg.trailMax; i++) {
@@ -1548,6 +1851,7 @@
      from one end of the profile picture to the other.
      ============================================================ */
   var profileScene = null;
+  var heroScene = null;
 
   function startProfileScene() {
     profileScene = createPlaneScene(document.getElementById('profilePlane'), {
@@ -1559,16 +1863,31 @@
   }
 
   /* ============================================================
+     THE HERO AIRPLANE
+     ------------------------------------------------------------
+     A 3D airplane that circuits the outer edges of the hero sky
+     with a fading vapour trail, always behind the scrapbook
+     collage so it never covers the heading, the face or the
+     video controls.
+     ============================================================ */
+  function startHeroScene() {
+    heroScene = createPlaneScene(document.getElementById('heroPlane'), {
+      mode: 'hero',
+      speed: 1 / 30,           /* one full circuit in 30 seconds */
+      phase: 0.06,
+      trailMax: 60
+    });
+    sceneStart(heroScene);
+  }
+
+  /* ============================================================
      THE LOADING SCREEN
      ------------------------------------------------------------
      A full screen overlay with the same 3D airplane flying in it.
-     It is used when the page starts, when a subject is opened and
-     when a portfolio item is opened. If two of those happen at
-     once, the second one simply waits for the first to finish.
+     It shows when a subject gallery is opened. If something else
+     also needs it, the second request simply waits its turn.
      ============================================================ */
-  var LOADER_DELAY = 2500;      /* the first load of the page */
-  var LOADER_SUBJECT = 1200;    /* opening a subject          */
-  var LOADER_ITEM = 1000;       /* opening a portfolio item   */
+  var LOADER_SUBJECT = 700;     /* opening a subject */
 
   var loaderBusy = false;
   var loaderQueue = [];
@@ -1617,6 +1936,16 @@
     };
     var start = now();
 
+    /* safety net: force-hide the loader if something blocks the tick loop */
+    var safety = window.setTimeout(function () {
+      loader.classList.add('is-done');
+      window.setTimeout(function () {
+        loader.classList.add('hidden');
+      }, 500);
+      sceneStop(loaderScene);
+      loaderBusy = false;
+    }, delay + 3000);
+
     function tick() {
       var p = Math.min(1, (now() - start) / delay);
       if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
@@ -1624,6 +1953,7 @@
         window.requestAnimationFrame(tick);
         return;
       }
+      window.clearTimeout(safety);
       loader.classList.add('is-done');
       window.setTimeout(function () {
         loader.classList.add('hidden');
@@ -1638,9 +1968,33 @@
   }
 
   /* ---------- init ---------- */
-  renderSubjects();
-  showView('home');
-  clearDisplay();
-  startProfileScene();
-  showLoader(LOADER_DELAY, null);
+  function initApp() {
+    renderSubjects();
+    renderMyGalleryFilters();
+    renderMyGallery();
+    showView('home');
+    startHeroScene();
+    startProfileScene();
+    /* the background music starts automatically with the home view
+       (see showView above) */
+    /* homepage opens immediately - no initial loader.
+       Loader only shows when entering subjects/portfolio items. */
+  }
+
+  try {
+    initApp();
+  } catch (err) {
+    console.error('Init error:', err);
+    var loader = document.getElementById('loader');
+    if (loader) {
+      loader.classList.add('is-done');
+      window.setTimeout(function () { loader.classList.add('hidden'); }, 500);
+    }
+    var home = document.getElementById('homeView');
+    if (home) home.classList.add('is-active');
+    /* fallback: try rendering subjects again after a short delay */
+    window.setTimeout(function () {
+      try { renderSubjects(); } catch (e) { console.error('Subject render fallback failed:', e); }
+    }, 100);
+  }
 })();
