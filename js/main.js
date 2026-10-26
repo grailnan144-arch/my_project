@@ -65,12 +65,7 @@
       intro: 'Language arts outputs — essays, speeches, and creative writing from class activities.',
       icon: ICONS.english,
       cover: 'images/covers/english.svg',
-      portfolio: [
-        { id: 'en-1', title: 'Read-In Report', description: 'Reaction paper for the class reading.', image: 'images/english-1.svg', section: 'activities' },
-        { id: 'en-2', title: 'Poem of the Rain', description: 'Original poem submitted for the recital.', image: 'images/english-2.svg', section: 'outputs' },
-        { id: 'en-3', title: 'Speech Draft', description: 'Draft and final delivery notes.', image: 'images/english-3.svg', section: 'projects' },
-        { id: 'en-4', title: 'Character Sketch', description: 'Analysis of the protagonist.', image: 'images/english-4.svg', section: 'outputs' }
-      ]
+      portfolio: []
     },
     {
       id: 'mathematics', title: 'Mathematics', tone: 1,
@@ -78,12 +73,7 @@
       intro: 'Mathematical reasoning shown through solutions, models, and project work.',
       icon: ICONS.mathematics,
       cover: 'images/covers/mathematics.svg',
-      portfolio: [
-        { id: 'ma-1', title: 'Problem Set 04', description: 'Solutions with complete working.', image: 'images/mathematics-1.svg', section: 'activities' },
-        { id: 'ma-2', title: 'Geometry Model', description: 'Built model of the solid figures.', image: 'images/mathematics-2.svg', section: 'projects' },
-        { id: 'ma-3', title: 'Data Report', description: 'Interpretation of collected data.', image: 'images/mathematics-3.svg', section: 'outputs' },
-        { id: 'ma-4', title: 'Calculus Notes', description: 'Summary of the differentiation topic.', image: 'images/mathematics-4.svg', section: 'activities' }
-      ]
+      portfolio: []
     },
     {
       id: 'science', title: 'Science', tone: 2,
@@ -91,12 +81,7 @@
       intro: 'Investigations, lab reports, and science fair outputs collected in one place.',
       icon: ICONS.science,
       cover: 'images/covers/science.svg',
-      portfolio: [
-        { id: 'sc-1', title: 'Volcano Experiment', description: 'Model eruption and observations.', image: 'images/science-1.svg', section: 'activities' },
-        { id: 'sc-2', title: 'Lab Report', description: 'Write-up of the approved experiment.', image: 'images/science-2.svg', section: 'outputs' },
-        { id: 'sc-3', title: 'Plant Growth Log', description: 'Two-week growth measurements.', image: 'images/science-3.svg', section: 'projects' },
-        { id: 'sc-4', title: 'Circuit Model', description: 'Working series-parallel circuit.', image: 'images/science-4.svg', section: 'projects' }
-      ]
+      portfolio: []
     },
     {
       id: 'filipino', title: 'Filipino', tone: 3,
@@ -105,10 +90,7 @@
       icon: ICONS.filipino,
       cover: 'images/covers/filipino.svg',
       portfolio: [
-        { id: 'fi-1', title: 'Sanaysay', description: 'Pagsulat tungkol sa aking karanasan.', image: 'images/filipino-1.svg', section: 'outputs' },
-        { id: 'fi-2', title: 'Tula ng Pag-asa', description: 'Tula inilathala sa panitikan ng klase.', image: 'images/filipino-2.svg', section: 'outputs' },
-        { id: 'fi-3', title: 'Ulat sa Klase', description: 'Ulat kinalam na ulat-panayam.', image: 'images/filipino-3.svg', section: 'activities' },
-        { id: 'fi-4', title: 'Batasang Pambansa', description: 'Balangkas ng isang panukalang batas.', image: 'images/filipino-4.svg', section: 'projects' }
+        { id: 'fi-tanka', title: 'Tanka at Haiku', description: 'Mga tanka at haiku tungkol sa aking karanasan.', image: 'images/Filipino/tanka_at_haiku/1.png', images: ['images/Filipino/tanka_at_haiku/1.png','images/Filipino/tanka_at_haiku/2.png','images/Filipino/tanka_at_haiku/3.png'], section: 'outputs', display: 'scroll' }
       ]
     },
     {
@@ -117,12 +99,7 @@
       intro: 'Research, maps, and community studies that explore people and society.',
       icon: ICONS.araling,
       cover: 'images/covers/araling-panlipunan.svg',
-      portfolio: [
-        { id: 'ap-1', title: 'Pre-Colonial Map', description: 'Mapa ng mga sinaunang kabayanan.', image: 'images/araling-panlipunan-1.svg', section: 'projects' },
-        { id: 'ap-2', title: 'Community Survey', description: 'Pag-aaral ng komunidad ng aming barangay.', image: 'images/araling-panlipunan-2.svg', section: 'activities' },
-        { id: 'ap-3', title: 'Timeline Poster', description: 'Timeline ng mga panahonang kasaysayan.', image: 'images/araling-panlipunan-3.svg', section: 'projects' },
-        { id: 'ap-4', title: 'Economic Report', description: 'Ulat sa kalagayan ng ekonomiya.', image: 'images/araling-panlipunan-4.svg', section: 'outputs' }
-      ]
+      portfolio: []
     },
     {
       id: 'values-education', title: 'Values Education', tone: 1,
@@ -130,12 +107,7 @@
       intro: 'Reflections, action plans, and service-learning outputs about values in practice.',
       icon: ICONS.values,
       cover: 'images/covers/values-education.svg',
-      portfolio: [
-        { id: 'va-1', title: 'Reflection Paper', description: 'Pagninilay sa mga aral ng klase.', image: 'images/values-education-1.svg', section: 'outputs' },
-        { id: 'va-2', title: 'Action Plan', description: 'Plano para sa isang linggong pagpapabuti.', image: 'images/values-education-2.svg', section: 'projects' },
-        { id: 'va-3', title: 'Service Diary', description: 'Talaan ng pagtutulong sa komunidad.', image: 'images/values-education-3.svg', section: 'activities' },
-        { id: 'va-4', title: 'Good Citizenship', description: 'Poster tungkol sa mabuting mamamayan.', image: 'images/values-education-4.svg', section: 'projects' }
-      ]
+      portfolio: []
     },
     {
       id: 'tle', title: 'TLE', tone: 2,
@@ -179,12 +151,7 @@
       intro: 'Performances, artwork, fitness records, and health projects in one gallery.',
       icon: ICONS.mapeh,
       cover: 'images/covers/mapeh.svg',
-      portfolio: [
-        { id: 'mp-1', title: 'Acoustic Piece', description: 'Performance notes for the recital.', image: 'images/mapeh-1.svg', section: 'projects' },
-        { id: 'mp-2', title: 'Still Life', description: 'Likhang sining na ginawa sa klase.', image: 'images/mapeh-2.svg', section: 'outputs' },
-        { id: 'mp-3', title: 'Fitness Record', description: 'Talaan ng mga benisyaryong ehersisyo.', image: 'images/mapeh-3.svg', section: 'activities' },
-        { id: 'mp-4', title: 'Health Poster', description: 'Poster tungkol sa malusog na pamumuhay.', image: 'images/mapeh-4.svg', section: 'projects' }
-      ]
+      portfolio: []
     }
   ];
 
