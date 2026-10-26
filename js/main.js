@@ -90,7 +90,7 @@
       icon: ICONS.filipino,
       cover: 'images/covers/filipino.svg',
       portfolio: [
-        { id: 'fi-tanka', title: 'Tanka at Haiku', description: 'Mga tanka at haiku tungkol sa aking karanasan.', image: 'images/Filipino/tanka_at_haiku/1.png', images: ['images/Filipino/tanka_at_haiku/1.png','images/Filipino/tanka_at_haiku/2.png','images/Filipino/tanka_at_haiku/3.png'], section: 'outputs', display: 'scroll' }
+        { id: 'fi-tanka', title: 'Tanka at Haiku', description: 'Mga tanka at haiku tungkol sa aking karanasan.', image: 'images/FILIPINO/tanka_at_haiku/1.png', images: ['images/FILIPINO/tanka_at_haiku/1.png','images/FILIPINO/tanka_at_haiku/2.png','images/FILIPINO/tanka_at_haiku/3.png'], section: 'outputs', display: 'scroll' }
       ]
     },
     {
