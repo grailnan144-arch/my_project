@@ -11,7 +11,7 @@
      a generic avatar fallback is shown automatically.
      ============================================================ */
   var CONFIG = {
-    logoPath: 'images/logo.jpg'
+    logoPath: 'images/logo.png'
   };
 
   /* ---------- subject icons (inline SVG) ---------- */
@@ -61,49 +61,57 @@
   var subjects = [
     {
       id: 'english', title: 'English', tone: 0,
-      desc: 'Reading, writing, and communication works.',
+      desc: 'Read, Write, and Express Your Ideas While Exploring Literature.',
       intro: 'Language arts outputs — essays, speeches, and creative writing from class activities.',
       icon: ICONS.english,
       cover: 'images/covers/english.svg',
-      portfolio: []
+      portfolio: [
+        { id: 'en-gallery', title: 'English Gallery', description: 'Reading, writing, and communication outputs from our English class.', image: 'images/ENGLISH/%20(1).png', images: ['images/ENGLISH/%20(1).png','images/ENGLISH/%20(2).png','images/ENGLISH/%20(3).png','images/ENGLISH/%20(4).png','images/ENGLISH/%20(5).png'], section: 'outputs', display: 'scroll' }
+      ]
     },
     {
       id: 'mathematics', title: 'Mathematics', tone: 1,
-      desc: 'Problem solving and numeracy projects.',
+      desc: 'Think Critically, Solve Problems, and Improve your Mathematical Skills.',
       intro: 'Mathematical reasoning shown through solutions, models, and project work.',
       icon: ICONS.mathematics,
       cover: 'images/covers/mathematics.svg',
-      portfolio: []
+      portfolio: [
+        { id: 'ma-gallery', title: 'Mathematics Gallery', description: 'Mathematical reasoning shown through worked solutions and project work.', image: 'images/MATH/math.png', images: ['images/MATH/math.png'], section: 'outputs', display: 'scroll' }
+      ]
     },
     {
       id: 'science', title: 'Science', tone: 2,
-      desc: 'Experiments, reports, and discoveries.',
+      desc: 'Experiments, Reports, and Discoveries',
       intro: 'Investigations, lab reports, and science fair outputs collected in one place.',
       icon: ICONS.science,
       cover: 'images/covers/science.svg',
-      portfolio: []
+      portfolio: [
+        { id: 'sc-gallery', title: 'Science Gallery', description: 'Mga proyekto at gawain sa Science.', image: 'images/SCIENCE/1.png', images: ['images/SCIENCE/1.png','images/SCIENCE/2.png','images/SCIENCE/3.png','images/SCIENCE/4.png','images/SCIENCE/5.png','images/SCIENCE/6.png','images/SCIENCE/7.png','images/SCIENCE/8.png','images/SCIENCE/9.png','images/SCIENCE/10.png'], section: 'outputs', display: 'scroll' }
+      ]
     },
     {
       id: 'filipino', title: 'Filipino', tone: 3,
-      desc: 'Wika, panitikan, at pagsulat.',
+      desc: 'Magbasa, Umunawa, at Ipagmalaki ang Wikang Filipino.',
       intro: 'Mga gawaing pamp Filipino — sanaysay, tula, ulat, at proyekto sa wika.',
       icon: ICONS.filipino,
       cover: 'images/covers/filipino.svg',
       portfolio: [
-        { id: 'fi-tanka', title: 'Tanka at Haiku', description: 'Mga tanka at haiku tungkol sa aking karanasan.', image: 'images/FILIPINO/tanka_at_haiku/1.png', images: ['images/FILIPINO/tanka_at_haiku/1.png','images/FILIPINO/tanka_at_haiku/2.png','images/FILIPINO/tanka_at_haiku/3.png'], section: 'outputs', display: 'scroll' }
+        { id: 'fi-tanka', title: 'Tanka at Haiku', description: 'Mga tanka at haiku tungkol sa aking karanasan.', image: 'images/FILIPINO/tanka_at_haiku/1.png', images: ['images/FILIPINO/tanka_at_haiku/1.png','images/FILIPINO/tanka_at_haiku/2.png','images/FILIPINO/tanka_at_haiku/3.png','images/FILIPINO/tanka_at_haiku/4.png'], section: 'outputs', display: 'scroll' }
       ]
     },
     {
       id: 'araling-panlipunan', title: 'Araling Panlipunan', tone: 0,
-      desc: 'History, society, and civics outputs.',
+      desc: 'Explore History, Understand Society and Civics, and Learn About Economics.',
       intro: 'Research, maps, and community studies that explore people and society.',
       icon: ICONS.araling,
       cover: 'images/covers/araling-panlipunan.svg',
-      portfolio: []
+      portfolio: [
+        { id: 'ap-gallery', title: 'Araling Panlipunan Gallery', description: 'Research, maps, and community studies from our Araling Panlipunan class.', image: 'images/AP/1.png', images: ['images/AP/1.png','images/AP/2.png','images/AP/3.png','images/AP/4.png','images/AP/5.png','images/AP/6.png'], section: 'outputs', display: 'scroll' }
+      ]
     },
     {
       id: 'values-education', title: 'Values Education', tone: 1,
-      desc: 'Character reflections and good-citizenship work.',
+      desc: 'Learn to Be Kind, Honest, Respectful, and Responsible.',
       intro: 'Reflections, action plans, and service-learning outputs about values in practice.',
       icon: ICONS.values,
       cover: 'images/covers/values-education.svg',
@@ -111,7 +119,7 @@
     },
     {
       id: 'tle', title: 'TLE', tone: 2,
-      desc: 'Technology and livelihood skills projects.',
+      desc: 'Learn Practical Skills, Create Useful Projects, and Achieve Your Goals.',
       intro: 'Practical creations, livelihood demos, and technology projects from TLE class.',
       icon: ICONS.tle,
       cover: 'images/covers/tle.svg',
@@ -147,7 +155,7 @@
     },
     {
       id: 'mapeh', title: 'MAPEH', tone: 3,
-      desc: 'Music, arts, PE, and health outputs.',
+      desc: 'Stay Active, Create Art, Perform with Confidence, and Express Yourself.',
       intro: 'Performances, artwork, fitness records, and health projects in one gallery.',
       icon: ICONS.mapeh,
       cover: 'images/covers/mapeh.svg',
@@ -238,6 +246,7 @@
     myGalleryView: document.getElementById('myGalleryView'),
     subjectCards: document.getElementById('subjectCards'),
     galleryTitle: document.getElementById('galleryTitle'),
+    galleryDesc: document.getElementById('galleryDesc'),
     galleryIntro: document.getElementById('galleryIntro'),
     galleryGrid: document.getElementById('galleryGrid'),
     galleryEmpty: document.getElementById('galleryEmpty'),
@@ -418,6 +427,7 @@
 
     el.galleryTitle.textContent = subject.title;
     el.galleryIntro.textContent = subject.intro;
+    if (el.galleryDesc) el.galleryDesc.textContent = subject.desc || '';
     el.crumbTitle.textContent = subject.title;
     el.heroIcon.innerHTML = subject.icon;
     el.heroIcon.style.background = SUBJECT_TINTS[subject.tone % SUBJECT_TINTS.length];
@@ -426,12 +436,21 @@
     if (!items.length) {
       el.galleryGrid.innerHTML = '';
       el.galleryGrid.classList.add('hidden');
+      el.galleryGrid.classList.remove('is-single');
+      el.galleryGrid.classList.remove('is-posters');
       el.galleryEmpty.classList.remove('hidden');
       return;
     }
 
     el.galleryEmpty.classList.add('hidden');
     el.galleryGrid.classList.remove('hidden');
+    /* one item only: the grid swaps to a single, centred feature card
+       (see .gallery-grid.is-single) so the page never looks empty */
+    el.galleryGrid.classList.toggle('is-single', items.length === 1);
+    /* Mathematics work is a portrait poster, not a snapshot: its preview
+       keeps the whole sheet on screen (object-fit: contain, see
+       .gallery-grid.is-posters) instead of cropping it like a photo */
+    el.galleryGrid.classList.toggle('is-posters', subject.id === 'mathematics');
 
     var html = '';
     for (var i = 0; i < items.length; i++) {
@@ -462,17 +481,14 @@
   function openSubject(id, afterOpen) {
     var subject = findSubject(id);
     if (!subject) return;
-    /* the gallery opens behind the loading screen */
-    showLoader(LOADER_SUBJECT, function () {
-      stopMusic();
-      activeSubjectId = id;
-      activeItemId = null;
-      renderSubjects();
-      renderGallery();
-      showView('gallery');
-      scrollToTop();
-      if (afterOpen) afterOpen(subject);
-    });
+    stopMusic();
+    activeSubjectId = id;
+    activeItemId = null;
+    renderSubjects();
+    renderGallery();
+    showView('gallery');
+    scrollToTop();
+    if (afterOpen) afterOpen(subject);
   }
 
   function backToSubjects() {
@@ -796,6 +812,7 @@
     lbDir = 1;
     lbIndex = (lbIndex + 1) % lbItems.length;
     updateLightbox();
+    playFlight();
   }
 
   function lightboxPrev() {
@@ -803,6 +820,7 @@
     lbDir = -1;
     lbIndex = (lbIndex - 1 + lbItems.length) % lbItems.length;
     updateLightbox();
+    playFlight();
   }
 
   /* ============================================================
@@ -864,6 +882,38 @@
     void f.offsetWidth; /* force a restart when the same class is reused */
     f.classList.add('lb-anim');
     f.classList.add(lbDir < 0 ? 'lb-prev' : (lbDir > 0 ? 'lb-next' : 'lb-fade'));
+  }
+
+  /* ============================================================
+     AIRPLANE FLIGHT ACROSS THE VIEWER
+     ------------------------------------------------------------
+     A small paper-airplane (the same silhouette already used by the
+     navigation and the paper banners) crosses the picture only when
+     the visitor moves to another image: Next, Previous or one of the
+     gallery thumbnails. It climbs, dips and leaves a short fading
+     trail, then removes itself from sight — nothing loops while a
+     picture is simply on screen, and nothing runs on page load.
+     ============================================================ */
+  var flightEl = null;
+
+  function playFlight() {
+    if (reducedMotion) return;
+    var host = el.lightboxContent;
+    if (!host) return;
+    if (!flightEl || !flightEl.parentNode) {
+      flightEl = document.createElement('span');
+      flightEl.className = 'lb-flight';
+      flightEl.setAttribute('aria-hidden', 'true');
+      flightEl.innerHTML =
+        '<svg viewBox="74 2 44 40" width="34" height="31" focusable="false">' +
+          '<path d="M112 10.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z" fill="currentColor"></path>' +
+        '</svg>';
+      host.appendChild(flightEl);
+    }
+    /* restart the animation even when the same class is reused */
+    flightEl.classList.remove('is-flying');
+    void flightEl.offsetWidth;
+    flightEl.classList.add('is-flying');
   }
 
   window.addEventListener('resize', layoutSlideOverlay);
@@ -1040,7 +1090,11 @@
     var subject = findSubject(activeSubjectId);
     if (!subject) return;
     var index = findItemIndex(subject, btn.getAttribute('data-item'));
-    if (index >= 0) openSubjectItem(subject, index);
+    if (index >= 0) {
+      openSubjectItem(subject, index);
+      /* picking a thumbnail is a change of picture too */
+      playFlight();
+    }
   });
 
   el.backBtn.addEventListener('click', backToSubjects);
@@ -1179,12 +1233,10 @@
   /* ============================================================
      3D AIRPLANE SCENES
      ------------------------------------------------------------
-     A miniature software renderer, used twice:
-       1. the preview picture - the plane loops around the top of
-          the picture and dives behind its left edge, so it
-          disappears for a moment and comes straight back out on
-          the left;
-       2. the loading screen - the same plane, always in front.
+     A miniature software renderer. It draws the airplane that
+     circuits the outer edges of the hero sky, always behind the
+     scrapbook collage so it never covers the heading, the face or
+     the video controls.
      Points are rotated by a yaw + pitch camera and projected with
      a simple perspective divide. No libraries, no build step.
      ============================================================ */
@@ -1416,9 +1468,9 @@
   }
 
   /* ---------- the trail behind the plane ----------
-     `soft` gives the profile airplane a smooth vapour trail: a wide
+     `soft` gives the flying airplanes a smooth vapour trail: a wide
      faint halo plus a brighter core, both fading out towards the
-     far end. The loading screen keeps its own dotted trail. */
+     far end. */
   function drawTrail(ctx, cam, trail, depthFade, soft, mul) {
     if (trail.length < 2) return;
     var m = mul === undefined ? 1 : mul;
@@ -1771,15 +1823,7 @@
     st.raf = window.requestAnimationFrame(function (t) { sceneLoop(st, t); });
   }
 
-  function sceneStop(st) {
-    if (!st) return;
-    if (st.raf && window.cancelAnimationFrame) {
-      window.cancelAnimationFrame(st.raf);
-    }
-    st.raf = 0;
-  }
-
-  /* starts the animation again after sceneStop() */
+  /* starts the animation (again) for a scene that was never started */
   function sceneResume(st) {
     if (!st || st.raf) return;
     st.last = 0;
@@ -1810,24 +1854,7 @@
     sceneResume(st);
   }
 
-  /* ============================================================
-     THE PROFILE AIRPLANE
-     ------------------------------------------------------------
-     Its own scene: the same 3D model as the loading screen, but
-     with its own canvas, its own path, timing and trail. It flies
-     from one end of the profile picture to the other.
-     ============================================================ */
-  var profileScene = null;
   var heroScene = null;
-
-  function startProfileScene() {
-    profileScene = createPlaneScene(document.getElementById('profilePlane'), {
-      mode: 'flight',
-      speed: 1 / 14,            /* one full crossing in 14 seconds */
-      trailMax: 40
-    });
-    sceneStart(profileScene);
-  }
 
   /* ============================================================
      THE HERO AIRPLANE
@@ -1847,93 +1874,6 @@
     sceneStart(heroScene);
   }
 
-  /* ============================================================
-     THE LOADING SCREEN
-     ------------------------------------------------------------
-     A full screen overlay with the same 3D airplane flying in it.
-     It shows when a subject gallery is opened. If something else
-     also needs it, the second request simply waits its turn.
-     ============================================================ */
-  var LOADER_SUBJECT = 700;     /* opening a subject */
-
-  var loaderBusy = false;
-  var loaderQueue = [];
-  var loaderScene = null;
-
-  function startLoaderScene() {
-    loaderScene = createPlaneScene(document.getElementById('loaderPlane'), {
-      tilt: 0.5,
-      speed: 0.22,
-      trailMax: 30
-    });
-    sceneStart(loaderScene);
-  }
-
-  /* shows the loading screen for `delay` ms, then calls `done` */
-  function showLoader(delay, done) {
-    var loader = document.getElementById('loader');
-    if (!loader) { if (done) done(); return; }
-
-    if (loaderBusy) {                 /* one after the other */
-      loaderQueue.push({ delay: delay, done: done });
-      return;
-    }
-    if (reducedMotion) {              /* no animation, no waiting */
-      if (done) done();
-      return;
-    }
-
-    loaderBusy = true;
-    loader.classList.remove('hidden');
-    loader.classList.remove('is-done');
-
-    var fill = document.getElementById('loaderFill');
-    if (fill) fill.style.width = '0%';
-
-    if (!loaderScene) {
-      startLoaderScene();
-    } else {
-      loaderScene.phase = 0;
-      loaderScene.trail.length = 0;
-      sceneResume(loaderScene);
-    }
-
-    var now = function () {
-      return (window.performance && performance.now) ? performance.now() : Date.now();
-    };
-    var start = now();
-
-    /* safety net: force-hide the loader if something blocks the tick loop */
-    var safety = window.setTimeout(function () {
-      loader.classList.add('is-done');
-      window.setTimeout(function () {
-        loader.classList.add('hidden');
-      }, 500);
-      sceneStop(loaderScene);
-      loaderBusy = false;
-    }, delay + 3000);
-
-    function tick() {
-      var p = Math.min(1, (now() - start) / delay);
-      if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
-      if (p < 1) {
-        window.requestAnimationFrame(tick);
-        return;
-      }
-      window.clearTimeout(safety);
-      loader.classList.add('is-done');
-      window.setTimeout(function () {
-        loader.classList.add('hidden');
-      }, 500);
-      sceneStop(loaderScene);
-      loaderBusy = false;
-      if (done) done();
-      var next = loaderQueue.shift();
-      if (next) window.setTimeout(function () { showLoader(next.delay, next.done); }, 260);
-    }
-    window.requestAnimationFrame(tick);
-  }
-
   /* ---------- init ---------- */
   function initApp() {
     renderSubjects();
@@ -1941,22 +1881,14 @@
     renderMyGallery();
     showView('home');
     startHeroScene();
-    startProfileScene();
     /* the background music starts automatically with the home view
        (see showView above) */
-    /* homepage opens immediately - no initial loader.
-       Loader only shows when entering subjects/portfolio items. */
   }
 
   try {
     initApp();
   } catch (err) {
     console.error('Init error:', err);
-    var loader = document.getElementById('loader');
-    if (loader) {
-      loader.classList.add('is-done');
-      window.setTimeout(function () { loader.classList.add('hidden'); }, 500);
-    }
     var home = document.getElementById('homeView');
     if (home) home.classList.add('is-active');
     /* fallback: try rendering subjects again after a short delay */

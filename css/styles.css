@@ -174,6 +174,8 @@ body {
   color: var(--deep-blue);
 }
 .nav-logo {
+  position: relative;
+  overflow: hidden;
   flex: 0 0 auto;
   width: 38px; height: 38px;
   border-radius: 12px;
@@ -185,7 +187,11 @@ body {
   box-shadow: var(--shadow-sm);
 }
 .nav-logo svg { width: 21px; height: 21px; }
+/* the logo image sits exactly over its rounded frame while it loads,
+   so the icon behind it never shifts the header */
 .nav-logo img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -206,6 +212,9 @@ body {
   font-family: 'Caveat', cursive;
   font-size: 0.98rem;
   color: var(--peach-brown);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .nav-brand:hover .nav-logo { transform: rotate(-6deg) scale(1.05); }
 .nav-logo { transition: transform 0.3s var(--ease); }
@@ -447,7 +456,7 @@ body {
 .hero {
   position: relative;
   overflow: hidden;
-  min-height: clamp(660px, 48vw, 740px);
+  min-height: clamp(740px, 56.7vw, 940px);
   height: auto;
   isolation: isolate;
   background:
@@ -552,6 +561,29 @@ body {
 .ticket-route { font-weight: 800; color: var(--deep-blue); letter-spacing: 0.06em; }
 .ticket-route i { font-style: normal; color: var(--peach-brown); padding: 0 2px; }
 .ticket-meta { color: var(--muted); letter-spacing: 0.08em; }
+/* passenger class printed on the pass, clear of the barcode */
+.ticket-grade {
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--navy);
+  line-height: 1.2;
+}
+/* school seal printed on the pass beside the class line */
+.ticket-foot {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.ticket-logo {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 1px 3px rgba(112, 70, 49, 0.28);
+}
 .ticket-barcode {
   height: 14px;
   margin-top: 2px;
@@ -598,9 +630,11 @@ body {
 .hero-content {
   position: relative;
   z-index: 2;
-  min-height: clamp(660px, 48vw, 740px);
+  /* taller than the intro alone so the bigger map frame (right column)
+     and the video card below it never touch each other */
+  min-height: clamp(740px, 56.7vw, 940px);
   display: grid;
-  grid-template-columns: minmax(0, 42%) minmax(0, 40%);
+  grid-template-columns: minmax(0, 42%) minmax(0, 46%);
   justify-content: space-between;
   align-items: stretch;
   gap: 24px;
@@ -692,23 +726,183 @@ body {
   transform: rotate(-1.4deg);
   z-index: 2;
 }
-.photo-frame .profile-picture {
-  display: block;
+/* ---- interactive map of Asia, printed inside the photo frame ----
+   The frame keeps the exact proportions the old photograph had
+   (4:3), so the collage below it does not shift by a pixel. */
+.map-holder {
+  position: relative;
+  display: grid;
+  place-items: center;
   width: 100%;
   aspect-ratio: 4 / 3;
-  object-fit: cover;
-  object-position: 50% 30%;
+  padding: 8px;
   border-radius: 2px;
-  background: #dfeaf3;
+  overflow: hidden;
+  /* own compositing layer: the animated airplane canvas above the map
+     can never repaint (or blank) the SVG underneath it */
+  isolation: isolate;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.55), transparent 62%),
+    linear-gradient(170deg, #DCEEFA 0%, var(--sky-soft) 58%, #BFE0F4 100%);
 }
-/* the 3D airplane flies inside the photograph only */
-.photo-frame .profile-plane {
-  position: absolute;
-  inset: 12px 12px 46px;
-  width: auto;
-  height: auto;
+.map-holder svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* the fallback note only shows while the map is missing */
+.map-fallback {
+  margin: 0;
+  max-width: 320px;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--deep-blue);
+}
+.map-holder.is-ready .map-fallback,
+.map-holder:has(svg) .map-fallback { display: none; }
+
+/* each country is its own clickable shape: hovering only tints it a
+   little deeper and brings up its flag card (see js/asia-map.js) */
+.map-holder path.land {
+  fill: #F7E7DA;
+  stroke: rgba(112, 70, 49, 0.55);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+  cursor: pointer;
+  outline: none;
+  transition: fill 0.28s var(--ease), stroke 0.28s var(--ease);
+}
+.map-holder path.land:hover,
+.map-holder path.land:focus {
+  fill: #F0D4BC;
+  stroke: var(--deep-brown);
+  stroke-width: 0.75;
+}
+/* country names printed on the map; they never catch the pointer so
+   hovering or tapping always reaches the country shape underneath */
+.map-holder .land-labels {
   pointer-events: none;
-  z-index: 3;
+  user-select: none;
+}
+.map-holder .land-label {
+  font-family: inherit;
+  /* sized in map units: the map SVG is scaled up inside the frame, so a
+     fixed px size here would render far too large */
+  font-size: 6.2px;
+  font-weight: 800;
+  text-anchor: middle;
+  fill: #6E4530;
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+/* thin line that ties a label to a country too small to hold it */
+.map-holder .land-leader {
+  fill: none;
+  stroke: rgba(110, 69, 48, 0.75);
+  stroke-width: 0.4;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+/* long names of tiny countries print smaller so they stay centred on
+   their own land without spilling onto a neighbour */
+.map-holder .land-label-sm {
+  font-size: 4.8px;
+}
+.map-holder .land-label-xs {
+  font-size: 4.2px;
+}
+/* "See my Adventures!" — a glowing note written across the top of the
+   map; it is a real control (see js/main.js) that opens My Gallery */
+.map-holder .map-adventures {
+  cursor: pointer;
+  outline: none;
+}
+.map-holder .map-adventures-arc {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 9;
+  pointer-events: stroke;
+}
+.map-holder .map-adventures-text {
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  font-style: italic;
+  text-anchor: middle;
+  fill: var(--deep-brown);
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  pointer-events: fill;
+  filter: drop-shadow(0 0 3px rgba(240, 165, 60, 0.75));
+}
+.map-holder .map-adventures:hover .map-adventures-text,
+.map-holder .map-adventures:focus .map-adventures-text {
+  fill: var(--deep-blue);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .map-holder .map-adventures-text {
+    animation: mapAdvGlow 2.4s ease-in-out infinite;
+  }
+}
+@keyframes mapAdvGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(240, 165, 60, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 0 7px rgba(240, 165, 60, 0.95));
+  }
+}
+/* the flag card that follows the pointer over a country */
+.map-flag-card {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px 5px 6px;
+  background: var(--white);
+  border: 1px solid rgba(169, 111, 84, 0.28);
+  border-radius: 6px 14px 6px 12px;
+  box-shadow: var(--shadow-sm);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.16s var(--ease), transform 0.16s var(--ease);
+  white-space: nowrap;
+}
+.map-flag-card.is-on {
+  opacity: 1;
+  transform: translateY(0);
+}
+.map-flag-card img {
+  width: 30px;
+  height: 21px;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(13, 30, 48, 0.3);
+}
+.map-flag-card span {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 1.08rem;
+  line-height: 1;
+  color: var(--deep-brown);
+}
+/* invisible pads that make tiny island countries tappable */
+.map-holder circle.land-hit {
+  fill: transparent;
+  stroke: none;
+  pointer-events: all;
+  cursor: pointer;
 }
 .photo-label {
   position: absolute;
@@ -719,6 +913,161 @@ body {
   font-weight: 600;
   font-size: 1.28rem;
   color: var(--deep-brown);
+}
+
+/* ============================================================
+   MAP COUNTRY GALLERY — opens when a country on the homepage
+   map is clicked or tapped
+   ============================================================ */
+.map-gallery-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 410;
+  display: flex;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 56px 16px 44px;
+}
+.map-gallery-overlay.hidden { display: none; }
+.map-gallery-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 30, 48, 0.8);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+.map-gallery-card {
+  position: relative;
+  z-index: 1;
+  margin: auto;
+  width: 100%;
+  max-width: min(920px, 100%);
+  padding: 24px 24px 28px;
+  background:
+    radial-gradient(600px 200px at 100% 0%, rgba(246, 211, 193, 0.5), transparent 70%),
+    linear-gradient(168deg, #FFFDF8 0%, var(--cream) 60%, var(--peach-soft) 100%);
+  border: 1px solid rgba(169, 111, 84, 0.25);
+  border-radius: 6px 22px 6px 20px / 20px 6px 22px 6px;
+  box-shadow: var(--shadow-xl), 0 3px 0 rgba(255, 255, 255, 0.6) inset;
+  transform: rotate(-0.5deg);
+  animation: fadeIn 0.3s var(--ease) both;
+}
+.map-gallery-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.map-gallery-kicker {
+  margin: 0;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange-deep);
+}
+.map-gallery-head h3 {
+  margin: 3px 0 0;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--deep-brown);
+}
+/* country name and flag printed together on the gallery header */
+.map-gallery-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.map-gallery-flag {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 25px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(13, 30, 48, 0.22);
+}
+.map-gallery-close {
+  flex: 0 0 auto;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--navy);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s var(--ease), background 0.25s var(--ease);
+}
+.map-gallery-close:hover { transform: rotate(-8deg) scale(1.05); background: var(--peach-soft); }
+.map-gallery-close:focus-visible { outline: 3px solid rgba(47, 134, 199, 0.45); outline-offset: 2px; }
+
+.map-gallery-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.map-gallery-body figure {
+  margin: 0;
+  padding: 8px 8px 0;
+  background: var(--white);
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+}
+/* country photos are shown whole — never cropped, so the whole
+   poster/photo (portrait or landscape) stays readable */
+.map-gallery-body figure img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  border-radius: 2px;
+  background: linear-gradient(160deg, var(--sky-soft), var(--cream-deep));
+}
+/* a country folder may also hold a short video */
+.map-gallery-body figure video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 2px;
+  background: #0d2036;
+}
+.map-gallery-body figcaption {
+  font-family: 'Caveat', cursive;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--deep-brown);
+  padding: 5px 3px 9px;
+}
+/* a photo file that cannot load becomes a small note, never a broken icon */
+.map-gallery-body figure.is-broken img,
+.map-gallery-body figure.is-broken video { display: none; }
+.map-gallery-body figure.is-broken::before {
+  content: "This photo could not be loaded.";
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--muted);
+  background: linear-gradient(160deg, var(--sky-soft), var(--cream-deep));
+  border-radius: 2px;
+}
+.map-gallery-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--muted);
+  border: 1px dashed rgba(47, 134, 199, 0.35);
+  border-radius: var(--radius-lg);
+  background: #FBFDFF;
 }
 
 .tape {
@@ -733,12 +1082,16 @@ body {
 .tape-r { width: 96px; height: 26px; top: -14px; right: -20px; transform: rotate(21deg); }
 .tape-v { width: 88px; height: 24px; top: -11px; left: 50%; margin-left: -44px; transform: rotate(3deg); }
 .tape-m { width: 54px; height: 16px; top: -7px; left: 50%; margin-left: -27px; transform: rotate(-6deg); }
+/* the "airline day" tape, moved onto the corner of the big map frame */
+.tape-map-b { width: 80px; height: 23px; right: -18px; bottom: -8px; transform: rotate(-18deg); }
 
 .video-card {
   position: absolute;
-  left: -22%;
+  /* the scrapbook collage keeps its exact position while the map frame
+     beside it grows (see .hero-content grid-template-columns) */
+  left: -6.1%;
   bottom: -3%;
-  width: 64%;
+  width: 55.6%;
   margin: 0;
   padding: 8px 8px 0;
   background: var(--white);
@@ -1032,7 +1385,9 @@ body {
   line-height: 1.45;
   color: var(--muted);
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  /* the descriptions are full sentences now, so they may use a
+     third line instead of being cut off mid-thought */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   padding-right: 38px;
@@ -1177,6 +1532,13 @@ body {
   letter-spacing: -0.015em;
   line-height: 1.15;
 }
+.hero-text .hero-desc {
+  margin: 7px 0 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--deep-blue);
+  letter-spacing: 0.01em;
+}
 .hero-text p:last-child {
   margin: 6px 0 0;
   font-size: 0.84rem;
@@ -1303,6 +1665,74 @@ body {
   background: rgba(143, 197, 232, 0.24);
   padding: 3px 8px;
   border-radius: 99px;
+}
+
+/* ---- a gallery with a single project: one wide, centred feature card
+   instead of a lone tiny tile in an empty grid ---- */
+.gallery-grid.is-single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 760px;
+  width: 100%;
+  margin-inline: auto;
+  margin-top: 8px;
+}
+.gallery-grid.is-single .g-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(210px, 1fr);
+  grid-template-areas: "thumb body";
+  column-gap: 18px;
+  align-items: stretch;
+  padding: 14px;
+  border-radius: 20px;
+}
+.gallery-grid.is-single .g-thumb {
+  grid-area: thumb;
+  aspect-ratio: 16 / 10;
+  min-height: 250px;
+  align-self: start;
+}
+.gallery-grid.is-single .g-body {
+  grid-area: body;
+  padding: 10px 8px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.gallery-grid.is-single .g-body h3 {
+  font-size: 1.2rem;
+  white-space: normal;
+  overflow: visible;
+}
+.gallery-grid.is-single .g-body p { font-size: 0.85rem; }
+.gallery-grid.is-single .g-tag { font-size: 0.66rem; align-self: center; }
+
+/* ---- Mathematics poster previews ----------------------------------
+   A poster is a portrait artwork, so its preview box is portrait too
+   and the whole sheet is shown with object-fit: contain — every edge
+   and all the text stay visible, centred on a soft background, with no
+   cropping, stretching or oversized empty bands. Only Mathematics gets
+   this class (toggled in renderGallery in js/main.js), so every other
+   subject keeps its photo thumbnails exactly as they were. */
+.gallery-grid.is-posters .g-thumb { aspect-ratio: 3 / 4; }
+.gallery-grid.is-posters .g-thumb img { object-fit: contain; }
+.gallery-grid.is-posters .g-card:hover .g-thumb img { transform: none; }
+.gallery-grid.is-single.is-posters .g-thumb {
+  aspect-ratio: 3 / 4;
+  min-height: 250px;
+}
+.gallery-grid.is-single.is-posters .g-thumb img { object-fit: contain; }
+
+@media (max-width: 680px) {
+  .gallery-grid.is-single .g-card {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "thumb" "body";
+    row-gap: 4px;
+    padding: 12px 12px 4px;
+  }
+  .gallery-grid.is-single .g-thumb { aspect-ratio: 16 / 10; min-height: 0; }
+  .gallery-grid.is-single .g-body { padding: 10px 4px 12px; text-align: center; }
+  .gallery-grid.is-single .g-body .g-tag { align-self: center; }
+  .gallery-grid.is-single .g-body h3 { font-size: 1.02rem; }
 }
 
 .gallery-empty {
@@ -1591,49 +2021,6 @@ body {
 .btn-sm { padding: 9px 16px; font-size: 0.78rem; }
 
 /* ============================================================
-   LOADING SCREEN
-   ============================================================ */
-.loader {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(900px 520px at 50% -10%, #FFFFFF, rgba(255, 255, 255, 0) 70%),
-    radial-gradient(700px 420px at 80% 110%, rgba(143, 197, 232, 0.4), rgba(143, 197, 232, 0) 70%),
-    linear-gradient(180deg, #EAF6FD 0%, #CBE7F7 55%, #F7E7DA 100%);
-  transition: opacity 0.45s var(--ease), visibility 0.45s var(--ease);
-}
-.loader.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
-.loader-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-align: center;
-  padding: 20px;
-}
-.loader-plane { width: 320px; height: 160px; max-width: 78vw; }
-.loader-title { margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; }
-.loader-sub { margin: 0; font-size: 0.85rem; color: var(--muted); }
-.loader-bar {
-  width: 220px;
-  height: 6px;
-  margin-top: 10px;
-  border-radius: 999px;
-  background: rgba(47, 134, 199, 0.16);
-  overflow: hidden;
-}
-.loader-bar span {
-  display: block;
-  width: 0;
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--sky-blue), var(--deep-blue));
-}
-
-/* ============================================================
    UNIFIED MEDIA VIEWER — images and videos
    ------------------------------------------------------------
    The overlay itself is the scroll container, so tall images and
@@ -1749,6 +2136,55 @@ body {
 .lightbox-frame.lb-anim.lb-fade { animation-name: lbFadeIn; }
 .lightbox-frame.lb-anim.lb-next { animation-name: lbFromNext; }
 .lightbox-frame.lb-anim.lb-prev { animation-name: lbFromPrev; }
+
+/* ---- little airplane that crosses the viewer when the picture
+   changes (js/main.js playFlight): climbs, dips, leaves a short
+   fading trail, never catches the pointer, never loops. ---------- */
+.lb-flight {
+  position: absolute;
+  left: 2%;
+  bottom: 12%;
+  z-index: 5;
+  display: block;
+  width: 34px;
+  color: #FFE3BC;
+  filter: drop-shadow(0 2px 6px rgba(13, 30, 48, 0.45));
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.lb-flight svg { display: block; width: 100%; height: auto; }
+.lb-flight::after {
+  content: "";
+  position: absolute;
+  right: 86%;
+  top: 50%;
+  height: 3px;
+  width: 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.85) 100%);
+  transform: translateY(-50%) rotate(-7deg);
+  transform-origin: right center;
+}
+.lb-flight.is-flying { animation: lbPlaneFly 1.15s var(--ease) both; }
+.lb-flight.is-flying::after { animation: lbPlaneTrail 1.15s var(--ease) both; }
+@keyframes lbPlaneFly {
+  0%   { opacity: 0; left: 2%;  bottom: 12%; transform: rotate(-8deg) scale(0.86); }
+  14%  { opacity: 1; }
+  40%  { bottom: 44%; transform: rotate(-16deg) scale(1); }
+  68%  { bottom: 15%; transform: rotate(7deg) scale(1); }
+  86%  { opacity: 1; }
+  100% { opacity: 0; left: 86%; bottom: 36%; transform: rotate(-6deg) scale(0.92); }
+}
+@keyframes lbPlaneTrail {
+  0%   { width: 0;   opacity: 0; }
+  22%  { opacity: 0.85; }
+  70%  { width: 86px;  opacity: 0.5; }
+  100% { width: 116px; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lb-flight { display: none; }
+}
 .lightbox-error {
   margin: 0;
   max-width: 420px;
@@ -1898,7 +2334,7 @@ body {
   .hero-sign { align-self: flex-start; }
   .hero-right { min-height: 0; }
   .photo-frame { padding: 9px 9px 38px; }
-  .photo-frame .profile-plane { inset: 9px 9px 38px; }
+  .map-holder { aspect-ratio: 1 / 1; }
   .photo-label { font-size: 1.1rem; bottom: 9px; }
   .ticket { width: 180px; transform: rotate(-3deg); }
   .compass { width: 74px; }
@@ -1959,5 +2395,4 @@ body {
   .btn,
   .my-gallery-card { transform: none !important; }
   .cloud { animation: none !important; }
-  .profile-plane { opacity: 1; }
 }

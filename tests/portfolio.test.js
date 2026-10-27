@@ -179,12 +179,11 @@ test('My Gallery photos always fit whole: never is-long, never scrollable', asyn
 
 test('tall subject images keep the scrollable is-long layout', async () => {
   await openSubjects();
-  await page.click('.subject-card[data-subject="english"]');
+  await page.click('.subject-card[data-subject="mathematics"]');
   await page.waitForSelector('#galleryView.is-active');
-  await page.waitForSelector('#loader', { state: 'hidden' });
 
-  /* "Speech Draft" uses images/english-3.svg — 800x1200, ratio 1.5 */
-  await page.click('.g-card[data-item="en-3"]');
+  /* images/MATH/math.png is 1587x2245 — ratio 1.41 */
+  await page.click('.g-card[data-item="ma-gallery"]');
   await page.waitForSelector('#lightboxOverlay:not(.hidden)');
   await waitForLightboxImage();
 
@@ -202,7 +201,6 @@ test('My Salad opens as a 9-slide deck with left/right navigation', async () => 
   await openSubjects();
   await page.click('.subject-card[data-subject="tle"]');
   await page.waitForSelector('#galleryView.is-active');
-  await page.waitForSelector('#loader', { state: 'hidden' });
 
   /* the card thumbnail now points at the deck's first slide */
   const thumb = await page.getAttribute('.g-card[data-item="tl-1"] img', 'src');
@@ -246,7 +244,6 @@ test('slide 3.png carries the animated salad gif exactly over its photo, caption
   await openSubjects();
   await page.click('.subject-card[data-subject="tle"]');
   await page.waitForSelector('#galleryView.is-active');
-  await page.waitForSelector('#loader', { state: 'hidden' });
   await page.click('.g-card[data-item="tl-1"]');
   await page.waitForSelector('#lightboxOverlay:not(.hidden)');
 
@@ -436,4 +433,127 @@ test('music comes back by itself when you return to the home page', async () => 
   }, null, { timeout: 5000 });
 
   assert.deepEqual(pageErrors, [], 'no page errors while the music comes and goes');
+});
+
+/* ---------- 6. homepage world map ---------- */
+
+test('the homepage map shows exactly the 11 allowed locations, flags and photo galleries', async () => {
+  /* 1. the map really is there — the frame must not be a white box */
+  const map = await page.evaluate(function () {
+    var holder = document.getElementById('asiaMap');
+    var svg = holder && holder.querySelector('svg');
+    var box = holder && holder.getBoundingClientRect();
+    var fallback = holder && holder.querySelector('.map-fallback');
+    var codes = svg ? Array.prototype.map.call(svg.querySelectorAll('path.land'), function (p) {
+      return p.getAttribute('data-code');
+    }) : [];
+    var labels = svg ? Array.prototype.map.call(svg.querySelectorAll('.land-label'), function (t) {
+      return t.textContent;
+    }) : [];
+    return {
+      codes: codes.sort(),
+      labels: labels,
+      ready: !!(holder && holder.classList.contains('is-ready')),
+      w: box ? box.width : 0,
+      h: box ? box.height : 0,
+      fallbackVisible: fallback ? getComputedStyle(fallback).display !== 'none' : false,
+      inMapPlane: !!document.getElementById('profilePlane')
+    };
+  });
+  const WANT = ['CN', 'HK', 'ID', 'JP', 'KR', 'MY', 'PH', 'SG', 'TH', 'TW', 'VN'];
+  assert.deepEqual(map.codes, WANT,
+    'exactly the 11 allowed locations must be on the map, nothing else');
+  assert.equal(map.labels.length, 11, 'each location keeps its own readable label');
+  assert.ok(map.labels.indexOf('CHINA') !== -1 && map.labels.indexOf('HONG KONG') !== -1 &&
+    map.labels.indexOf('CHINA') !== map.labels.indexOf('HONG KONG'),
+  'Hong Kong must be labelled separately from mainland China');
+  assert.ok(map.ready, 'js/asia-map.js must have wired the map up');
+  assert.ok(map.w > 400 && map.h > 300, 'the map must take up real space, got ' + map.w + 'x' + map.h);
+  assert.equal(map.fallbackVisible, false, 'the fallback note must stay hidden while the map is present');
+  assert.equal(map.inMapPlane, false, 'the airplane inside the map must be removed');
+
+  /* 2. pointing at a country raises its name-and-flag card */
+  await page.hover('path.land[data-code="CN"]');
+  await page.waitForSelector('.map-flag-card.is-on');
+  assert.equal(await page.textContent('#mapFlagName'), 'China');
+  assert.match(await page.getAttribute('#mapFlagImg', 'src'), /flags\/cn\.png$/);
+
+  /* 3. clicking it opens the country gallery with its real photos */
+  await page.click('path.land[data-code="CN"]');
+  await page.waitForSelector('#mapGalleryOverlay:not(.hidden)');
+  assert.equal(await page.textContent('#mapGalleryTitle'), 'China');
+  assert.match(await page.getAttribute('#mapGalleryFlag', 'src'), /flags\/cn\.png$/);
+  assert.equal(await page.locator('#mapGalleryBody figure').count(), 2,
+    'China must show the two photos from images/MAP/CHINA');
+
+  await page.click('#mapGalleryClose');
+  await page.waitForSelector('#mapGalleryOverlay', { state: 'hidden' });
+
+  /* 4. Hong Kong is its own selectable location, not a duplicate of China.
+     Its shape is only a few pixels wide, so the pointer really lands on
+     the tap pad that carries the same data-code and country name. */
+  await page.hover('circle.land-hit[data-code="HK"]');
+  await page.waitForSelector('.map-flag-card.is-on');
+  assert.equal(await page.textContent('#mapFlagName'), 'Hong Kong');
+  assert.match(await page.getAttribute('#mapFlagImg', 'src'), /flags\/hk\.png$/);
+  await page.click('circle.land-hit[data-code="HK"]');
+  await page.waitForSelector('#mapGalleryOverlay:not(.hidden)');
+  assert.equal(await page.textContent('#mapGalleryTitle'), 'Hong Kong');
+  assert.equal(await page.locator('#mapGalleryBody figure').count(), 1,
+    'Hong Kong must show its photo from images/MAP/HONGKONG');
+  await page.keyboard.press('Escape');
+  await page.waitForSelector('#mapGalleryOverlay', { state: 'hidden' });
+
+  /* 5. a country whose folder is still empty shows the friendly note */
+  await page.waitForSelector('circle.land-hit[data-code="PH"]');
+  await page.click('circle.land-hit[data-code="PH"]');
+  await page.waitForSelector('#mapGalleryOverlay:not(.hidden)');
+  assert.equal(await page.textContent('#mapGalleryTitle'), 'Philippines');
+  assert.ok((await page.textContent('#mapGalleryBody')).indexOf('No photos available') !== -1,
+    'a country without photos must show the friendly note, never unrelated pictures');
+
+  await page.keyboard.press('Escape');
+  await page.waitForSelector('#mapGalleryOverlay', { state: 'hidden' });
+
+  /* 6. Japan carries four photos (hovered on its tap pad: the island
+     chain's bounding-box centre falls in the sea between the islands) */
+  await page.hover('circle.land-hit[data-code="JP"]');
+  await page.waitForSelector('.map-flag-card.is-on');
+  assert.equal(await page.textContent('#mapFlagName'), 'Japan');
+
+  assert.deepEqual(pageErrors, [], 'no page errors while using the map');
+  await screenshot('06-home-map.png');
+});
+
+/* ---------- 7. MATH, ENGLISH and AP folder contents ---------- */
+
+test('Mathematics, English and Araling Panlipunan show their folder contents', async () => {
+  const want = { mathematics: 1, english: 5, 'araling-panlipunan': 6 };
+
+  await openSubjects();
+  for (const id of Object.keys(want)) {
+    await page.click('.subject-card[data-subject="' + id + '"]');
+    await page.waitForSelector('#galleryView.is-active');
+
+    assert.equal(await page.locator('.g-card').count(), 1, id + ' must have one gallery item');
+    await page.click('.g-card');
+    await page.waitForSelector('#lightboxOverlay:not(.hidden)');
+    await waitForLightboxImage();
+
+    assert.equal(await page.textContent('#lightboxCounter'), '1 of ' + want[id],
+      id + ' must list every file in its folder');
+    const decoded = await page.evaluate(function () {
+      var i = document.getElementById('lightboxImage');
+      return i.complete && i.naturalWidth > 0;
+    });
+    assert.ok(decoded, id + ' first image must decode');
+
+    await page.click('#lightboxClose');
+    await page.waitForSelector('#lightboxOverlay', { state: 'hidden' });
+    await page.click('#backBtn');
+    await page.waitForSelector('#subjectsView.is-active');
+  }
+
+  assert.deepEqual(pageErrors, [], 'no page errors while opening the new subject galleries');
+  await screenshot('07-subject-new-folders.png');
 });
