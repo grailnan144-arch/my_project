@@ -177,13 +177,19 @@
     var items = [];
     for (var i = 0; i < files.length; i++) {
       var src = MAP_DIR + files[i];
-      /* a country folder may hold a short video; the viewer plays it */
-      if (isVideoSrc(src)) continue;
-      items.push({
-        id: "map-" + code + "-" + i,
-        title: name || code,
-        image: src,
-      });
+      if (isVideoSrc(src)) {
+        items.push({
+          id: "map-" + code + "-" + i,
+          title: name || code,
+          video: src,
+        });
+      } else {
+        items.push({
+          id: "map-" + code + "-" + i,
+          title: name || code,
+          image: src,
+        });
+      }
     }
     return items;
   }
@@ -244,7 +250,7 @@
       var media = isVideo
         ? '<video src="' +
           esc(src) +
-          '" controls playsinline preload="metadata" aria-label="' +
+          '" playsinline preload="metadata" aria-label="' +
           esc(label) +
           '"></video>'
         : '<img src="' +
@@ -252,19 +258,17 @@
           '" alt="' +
           esc(label) +
           '" loading="lazy">';
-      /* photographs open full size in the shared viewer; videos keep
-         their own inline playback controls */
+      /* photographs and short videos both open full size in the shared
+         viewer; the thumbnail itself stays light and quiet */
       html +=
         "<figure>" +
-        (isVideo
-          ? media
-          : '<button type="button" class="map-gallery-open" data-photo-index="' +
-            photoIndex++ +
-            '" aria-label="Open ' +
-            esc(label) +
-            ' full size">' +
-            media +
-            "</button>") +
+        '<button type="button" class="map-gallery-open" data-photo-index="' +
+        photoIndex++ +
+        '" aria-label="Open ' +
+        esc(label) +
+        ' full size">' +
+        media +
+        "</button>" +
         "</figure>";
     }
     if (!html) {
