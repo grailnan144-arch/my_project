@@ -350,8 +350,6 @@
     { id: "aviation", label: "Aviation and Airplanes" },
     { id: "toyota", label: "Toyota" },
     { id: "guitar", label: "Guitar and Musics" },
-    { id: "food", label: "Food Adventure" },
-    { id: "movies", label: "Animation and Movies" },
   ];
 
   var EMPTY_CATEGORY_NOTE = {
@@ -359,8 +357,6 @@
     aviation: "Aviation and airplane photos will be pinned here soon.",
     toyota: "Toyota memories will be pinned here soon.",
     guitar: "Guitar and music photos will be pinned here soon.",
-    food: "Food adventures will be pinned here soon — new dishes, cafés, and family recipes.",
-    movies: "Animations and movie favourites will be pinned here soon.",
   };
 
   /* each photograph keeps its own category; nothing is ever moved
@@ -368,37 +364,37 @@
   var PROFILE_GALLERY = [
     {
       id: "pg-1",
-      title: "Gallery Image 1",
+      title: "Aviation",
       image: "images/PROFILE_GALLERY/gallery (1).jpg",
       cat: "aviation",
     },
     {
       id: "pg-2",
-      title: "Gallery Image 2",
+      title: "School",
       image: "images/PROFILE_GALLERY/gallery (2).jpg",
       cat: "school",
     },
     {
       id: "pg-3",
-      title: "Gallery Image 3",
+      title: "Guitar",
       image: "images/PROFILE_GALLERY/gallery (3).jpg",
       cat: "guitar",
     },
     {
       id: "pg-4",
-      title: "Gallery Image 4",
+      title: "School",
       image: "images/PROFILE_GALLERY/gallery (4).jpg",
       cat: "school",
     },
     {
       id: "pg-5",
-      title: "Gallery Image 5",
+      title: "Toyota",
       image: "images/PROFILE_GALLERY/gallery (5).jpg",
       cat: "toyota",
     },
     {
       id: "pg-6",
-      title: "Gallery Image 6",
+      title: "Toyota",
       image: "images/PROFILE_GALLERY/gallery (6).jpg",
       cat: "toyota",
     },
