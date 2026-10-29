@@ -1,516 +1,1428 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jarred's Digital Portfolio</title>
-<link rel="icon" type="image/png" href="images/logo.png">
-<link rel="stylesheet" href="css/styles.css?v=6">
-</head>
-<body>
-
-<div class="bg-decor" aria-hidden="true">
-  <span class="blob blob-1" data-depth="14"></span>
-  <span class="blob blob-2" data-depth="-18"></span>
-  <span class="blob blob-3" data-depth="10"></span>
-</div>
-
-<!-- ============ SKY SCRAPBOOK DECOR (behind all content) ============ -->
-<div class="sky-layer" aria-hidden="true">
-  <span class="sky-cloud cloud-s1"></span>
-  <span class="sky-cloud cloud-s2"></span>
-  <span class="sky-cloud cloud-s3"></span>
-  <span class="sky-cloud cloud-s4"></span>
-
-  <svg class="sky-path sky-path-1" viewBox="0 0 420 160" fill="none">
-    <path d="M8 140 C120 140 170 40 300 34" stroke="rgba(255,255,255,0.85)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 14"/>
-    <path d="M316 22a11 11 0 0 0-15-10l-38 16-40-14a7 7 0 0 0-8 4l-6 16 30 17-2 24 14 10 1 8-19 2-13 10 1 7 17-2 15-11-1-23 41-17a7 7 0 0 0 4-8z" fill="rgba(169,111,84,0.65)" transform="translate(300 24) scale(0.85)"/>
-  </svg>
-
-  <svg class="sky-path sky-path-2" viewBox="0 0 460 180" fill="none">
-    <path d="M452 36 C330 36 260 140 120 146" stroke="rgba(255,255,255,0.7)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 14"/>
-    <path d="M316 22a11 11 0 0 0-15-10l-38 16-40-14a7 7 0 0 0-8 4l-6 16 30 17-2 24 14 10 1 8-19 2-13 10 1 7 17-2 15-11-1-23 41-17a7 7 0 0 0 4-8z" fill="rgba(36,78,117,0.5)" transform="translate(120 110) scale(-0.7 0.7)"/>
-  </svg>
-
-  <svg class="sky-path sky-path-3" viewBox="0 0 340 120" fill="none">
-    <path d="M6 110 C100 108 150 26 260 24" stroke="rgba(255,255,255,0.75)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="1 12"/>
-    <path d="M276 14a9 9 0 0 0-12-8l-32 13-33-11a6 6 0 0 0-7 3l-5 14 25 14-2 20 12 8 1 7-16 2-11 8 1 6 14-2 13-9-1-19 34-14a6 6 0 0 0 3-7z" fill="rgba(169,111,84,0.55)" transform="translate(258 16) scale(0.7)"/>
-  </svg>
-</div>
-
-<!-- ============ TOP NAVIGATION ============ -->
-<header class="site-nav">
-  <div class="nav-inner">
-    <button type="button" class="nav-brand" id="brandHome" title="Back to home">
-      <span class="nav-logo" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M10.2 3.3a1.6 1.6 0 0 1 3.1 0l.5 3.2 6.6 3.4a1 1 0 0 1 .6 1v1.1l-6.9-1.6-.4 4.3 2.4 1.9v1.2L13.4 17l-2.5 1.6L8.4 17l-2.2.6v-1.2l2.4-1.9-.4-4.3L1.3 12V10.9a1 1 0 0 1 .6-1l6.7-3.4z"></path>
-        </svg>
-      </span>
-      <span class="nav-brand-text">
-        <strong>Jarred's Digital Portfolio</strong>
-        <em>Project Based Assessment 2nd Quarter</em>
-      </span>
-    </button>
-
-    <nav class="nav-links" aria-label="Primary">
-      <button type="button" class="nav-link is-active" data-nav="home">Home</button>
-      <button type="button" class="nav-link" data-nav="mygallery">My Gallery</button>
-      <button type="button" class="nav-link" data-nav="subjects">Subjects</button>
-    </nav>
-
-    <div class="nav-side">
-      <button type="button" class="nav-icon-btn" id="searchToggle" aria-label="Search subjects and portfolios" aria-expanded="false">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
-          <circle cx="11" cy="11" r="7"></circle>
-          <path d="M20 20l-3.4-3.4"></path>
-        </svg>
-      </button>
-      <span class="nav-plane-deco" aria-hidden="true">
-        <svg viewBox="0 0 120 46" fill="none">
-          <path class="nav-plane-trail" d="M2 40C22 40 34 28 52 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 7"></path>
-          <path d="M112 10.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z" fill="currentColor"></path>
-        </svg>
-      </span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jarred's Digital Portfolio</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="css/styles.css?v=13" />
+  </head>
+  <body>
+    <div class="bg-decor" aria-hidden="true">
+      <span class="blob blob-1" data-depth="14"></span>
+      <span class="blob blob-2" data-depth="-18"></span>
+      <span class="blob blob-3" data-depth="10"></span>
     </div>
-  </div>
 
-  <div class="nav-search" id="navSearch" hidden>
-    <div class="search-box">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
-        <circle cx="11" cy="11" r="7"></circle>
-        <path d="M20 20l-3.4-3.4"></path>
+    <!-- ============ SKY SCRAPBOOK DECOR (behind all content) ============ -->
+    <div class="sky-layer" aria-hidden="true">
+      <span class="sky-cloud cloud-s1"></span>
+      <span class="sky-cloud cloud-s2"></span>
+      <span class="sky-cloud cloud-s3"></span>
+      <span class="sky-cloud cloud-s4"></span>
+
+      <svg class="sky-path sky-path-1" viewBox="0 0 420 160" fill="none">
+        <path
+          d="M8 140 C120 140 170 40 300 34"
+          stroke="rgba(255,255,255,0.85)"
+          stroke-width="4"
+          stroke-linecap="round"
+          stroke-dasharray="1 14"
+        />
+        <path
+          d="M316 22a11 11 0 0 0-15-10l-38 16-40-14a7 7 0 0 0-8 4l-6 16 30 17-2 24 14 10 1 8-19 2-13 10 1 7 17-2 15-11-1-23 41-17a7 7 0 0 0 4-8z"
+          fill="rgba(169,111,84,0.65)"
+          transform="translate(300 24) scale(0.85)"
+        />
       </svg>
-      <label class="sr-only" for="searchInput">Search subjects and portfolios</label>
-      <input id="searchInput" type="search" placeholder="Search subjects or portfolios…" autocomplete="off">
-      <button type="button" class="search-clear" id="searchClear" aria-label="Clear search">&times;</button>
+
+      <svg class="sky-path sky-path-2" viewBox="0 0 460 180" fill="none">
+        <path
+          d="M452 36 C330 36 260 140 120 146"
+          stroke="rgba(255,255,255,0.7)"
+          stroke-width="4"
+          stroke-linecap="round"
+          stroke-dasharray="1 14"
+        />
+        <path
+          d="M316 22a11 11 0 0 0-15-10l-38 16-40-14a7 7 0 0 0-8 4l-6 16 30 17-2 24 14 10 1 8-19 2-13 10 1 7 17-2 15-11-1-23 41-17a7 7 0 0 0 4-8z"
+          fill="rgba(36,78,117,0.5)"
+          transform="translate(120 110) scale(-0.7 0.7)"
+        />
+      </svg>
+
+      <svg class="sky-path sky-path-3" viewBox="0 0 340 120" fill="none">
+        <path
+          d="M6 110 C100 108 150 26 260 24"
+          stroke="rgba(255,255,255,0.75)"
+          stroke-width="3.5"
+          stroke-linecap="round"
+          stroke-dasharray="1 12"
+        />
+        <path
+          d="M276 14a9 9 0 0 0-12-8l-32 13-33-11a6 6 0 0 0-7 3l-5 14 25 14-2 20 12 8 1 7-16 2-11 8 1 6 14-2 13-9-1-19 34-14a6 6 0 0 0 3-7z"
+          fill="rgba(169,111,84,0.55)"
+          transform="translate(258 16) scale(0.7)"
+        />
+      </svg>
     </div>
-  </div>
-</header>
 
-<main class="site-main">
+    <!-- ============ TOP NAVIGATION ============ -->
+    <header class="site-nav">
+      <div class="nav-inner">
+        <button
+          type="button"
+          class="nav-brand"
+          id="brandHome"
+          title="Back to home"
+        >
+          <span class="nav-logo" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M10.2 3.3a1.6 1.6 0 0 1 3.1 0l.5 3.2 6.6 3.4a1 1 0 0 1 .6 1v1.1l-6.9-1.6-.4 4.3 2.4 1.9v1.2L13.4 17l-2.5 1.6L8.4 17l-2.2.6v-1.2l2.4-1.9-.4-4.3L1.3 12V10.9a1 1 0 0 1 .6-1l6.7-3.4z"
+              ></path>
+            </svg>
+          </span>
+          <span class="nav-brand-text">
+            <strong>Jarred's Digital Portfolio</strong>
+            <em>Project Based Assessment 2nd Quarter</em>
+          </span>
+        </button>
 
-  <!-- ============ HOME VIEW ============ -->
-  <div class="view is-active" id="homeView">
+        <nav class="nav-links" aria-label="Primary">
+          <button type="button" class="nav-link is-active" data-nav="home">
+            Home
+          </button>
+          <button type="button" class="nav-link" data-nav="mygallery">
+            My Gallery
+          </button>
+          <button type="button" class="nav-link" data-nav="subjects">
+            Subjects
+          </button>
+        </nav>
 
-    <!-- ---- cinematic hero ---- -->
-    <section class="hero" id="hero" aria-label="Introduction">
-      <div class="hero-sky" aria-hidden="true">
-        <span class="sun-glow"></span>
-        <span class="cloud cloud-a"></span>
-        <span class="cloud cloud-b"></span>
-        <span class="cloud cloud-c"></span>
-        <span class="cloud cloud-d"></span>
-        <span class="cloud cloud-e"></span>
-
-        <div class="hero-map">
-          <svg viewBox="0 0 520 260" fill="none">
-            <g fill="currentColor" opacity="0.5">
-              <path d="M40 74c14-16 38-24 58-18 12 4 14 16 26 18 14 3 28-6 40 2 10 7 6 22-4 28-12 8-28 6-40 14-10 7-12 22-24 26-14 5-30-4-34-18-4-16 2-34-4-48-3-7 0-14  -18-4z"></path>
-              <path d="M150 150c8-4 18 0 22 8 4 10-2 22-10 28-8 5-20 2-24-6-5-10 0-24 12-30z"></path>
-              <path d="M240 60c22-10 50-8 70 2 14 7 24 20 40 22 18 3 38-6 54 4 12 8 10 26-2 34-14 9-34 6-48 14-12 7-16 22-30 26-16 4-34-6-40-20-6-16 0-34-8-50-6-12-22-24 -44-32z"></path>
-              <path d="M330 152c12-3 24 4 26 16 3 14-6 28-18 32-12 4-24-4-26-16-2-14 6-28 18-32z"></path>
-              <path d="M410 176c14-6 32 0 36 12 4 12-6 24-18 26-14 3-28-6-30-18-1-10 4-16 12-20z"></path>
-            </g>
-            <g stroke="currentColor" stroke-width="1" opacity="0.35" stroke-dasharray="4 8">
-              <path d="M0 65h520M0 130h520M0 195h520"></path>
-              <path d="M130 0v260M260 0v260M390 0v260"></path>
-            </g>
-            <circle cx="196" cy="126" r="6" fill="currentColor"></circle>
-            <path d="M196 126c26-22 62-24 92-8" stroke="currentColor" stroke-width="2" stroke-dasharray="3 6" fill="none"></path>
-          </svg>
+        <div class="nav-side">
+          <button
+            type="button"
+            class="nav-icon-btn"
+            id="searchToggle"
+            aria-label="Search subjects and portfolios"
+            aria-expanded="false"
+          >
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.1"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-3.4-3.4"></path>
+            </svg>
+          </button>
+          <span class="nav-plane-deco" aria-hidden="true">
+            <svg viewBox="0 0 120 46" fill="none">
+              <path
+                class="nav-plane-trail"
+                d="M2 40C22 40 34 28 52 22"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-dasharray="1 7"
+              ></path>
+              <path
+                d="M112 10.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </span>
         </div>
-
-        <div class="compass">
-          <svg viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2"></circle>
-            <circle cx="50" cy="50" r="36" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 5"></circle>
-            <path d="M50 14l8 36-8 36-8-36z" fill="currentColor" opacity="0.85"></path>
-            <path d="M50 14l8 36-8 36" fill="currentColor" opacity="0.35"></path>
-            <text x="50" y="10" text-anchor="middle" font-size="11" fill="currentColor">N</text>
-          </svg>
-        </div>
-
-        <div class="ticket">
-          <div class="ticket-stub">BOARDING PASS</div>
-          <div class="ticket-body">
-            <span class="ticket-route">MNL <i>&#9992;</i> ANYWHERE</span>
-            <span class="ticket-meta">FLIGHT JD-2026 &middot; SEAT 12A</span>
-            <span class="ticket-barcode"></span>
-            <span class="ticket-foot">
-              <img class="ticket-logo" src="images/school.jpg" alt="School logo">
-              <span class="ticket-grade">Grade 9-Synergy</span>
-            </span>
-          </div>
-        </div>
-
-        <div class="passport-stamp">
-          <span>EXPLORE</span>
-          <small>2026 &middot; SECOND QUARTER</small>
-        </div>
-
-        <p class="hand-note note-a">the adventure begins&#33;</p>
-        <p class="hand-note note-b">take off &amp; explore</p>
-
-        <canvas id="heroPlane" class="hero-plane-canvas"></canvas>
       </div>
 
-      <div class="hero-content">
-        <!-- LEFT: introduction -->
-        <div class="hero-left">
-          <p class="hero-kicker">Welcome to</p>
-          <h1 class="hero-title">
-            <span class="t-brown">Jarred's</span><br>
-            <span class="t-blue">Digital Portfolio&#33;</span>
-          </h1>
+      <div class="nav-search" id="navSearch" hidden>
+        <div class="search-box">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.1"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="M20 20l-3.4-3.4"></path>
+          </svg>
+          <label class="sr-only" for="searchInput"
+            >Search subjects and portfolios</label
+          >
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search subjects or portfolios…"
+            autocomplete="off"
+          />
+          <button
+            type="button"
+            class="search-clear"
+            id="searchClear"
+            aria-label="Clear search"
+          >
+            &times;
+          </button>
+        </div>
+      </div>
+    </header>
 
-          <div class="hero-intro" id="heroIntro">
-            <p>
-              Fasten your seatbelt and join me on an exciting journey through my world of discovery,
-              creativity, and learning. My name is <strong>Jarred Reinel C. Vivar</strong>, a young
-              enthusiast whose curiosity soars as high as the aircraft that inspire me. My passion for
-              <strong>aviation and travel</strong> fuels my dream of exploring new horizons, cultures,
-              and destinations around the globe.
-            </p>
-            <p>
-              Beyond the skies, I find joy in expressing myself through <strong>guitar playing</strong>,
-              embarking on delicious <strong>food adventures</strong>, immersing myself in captivating
-              <strong>animations and movies</strong>, and discovering new experiences that enrich my
-              imagination and creativity. Each interest helps shape who I am and inspires me to learn
-              something new every day.
-            </p>
-            <p>
-              This digital portfolio serves as a showcase of my achievements, experiences, and memorable
-              learning moments during the <strong>Second Quarter</strong>. Inside, you will find
-              highlights from my journey through Science, Mathematics, Language, Music, the Arts, and
-              Values Education. These subjects have helped me develop not only knowledge and skills but
-              also creativity, critical thinking, discipline, and character.
-            </p>
-            <p>
-              As you explore this portfolio, I invite you to discover the projects, activities, and
-              experiences that reflect my growth as a learner and as an individual. Thank you for
-              visiting, and I hope you enjoy this journey as much as I enjoyed creating it&#33;
-            </p>
+    <main class="site-main">
+      <!-- ============ HOME VIEW ============ -->
+      <div class="view is-active" id="homeView">
+        <!-- ---- cinematic hero ---- -->
+        <section class="hero" id="hero" aria-label="Introduction">
+          <div class="hero-sky" aria-hidden="true">
+            <span class="sun-glow"></span>
+            <span class="cloud cloud-a"></span>
+            <span class="cloud cloud-b"></span>
+            <span class="cloud cloud-c"></span>
+            <span class="cloud cloud-d"></span>
+            <span class="cloud cloud-e"></span>
+
+            <div class="hero-map">
+              <svg viewBox="0 0 520 260" fill="none">
+                <g fill="currentColor" opacity="0.5">
+                  <path
+                    d="M40 74c14-16 38-24 58-18 12 4 14 16 26 18 14 3 28-6 40 2 10 7 6 22-4 28-12 8-28 6-40 14-10 7-12 22-24 26-14 5-30-4-34-18-4-16 2-34-4-48-3-7 0-14  -18-4z"
+                  ></path>
+                  <path
+                    d="M150 150c8-4 18 0 22 8 4 10-2 22-10 28-8 5-20 2-24-6-5-10 0-24 12-30z"
+                  ></path>
+                  <path
+                    d="M240 60c22-10 50-8 70 2 14 7 24 20 40 22 18 3 38-6 54 4 12 8 10 26-2 34-14 9-34 6-48 14-12 7-16 22-30 26-16 4-34-6-40-20-6-16 0-34-8-50-6-12-22-24 -44-32z"
+                  ></path>
+                  <path
+                    d="M330 152c12-3 24 4 26 16 3 14-6 28-18 32-12 4-24-4-26-16-2-14 6-28 18-32z"
+                  ></path>
+                  <path
+                    d="M410 176c14-6 32 0 36 12 4 12-6 24-18 26-14 3-28-6-30-18-1-10 4-16 12-20z"
+                  ></path>
+                </g>
+                <g
+                  stroke="currentColor"
+                  stroke-width="1"
+                  opacity="0.35"
+                  stroke-dasharray="4 8"
+                >
+                  <path d="M0 65h520M0 130h520M0 195h520"></path>
+                  <path d="M130 0v260M260 0v260M390 0v260"></path>
+                </g>
+                <circle cx="196" cy="126" r="6" fill="currentColor"></circle>
+                <path
+                  d="M196 126c26-22 62-24 92-8"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-dasharray="3 6"
+                  fill="none"
+                ></path>
+              </svg>
+            </div>
+
+            <div class="compass">
+              <svg viewBox="0 0 100 100">
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="46"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                ></circle>
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="36"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1"
+                  stroke-dasharray="2 5"
+                ></circle>
+                <path
+                  d="M50 14l8 36-8 36-8-36z"
+                  fill="currentColor"
+                  opacity="0.85"
+                ></path>
+                <path
+                  d="M50 14l8 36-8 36"
+                  fill="currentColor"
+                  opacity="0.35"
+                ></path>
+                <text
+                  x="50"
+                  y="10"
+                  text-anchor="middle"
+                  font-size="11"
+                  fill="currentColor"
+                >
+                  N
+                </text>
+              </svg>
+            </div>
+
+            <div class="passport-stamp">
+              <span>EXPLORE</span>
+              <small>2026 &middot; SECOND QUARTER</small>
+            </div>
+
+            <p class="hand-note note-a">the adventure begins&#33;</p>
+            <p class="hand-note note-b">take off &amp; explore</p>
+
+            <canvas id="heroPlane" class="hero-plane-canvas"></canvas>
           </div>
 
-          <p class="hero-sign">Jarred Reinel C. Vivar</p>
-        </div>
+          <div class="hero-content">
+            <!-- LEFT: introduction -->
+            <div class="hero-left">
+              <p class="hero-kicker">Welcome to</p>
+              <h1 class="hero-title">
+                <span class="t-brown">Jarred's</span><br />
+                <span class="t-blue">Digital Portfolio&#33;</span>
+              </h1>
 
-        <!-- RIGHT: scrapbook collage (photo + video) -->
-        <div class="hero-right">
-          <figure class="photo-frame display-frame">
-            <span class="tape tape-l" aria-hidden="true"></span>
-            <span class="tape tape-r" aria-hidden="true"></span>
-            <span class="tape tape-map-b" aria-hidden="true"></span>
-            <div class="map-holder" id="asiaMap">
-              <p class="map-fallback">The interactive map could not be loaded. Refresh the page to try again.</p>
-              <svg viewBox="671.84 276.23 221.49 226.17" role="group" aria-label="Interactive map of Southeast Asia">
-          <path class="land" data-code="PH" data-name="Philippines" tabindex="0" role="button" aria-label="Philippines" d="M829.59,439.86l0.29,1.87l0.17,1.58l-0.96,2.57l-1.02,-2.86l-1.31,1.42l0.9,2.06l-0.8,1.31l-3.3,-1.63l-0.79,-2.03l0.86,-1.33l-1.78,-1.33l-0.88,1.17l-1.32,-0.11l-2.08,1.57l-0.46,-0.82l1.1,-2.37l1.77,-0.79l1.53,-1.06l0.99,1.27l2.13,-0.77l0.46,-1.26l1.98,-0.08l-0.17,-2.18l2.27,1.34l0.24,1.42L829.59,439.86zM822.88,434.6l-1.01,0.93l-0.88,1.79l-0.88,0.84l-1.73,-1.95l0.58,-0.76l0.7,-0.79l0.31,-1.76l1.55,-0.17l-0.45,1.91l2.08,-2.74L822.88,434.6zM807.52,437.32l-3.73,2.67l1.38,-1.97l2.03,-1.74l1.68,-1.96l1.47,-2.82l0.5,2.31l-1.85,1.56L807.52,437.32zM817,430.02l1.68,0.88l1.78,0l-0.05,1.19l-1.3,1.2l-1.78,0.85l-0.1,-1.32l0.2,-1.45L817,430.02zM827.14,429.25l0.79,3.18l-2.16,-0.75l0.06,0.95l0.69,1.75l-1.33,0.63l-0.12,-1.99l-0.84,-0.15l-0.44,-1.72l1.65,0.23l-0.04,-1.08l-1.71,-2.18l2.69,0.06L827.14,429.25zM816,426.66l-0.74,2.47l-1.2,-1.42l-1.43,-2.18l2.4,0.1L816,426.66zM815.42,410.92l1.73,0.84l0.86,-0.76l0.25,0.75l-0.46,1.22l0.96,2.09l-0.74,2.42l-1.65,0.96l-0.44,2.33l0.63,2.29l1.49,0.32l1.24,-0.34l3.5,1.59l-0.27,1.56l0.92,0.69l-0.29,1.32l-2.18,-1.4l-1.04,-1.5l-0.72,1.05l-1.79,-1.72l-2.55,0.42l-1.4,-0.63l0.14,-1.19l0.88,-0.73l-0.84,-0.67l-0.36,1.04l-1.38,-1.65l-0.42,-1.26l-0.1,-2.77l1.13,0.96l0.29,-4.55l0.91,-2.66L815.42,410.92z"/>
-          <path class="land" data-code="TH" data-name="Thailand" tabindex="0" role="button" aria-label="Thailand" d="M762.89,429.18L760.37,427.87L757.97,427.93L758.38,425.68L755.91,425.7L755.69,428.84L754.18,432.99L753.27,435.49L753.46,437.54L755.28,437.63L756.42,440.2L756.93,442.63L758.49,444.24L760.19,444.57L761.64,446.02L760.73,447.17L758.87,447.51L758.65,446.07L756.37,444.84L755.88,445.34L754.77,444.27L754.29,442.88L752.8,441.29L751.44,439.96L750.98,441.61L750.45,440.05L750.76,438.29L751.58,435.58L752.94,432.67L754.48,430.02L753.38,427.42L753.43,426.09L753.11,424.49L751.24,422.21L750.57,420.76L751.54,420.23L752.56,417.71L751.42,415.79L749.64,413.66L748.28,411.09L749.46,410.56L750.74,407.37L752.72,407.23L754.36,405.95L755.96,405.26L757.18,406.18L757.34,407.96L759.23,408.09L758.54,411.2L758.61,413.82L761.56,412.08L762.4,412.59L764.05,412.51L764.61,411.49L766.73,411.69L768.86,414.07L769.04,416.94L771.31,419.47L771.18,421.91L770.27,423.21L767.64,422.8L764.02,423.35L762.22,425.73z"/>
-          <path class="land" data-code="TW" data-name="Taiwan" tabindex="0" role="button" aria-label="Taiwan" d="M816.7,393.27L815.01,398.14L813.81,400.62L812.33,398.07L812.01,395.82L813.66,392.82L815.91,390.5L817.19,391.41z"/>
-          <path class="land" data-code="MY" data-name="Malaysia" tabindex="0" role="button" aria-label="Malaysia" d="M758.65,446.07l0.22,1.44l1.85,-0.33l0.92,-1.15l0.64,0.26l1.66,1.69l1.18,1.87l0.16,1.88l-0.3,1.27l0.27,0.96l0.21,1.65l0.99,0.77l1.1,2.46l-0.05,0.94l-1.99,0.19l-2.65,-2.06l-3.32,-2.21l-0.33,-1.42l-1.62,-1.87l-0.39,-2.31l-1.01,-1.52l0.31,-2.04l-0.62,-1.19l0.49,-0.5L758.65,446.07zM807.84,450.9l-2.06,0.95l-2.43,-0.47l-3.22,0l-0.97,3.17l-1.08,0.97l-1.44,3.88l-2.29,0.59l-2.65,-0.78l-1.34,0.24l-1.63,1.41l-1.79,-0.2l-1.81,0.57l-1.92,-1.57l-0.47,-1.86l2.05,0.96l2.17,-0.52l0.56,-2.36l1.2,-0.53l3.36,-0.6l2.01,-2.21l1.38,-1.77l1.28,1.45l0.59,-0.95l1.34,0.09l0.16,-1.78l0.13,-1.38l2.16,-1.95l1.41,-2.19l1.13,-0.01l1.44,1.42l0.13,1.22l1.85,0.78l2.34,0.84l-0.2,1.1l-1.88,0.14L807.84,450.9z"/>
-          <path class="land" data-code="ID" data-name="Indonesia" tabindex="0" role="button" aria-label="Indonesia" d="M813.72,492.06l-1.18,0.05l-3.72,-1.98l2.61,-0.56l1.47,0.86l0.98,0.86L813.72,492.06zM824.15,491.78l-2.4,0.62l-0.34,-0.34l0.25,-0.96l1.21,-1.72l2.77,-1.12l0.28,0.56l0.05,0.86L824.15,491.78zM805.83,486.01l1.01,0.75l1.73,-0.23l0.7,1.2l-3.24,0.57l-1.94,0.38l-1.51,-0.02l0.96,-1.62l1.54,-0.02L805.83,486.01zM819.86,486l-0.41,1.56l-4.21,0.8l-3.73,-0.35l-0.01,-1.03l2.23,-0.59l1.76,0.84l1.87,-0.21L819.86,486zM779.82,482.31l5.37,0.28l0.62,-1.16l5.2,1.35l1.02,1.82l4.21,0.51l3.44,1.67l-3.2,1.07l-3.08,-1.13l-2.54,0.08l-2.91,-0.21l-2.62,-0.51l-3.25,-1.07l-2.06,-0.28l-1.17,0.35l-5.11,-1.16l-0.49,-1.21l-2.57,-0.21l1.92,-2.68l3.4,0.17l2.26,1.09l1.16,0.21L779.82,482.31zM853,480.73l-1.44,1.91l-0.27,-2.11l0.5,-1.01l0.59,-0.95l0.64,0.82L853,480.73zM832.04,473.02l-1.05,0.93l-1.94,-0.51l-0.55,-1.2l2.84,-0.13L832.04,473.02zM841.08,472.01l1.02,2.13l-2.37,-1.15l-2.34,-0.23l-1.58,0.18l-1.94,-0.1l0.67,-1.53l3.46,-0.12L841.08,472.01zM851.37,466.59l0.78,4.51l2.9,1.67l2.34,-2.96l3.22,-1.68l2.49,0l2.4,0.97l2.08,1l3.01,0.53l0.05,9.1l0.05,9.16l-2.5,-2.31l-2.85,-0.57l-0.69,0.8l-3.55,0.09l1.19,-2.29l1.77,-0.78l-0.73,-3.05l-1.35,-2.35l-5.44,-2.37l-2.31,-0.23l-4.21,-2.58l-0.83,1.36l-1.08,0.25l-0.64,-1.02l-0.01,-1.21l-2.14,-1.37l3.02,-1l2,0.05l-0.24,-0.74l-4.1,-0.01l-1.11,-1.66l-2.5,-0.51l-1.19,-1.38l3.78,-0.67l1.44,-0.91l4.5,1.14L851.37,466.59zM826.41,459.43l-2.25,2.76l-2.11,0.54l-2.7,-0.54l-4.67,0.14l-2.45,0.4l-0.4,2.11l2.51,2.48l1.51,-1.26l5.23,-0.95l-0.23,1.28l-1.22,-0.4l-1.22,1.63l-2.47,1.08l2.65,3.57l-0.51,0.96l2.52,3.22l-0.02,1.84l-1.5,0.82l-1.1,-0.98l1.36,-2.29l-2.75,1.08l-0.7,-0.77l0.36,-1.08l-2.02,-1.64l0.21,-2.72l-1.87,0.85l0.24,3.25l0.11,4l-1.78,0.41l-1.2,-0.82l0.8,-2.57l-0.43,-2.69l-1.18,-0.02l-0.87,-1.91l1.16,-1.83l0.4,-2.21l1.41,-4.2l0.59,-1.15l2.38,-2.07l2.19,0.82l3.54,0.39l3.22,-0.12l2.77,-2.02L826.41,459.43zM836.08,460.23l-0.15,2.43l-1.45,-0.27l-0.43,1.69l1.16,1.47l-0.79,0.33l-1.13,-1.76l-0.83,-3.56l0.56,-2.23l0.93,-1.01l0.2,1.52l1.66,0.24L836.08,460.23zM805.76,458.29l3.14,2.58l-3.32,0.33l-0.94,1.9l0.12,2.52l-2.7,1.91L802,470.3l-1.08,4.27l-0.41,-0.99l-3.19,1.26l-1.11,-1.71l-2,-0.16l-1.4,-0.89l-3.33,1l-1.02,-1.35l-1.84,0.15l-2.31,-0.32l-0.43,-3.74l-1.4,-0.77l-1.35,-2.38l-0.39,-2.44l0.33,-2.58l1.67,-1.85l0.47,1.86l1.92,1.57l1.81,-0.57l1.79,0.2l1.63,-1.41l1.34,-0.24l2.65,0.78l2.29,-0.59l1.44,-3.88l1.08,-0.97l0.97,-3.17l3.22,0l2.43,0.47l-1.59,2.52l2.06,2.64L805.76,458.29zM771.95,479.71l-3.1,0.06l-2.36,-2.34l-3.6,-2.28l-1.2,-1.69l-2.12,-2.27l-1.39,-2.09l-2.13,-3.9l-2.46,-2.32l-0.82,-2.39l-1.03,-2.17l-2.53,-1.75l-1.47,-2.39l-2.11,-1.56l-2.92,-3.08l-0.25,-1.42l1.81,0.11l4.34,0.54l2.48,2.73l2.17,1.89l1.55,1.16l2.66,3l2.85,0.04l2.36,1.91l1.62,2.33l2.13,1.27l-1.12,2.27l1.61,0.97l1.01,0.07l0.48,1.94l0.98,1.56l2.06,0.25l1.36,1.76l-0.7,3.47L771.95,479.71z"/>
-          <path class="land" data-code="VN" data-name="Vietnam" tabindex="0" role="button" aria-label="Vietnam" d="M778.21,401.87L774.47,404.43L772.13,407.24L771.51,409.29L773.66,412.38L776.28,416.2L778.82,417.99L780.53,420.32L781.81,425.64L781.43,430.66L779.1,432.53L775.88,434.36L773.6,436.72L770.1,439.34L769.08,437.53L769.87,435.62L767.79,434.01L770.22,432.87L773.16,432.67L771.93,430.94L776.64,428.75L776.99,425.33L776.34,423.41L776.85,420.53L776.14,418.49L774.02,416.47L772.25,413.9L769.92,410.44L766.56,408.68L767.37,407.61L769.16,406.84L768.07,404.25L764.62,404.22L763.36,401.5L761.72,399.13L763.23,398.39L765.46,398.41L768.19,398.06L770.58,396.44L771.93,397.58L774.5,398.13L774.05,399.87L775.39,401.09z"/>
-          <path class="land" data-code="CN" data-name="China" tabindex="0" role="button" aria-label="China" d="M785.88,406.27l0.63,1.13l-1.23,1.3l-0.65,1.7l-2.42,1.41l-2.3,-0.91l-0.08,-2.53l1.38,-1.34l3.06,-0.83L785.88,406.27zM849.21,309.6l-2.43,1.65l-4.26,0l-1.13,-3.95l-3.32,-3.03l-4.88,-1.38l-1.04,-4.28l-0.98,-2.73l-1.05,-1.94l-1.73,-4.61l-2.46,-1.71l-4.2,-1.39l-3.72,0.13l-3.48,0.84l-2.32,2.31l1.54,1.1l0.04,2.52l-1.56,1.45l-2.53,4.73l0.03,1.93l-3.95,2.74l-3.37,-1.63l-1.37,3.25l-1.98,4.23l0.72,1.71l1.59,-0.53l2.77,0.65l2.16,-1.54l2.25,1.33l2.54,2.89l-0.31,1.45l-2.21,-0.46l-4.07,0.54l-1.97,1.16l-2.05,2.66l-4.28,1.55l-2.79,2.1l-2.88,-0.8l-1.58,-0.36l-1.47,2.54l0.9,1.5l0.45,1.28l-1.96,1.3l-2.01,2.05l-3.28,1.34l-4.2,0.14l-4.53,1.31l-3.26,2.01l-1.24,-1.16l-3.39,0l-4.15,-2.29l-2.77,-0.57l-3.73,0.53l-5.79,-0.85l-3.09,0.09l-1.65,-2.27l-1.28,-3.57l-1.73,-0.43l-3.39,-2.45l-3.78,-0.55l-3.33,-0.68l-1.01,-1.73l1.08,-4.73l-1.93,-3.32l-4,-1.57l-2.36,-2.23l-0.74,-2.97l-1.1,0.35l-2.13,2.83l-2.33,0.39l-0.13,4.19l-1.56,1.86l-5.56,-1.35l-2.02,7.26l-1.44,0.89l-5.55,1.58l2.52,6.75l-1.92,1l0.22,2.17l-0.39,0.85l-4.42,2.03l-1,1.48l-3.6,0.44l-1.06,2.35l-2.97,-0.49l-1.94,0.72l-2.68,1.73l0.39,0.85l-0.8,0.83l0.71,3.32l0.92,-0.36l1.7,0.81l-0.1,1.38l0.42,2.01l0.5,1.01l2.07,1.63l0.83,2.66l4.42,1.33l0.14,-0.04l3.88,-1.37l2.88,1.37l-0.91,2.76l-1.6,2.23l-1.24,0.1h-0.05l-0.18,1.74l1.12,1.71l-0.09,1.69l-2.01,-0.44l0.79,3.63l2.75,2.07l3.9,2.26l1.16,-0.77l2.25,0.99l2.83,2.09l1.58,0.46l0.94,1.53l2.18,0.63l2.28,1.39l3.17,0.73l3.27,0.31l1.71,-0.66l0.24,2.48l1.85,-2.34l1.51,-0.8l2,0.73l1.48,0.08l1.23,0.85l2.26,-0.39l2.55,-2.36l3.23,-2.03l2.35,0.78l2,-1.35l1.31,1.99l-0.95,1.33l3.02,0.47l1.64,-0.24l0.94,1.86l1.22,0.75l0.08,2.4l-0.11,2.57l-2.66,2.58l-0.34,3.63l2.96,-0.51l0.67,2.8l1.78,0.59l-0.82,2.51l2.08,1.13l1.21,0.55l2.06,-0.87l0.08,1.24l0.25,0.7l1.5,0.08l-0.42,-3.43l1.45,-0.44l1.5,-0.74l2.24,0.02l2.73,-0.35l2.39,-1.62l1.35,1.14l2.56,0.55l-0.44,1.74l1.33,1.22l2.82,0.78l1.33,-0.49l3.76,0.96l-0.66,1.16l0.74,2.16l1.55,-0.17l0.96,-3.15l2.97,-0.46l3.92,-1.5l1.59,-1.5l0.97,0.98l1.71,-1.34l3.16,-0.35l3.9,-2.55l3.86,-2.82l2.6,-3.68l2.27,-4.09l2.05,-3.41l1.57,-0.28l0.71,-2.52l0.43,-2.61l-1.65,-1l-0.67,-1.73l1.76,-0.89l0.05,-2.43l-1.9,-2.53l-1.71,-3.05l-1.1,-3.31l-3.02,-1.86l1.44,-2.39l2.73,-1.73l1.31,-1.87l3.97,-0.97l-0.46,-1.84l-1.81,-0.09l-2.49,-1.37l-3.14,2.51l-2.22,-1.02l-0.09,-1.58l-2.29,-0.58l-1.48,-2.41l1.43,-1.68l2.75,-0.17l1.73,-2.34l3.17,-2.54l2.44,-1.3l1.48,1.93l-2.22,2.45l0.59,1.41l-1.49,1.67l3.02,-0.98l2.06,-1.69l3.92,-1.06l2.28,-2.35l3.09,-1.98l1.93,-2.64l1.33,1.17l2.42,0.14l-0.44,-1.97l4.33,-1.62l1.11,-2.13l1.81,2.24l-0.02,-1.93l1.43,-0.1l0.4,-4.55l-0.74,-3.36l2.41,-1.4l3.4,0.7l1.89,-3.89l0.96,-4.46l1.09,-1.51l1.47,-3.76L849.21,309.6z"/>
-          <path class="land" data-code="JP" data-name="Japan" tabindex="0" role="button" aria-label="Japan" d="M852.76,362.01l0.36,1.15l-1.58,2.03l-1.15,-1.07l-1.44,0.78l-0.74,1.95l-1.83,-0.95l0.02,-1.58l1.55,-2l1.59,0.39l1.15,-1.42L852.76,362.01zM870.53,351.73l-1.06,2.78l0.49,1.73l-1.46,2.42l-3.58,1.6l-4.93,0.21l-4,3.84l-1.88,-1.29L854,360.5l-4.88,0.75l-3.32,1.59l-3.28,0.06l2.84,2.46l-1.87,5.61l-1.81,1.37l-1.36,-1.27l0.69,-2.96l-1.77,-0.96l-1.14,-2.28l2.65,-1.03l1.47,-2.11l2.82,-1.75l2.06,-2.33l5.58,-1.02l3,0.7l2.93,-6.17l1.87,1.67l4.11,-3.51l1.59,-1.38l1.76,-4.38l-0.48,-4.1l1.18,-2.33l2.98,-0.68l1.53,5.11l-0.08,2.94l-2.59,3.6L870.53,351.73zM878.76,325.8l1.97,0.83l1.98,-1.65l0.62,4.35l-4.16,1.05l-2.46,3.76l-4.41,-2.58l-1.53,4.12l-3.12,0.06l-0.39,-3.74l1.39,-2.94l3,-0.21l0.82,-5.38l0.83,-3.09l3.29,4.12L878.76,325.8z"/>
-          <path class="land" data-code="KR" data-name="South Korea" tabindex="0" role="button" aria-label="South Korea" d="M835.13,346.53L837.55,350.71L838.24,352.98L838.26,356.96L837.21,358.84L834.67,359.5L832.43,360.91L829.9,361.2L829.59,359.35L830.11,356.78L828.87,353.18L830.95,352.59L829.03,349.59L829.2,349.27L830.46,349.39L831.55,347.79L833.53,347.62L834.72,347.39z"/>
-          <path class="land" data-code="HK" data-name="Hong Kong" tabindex="0" role="button" aria-label="Hong Kong" d="M793.7,399.8C793.7,398.9 794.4,398.5 795.4,398.5C796.3,398.5 797.1,398.9 797.1,399.8C797.1,400.7 796.3,401.1 795.4,401.1C794.4,401.1 793.7,400.7 793.7,399.8Z"/>
-          <path class="land" data-code="SG" data-name="Singapore" tabindex="0" role="button" aria-label="Singapore" d="M765.9,458.9C766.6,458.6 767.6,458.6 768.2,459.1C768.7,459.5 768.8,460.1 768.5,460.6C768.1,461.1 767.3,461.4 766.6,461.3C765.9,461.2 765.4,460.7 765.3,460.1C765.2,459.6 765.4,459.2 765.9,458.9Z"/>
-          <g class="land-labels" aria-hidden="true">
-            <text class="land-label" x="738" y="336">CHINA</text>
-            <text class="land-label land-label-sm" x="831" y="355.8">SOUTH KOREA</text>
-            <text class="land-label" x="866" y="356.35">JAPAN</text>
-            <text class="land-label land-label-sm" x="814.6" y="396.35">TAIWAN</text>
-            <text class="land-label" x="756" y="416.35">THAILAND</text>
-            <text class="land-label" x="773" y="435.35">VIETNAM</text>
-            <text class="land-label" x="815" y="430.35">PHILIPPINES</text>
-            <text class="land-label" x="763" y="452.35">MALAYSIA</text>
-            <text class="land-label land-label-sm" x="767" y="461.8">SINGAPORE</text>
-            <text class="land-label" x="815" y="489.35">INDONESIA</text>
-            <text class="land-label land-label-xs" x="795.4" y="402">HONG KONG</text>
-          </g>
-          <g class="map-adventures" id="mapAdventures" data-nav="mygallery" role="link" tabindex="0" aria-label="See my adventures &mdash; opens My Gallery">
-            <path id="mapAdventuresArc" class="map-adventures-arc" d="M694,326C762,312 828,302 886,294"/>
-            <text class="map-adventures-text"><textPath href="#mapAdventuresArc" startOffset="50%">See my Adventures!</textPath></text>
-          </g>
-        </svg>
-              <div class="map-flag-card" id="mapFlagCard">
-                <img id="mapFlagImg" alt="">
-                <span id="mapFlagName"></span>
+              <div class="hero-intro" id="heroIntro">
+                <p>
+                  Fasten your seatbelt and join me on an exciting journey
+                  through my world of discovery, creativity, and learning. My
+                  name is <strong>Jarred Reinel C. Vivar</strong>, a young
+                  enthusiast whose curiosity soars as high as the aircraft that
+                  inspire me. My passion for
+                  <strong>aviation and travel</strong> fuels my dream of
+                  exploring new horizons, cultures, and destinations around the
+                  globe.
+                </p>
+                <p>
+                  Beyond the skies, I find joy in expressing myself through
+                  <strong>guitar playing</strong>, embarking on delicious
+                  <strong>food adventures</strong>, immersing myself in
+                  captivating <strong>animations and movies</strong>, and
+                  discovering new experiences that enrich my imagination and
+                  creativity. Each interest helps shape who I am and inspires me
+                  to learn something new every day.
+                </p>
+                <p>
+                  This digital portfolio serves as a showcase of my
+                  achievements, experiences, and memorable learning moments
+                  during the <strong>Second Quarter</strong>. Inside, you will
+                  find highlights from my journey through Science, Mathematics,
+                  Language, Music, the Arts, and Values Education. These
+                  subjects have helped me develop not only knowledge and skills
+                  but also creativity, critical thinking, discipline, and
+                  character.
+                </p>
+                <p>
+                  As you explore this portfolio, I invite you to discover the
+                  projects, activities, and experiences that reflect my growth
+                  as a learner and as an individual. Thank you for visiting, and
+                  I hope you enjoy this journey as much as I enjoyed creating
+                  it&#33;
+                </p>
+                <p class="intro-quote">
+                  “Energy and persistence conquer all things.” — Benjamin
+                  Franklin
+                </p>
+              </div>
+
+              <div class="ticket" aria-label="Boarding pass, Grade 9-Synergy">
+                <div class="ticket-stub">BOARDING PASS</div>
+                <div class="ticket-body">
+                  <span class="ticket-route">MNL <i>&#9992;</i> ANYWHERE</span>
+                  <span class="ticket-meta"
+                    >FLIGHT JD-2026 &middot; SEAT 12A</span
+                  >
+                  <span class="ticket-barcode"></span>
+                  <span class="ticket-foot">
+                    <img
+                      class="ticket-logo"
+                      src="images/school.jpg"
+                      alt="School logo"
+                    />
+                    <span class="ticket-grade">Grade 9-Synergy</span>
+                  </span>
+                </div>
               </div>
             </div>
-            <figcaption class="photo-label">Jarred Reinel C. Vivar</figcaption>
-          </figure>
 
-          <figure class="video-card">
-            <span class="tape tape-v" aria-hidden="true"></span>
-            <div class="video-frame">
-              <video class="hero-video" id="heroVideo" controls playsinline preload="metadata">
-                <source src="videos/SNK.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
+            <!-- RIGHT: scrapbook collage (photo + video) -->
+            <div class="hero-right">
+              <figure class="photo-frame display-frame">
+                <span class="tape tape-l" aria-hidden="true"></span>
+                <span class="tape tape-r" aria-hidden="true"></span>
+                <span class="tape tape-map-b" aria-hidden="true"></span>
+                <!-- Decorative scrapbook title; the map hint sits below the map. -->
+                <div class="adventures-banner">
+                  <span class="ab-tape" aria-hidden="true"></span>
+                  <svg
+                    class="ab-plane"
+                    viewBox="0 0 48 34"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 30c14 0 22-8 34-14"
+                      stroke="currentColor"
+                      stroke-width="2.4"
+                      stroke-linecap="round"
+                      stroke-dasharray="1 7"
+                    ></path>
+                    <path
+                      d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z"
+                      fill="currentColor"
+                      transform="translate(0 -1)"
+                    ></path>
+                  </svg>
+                  <span class="ab-copy">
+                    <span class="ab-text">See my Journey</span>
+                    <span class="map-hint">
+                      <span class="map-hint-icon" aria-hidden="true">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.9"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path
+                            d="M12 2.6a6.6 6.6 0 0 0-6.6 6.6C5.4 14 12 21.4 12 21.4s6.6-7.4 6.6-12.2A6.6 6.6 0 0 0 12 2.6z"
+                          ></path>
+                          <circle cx="12" cy="9.2" r="2.4"></circle>
+                        </svg>
+                      </span>
+                      Explore the map: drag to move and click a country to
+                      discover Jarred's adventures!
+                    </span>
+                  </span>
+                  <svg class="ab-pin" viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M12 2.5a6.8 6.8 0 0 0-6.8 6.8C5.2 14.4 12 21.5 12 21.5s6.8-7.1 6.8-12.2A6.8 6.8 0 0 0 12 2.5z"
+                      fill="currentColor"
+                    ></path>
+                    <circle cx="12" cy="9.2" r="2.5" fill="#FFFDF6"></circle>
+                  </svg>
+                  <svg class="ab-dots" viewBox="0 0 320 60" aria-hidden="true">
+                    <path
+                      d="M6 48C70 20 150 54 230 26 262 15 292 18 314 26"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-dasharray="1 11"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="map-holder" id="asiaMap">
+                  <p class="map-fallback">
+                    The interactive map could not be loaded. Refresh the page to
+                    try again.
+                  </p>
+                  <svg
+                    viewBox="671.84 276.23 221.49 226.17"
+                    role="group"
+                    aria-label="Interactive map of Southeast Asia"
+                  >
+                    <path
+                      class="land"
+                      data-code="PH"
+                      data-name="Philippines"
+                      tabindex="0"
+                      role="button"
+                      aria-label="Philippines"
+                      d="M829.59,439.86l0.29,1.87l0.17,1.58l-0.96,2.57l-1.02,-2.86l-1.31,1.42l0.9,2.06l-0.8,1.31l-3.3,-1.63l-0.79,-2.03l0.86,-1.33l-1.78,-1.33l-0.88,1.17l-1.32,-0.11l-2.08,1.57l-0.46,-0.82l1.1,-2.37l1.77,-0.79l1.53,-1.06l0.99,1.27l2.13,-0.77l0.46,-1.26l1.98,-0.08l-0.17,-2.18l2.27,1.34l0.24,1.42L829.59,439.86zM822.88,434.6l-1.01,0.93l-0.88,1.79l-0.88,0.84l-1.73,-1.95l0.58,-0.76l0.7,-0.79l0.31,-1.76l1.55,-0.17l-0.45,1.91l2.08,-2.74L822.88,434.6zM807.52,437.32l-3.73,2.67l1.38,-1.97l2.03,-1.74l1.68,-1.96l1.47,-2.82l0.5,2.31l-1.85,1.56L807.52,437.32zM817,430.02l1.68,0.88l1.78,0l-0.05,1.19l-1.3,1.2l-1.78,0.85l-0.1,-1.32l0.2,-1.45L817,430.02zM827.14,429.25l0.79,3.18l-2.16,-0.75l0.06,0.95l0.69,1.75l-1.33,0.63l-0.12,-1.99l-0.84,-0.15l-0.44,-1.72l1.65,0.23l-0.04,-1.08l-1.71,-2.18l2.69,0.06L827.14,429.25zM816,426.66l-0.74,2.47l-1.2,-1.42l-1.43,-2.18l2.4,0.1L816,426.66zM815.42,410.92l1.73,0.84l0.86,-0.76l0.25,0.75l-0.46,1.22l0.96,2.09l-0.74,2.42l-1.65,0.96l-0.44,2.33l0.63,2.29l1.49,0.32l1.24,-0.34l3.5,1.59l-0.27,1.56l0.92,0.69l-0.29,1.32l-2.18,-1.4l-1.04,-1.5l-0.72,1.05l-1.79,-1.72l-2.55,0.42l-1.4,-0.63l0.14,-1.19l0.88,-0.73l-0.84,-0.67l-0.36,1.04l-1.38,-1.65l-0.42,-1.26l-0.1,-2.77l1.13,0.96l0.29,-4.55l0.91,-2.66L815.42,410.92z"
+                    />
+                    <path
+                      class="land"
+                      data-code="TH"
+                      data-name="Thailand"
+                      tabindex="0"
+                      role="button"
+                      aria-label="Thailand"
+                      d="M762.89,429.18L760.37,427.87L757.97,427.93L758.38,425.68L755.91,425.7L755.69,428.84L754.18,432.99L753.27,435.49L753.46,437.54L755.28,437.63L756.42,440.2L756.93,442.63L758.49,444.24L760.19,444.57L761.64,446.02L760.73,447.17L758.87,447.51L758.65,446.07L756.37,444.84L755.88,445.34L754.77,444.27L754.29,442.88L752.8,441.29L751.44,439.96L750.98,441.61L750.45,440.05L750.76,438.29L751.58,435.58L752.94,432.67L754.48,430.02L753.38,427.42L753.43,426.09L753.11,424.49L751.24,422.21L750.57,420.76L751.54,420.23L752.56,417.71L751.42,415.79L749.64,413.66L748.28,411.09L749.46,410.56L750.74,407.37L752.72,407.23L754.36,405.95L755.96,405.26L757.18,406.18L757.34,407.96L759.23,408.09L758.54,411.2L758.61,413.82L761.56,412.08L762.4,412.59L764.05,412.51L764.61,411.49L766.73,411.69L768.86,414.07L769.04,416.94L771.31,419.47L771.18,421.91L770.27,423.21L767.64,422.8L764.02,423.35L762.22,425.73z"
+                    />
+                    <path
+                      class="land"
+                      data-code="TW"
+                      data-name="Taiwan"
+                      tabindex="0"
+                      role="button"
+                      aria-label="Taiwan"
+                      d="M816.7,393.27L815.01,398.14L813.81,400.62L812.33,398.07L812.01,395.82L813.66,392.82L815.91,390.5L817.19,391.41z"
+                    />
+                    <path
+                      class="land"
+                      data-code="MY"
+                      data-name="Malaysia"
+                      tabindex="0"
+                      role="button"
+                      aria-label="Malaysia"
+                      d="M758.65,446.07l0.22,1.44l1.85,-0.33l0.92,-1.15l0.64,0.26l1.66,1.69l1.18,1.87l0.16,1.88l-0.3,1.27l0.27,0.96l0.21,1.65l0.99,0.77l1.1,2.46l-0.05,0.94l-1.99,0.19l-2.65,-2.06l-3.32,-2.21l-0.33,-1.42l-1.62,-1.87l-0.39,-2.31l-1.01,-1.52l0.31,-2.04l-0.62,-1.19l0.49,-0.5L758.65,446.07zM807.84,450.9l-2.06,0.95l-2.43,-0.47l-3.22,0l-0.97,3.17l-1.08,0.97l-1.44,3.88l-2.29,0.59l-2.65,-0.78l-1.34,0.24l-1.63,1.41l-1.79,-0.2l-1.81,0.57l-1.92,-1.57l-0.47,-1.86l2.05,0.96l2.17,-0.52l0.56,-2.36l1.2,-0.53l3.36,-0.6l2.01,-2.21l1.38,-1.77l1.28,1.45l0.59,-0.95l1.34,0.09l0.16,-1.78l0.13,-1.38l2.16,-1.95l1.41,-2.19l1.13,-0.01l1.44,1.42l0.13,1.22l1.85,0.78l2.34,0.84l-0.2,1.1l-1.88,0.14L807.84,450.9z"
+                    />
+                    <path
+                      class="land"
+                      data-code="ID"
+                      data-name="Indonesia"
+                      tabindex="0"
+                      role="button"
+                      aria-label="Indonesia"
+                      d="M813.72,492.06l-1.18,0.05l-3.72,-1.98l2.61,-0.56l1.47,0.86l0.98,0.86L813.72,492.06zM824.15,491.78l-2.4,0.62l-0.34,-0.34l0.25,-0.96l1.21,-1.72l2.77,-1.12l0.28,0.56l0.05,0.86L824.15,491.78zM805.83,486.01l1.01,0.75l1.73,-0.23l0.7,1.2l-3.24,0.57l-1.94,0.38l-1.51,-0.02l0.96,-1.62l1.54,-0.02L805.83,486.01zM819.86,486l-0.41,1.56l-4.21,0.8l-3.73,-0.35l-0.01,-1.03l2.23,-0.59l1.76,0.84l1.87,-0.21L819.86,486zM779.82,482.31l5.37,0.28l0.62,-1.16l5.2,1.35l1.02,1.82l4.21,0.51l3.44,1.67l-3.2,1.07l-3.08,-1.13l-2.54,0.08l-2.91,-0.21l-2.62,-0.51l-3.25,-1.07l-2.06,-0.28l-1.17,0.35l-5.11,-1.16l-0.49,-1.21l-2.57,-0.21l1.92,-2.68l3.4,0.17l2.26,1.09l1.16,0.21L779.82,482.31zM853,480.73l-1.44,1.91l-0.27,-2.11l0.5,-1.01l0.59,-0.95l0.64,0.82L853,480.73zM832.04,473.02l-1.05,0.93l-1.94,-0.51l-0.55,-1.2l2.84,-0.13L832.04,473.02zM841.08,472.01l1.02,2.13l-2.37,-1.15l-2.34,-0.23l-1.58,0.18l-1.94,-0.1l0.67,-1.53l3.46,-0.12L841.08,472.01zM851.37,466.59l0.78,4.51l2.9,1.67l2.34,-2.96l3.22,-1.68l2.49,0l2.4,0.97l2.08,1l3.01,0.53l0.05,9.1l0.05,9.16l-2.5,-2.31l-2.85,-0.57l-0.69,0.8l-3.55,0.09l1.19,-2.29l1.77,-0.78l-0.73,-3.05l-1.35,-2.35l-5.44,-2.37l-2.31,-0.23l-4.21,-2.58l-0.83,1.36l-1.08,0.25l-0.64,-1.02l-0.01,-1.21l-2.14,-1.37l3.02,-1l2,0.05l-0.24,-0.74l-4.1,-0.01l-1.11,-1.66l-2.5,-0.51l-1.19,-1.38l3.78,-0.67l1.44,-0.91l4.5,1.14L851.37,466.59zM826.41,459.43l-2.25,2.76l-2.11,0.54l-2.7,-0.54l-4.67,0.14l-2.45,0.4l-0.4,2.11l2.51,2.48l1.51,-1.26l5.23,-0.95l-0.23,1.28l-1.22,-0.4l-1.22,1.63l-2.47,1.08l2.65,3.57l-0.51,0.96l2.52,3.22l-0.02,1.84l-1.5,0.82l-1.1,-0.98l1.36,-2.29l-2.75,1.08l-0.7,-0.77l0.36,-1.08l-2.02,-1.64l0.21,-2.72l-1.87,0.85l0.24,3.25l0.11,4l-1.78,0.41l-1.2,-0.82l0.8,-2.57l-0.43,-2.69l-1.18,-0.02l-0.87,-1.91l1.16,-1.83l0.4,-2.21l1.41,-4.2l0.59,-1.15l2.38,-2.07l2.19,0.82l3.54,0.39l3.22,-0.12l2.77,-2.02L826.41,459.43zM836.08,460.23l-0.15,2.43l-1.45,-0.27l-0.43,1.69l1.16,1.47l-0.79,0.33l-1.13,-1.76l-0.83,-3.56l0.56,-2.23l0.93,-1.01l0.2,1.52l1.66,0.24L836.08,460.23zM805.76,458.29l3.14,2.58l-3.32,0.33l-0.94,1.9l0.12,2.52l-2.7,1.91L802,470.3l-1.08,4.27l-0.41,-0.99l-3.19,1.26l-1.11,-1.71l-2,-0.16l-1.4,-0.89l-3.33,1l-1.02,-1.35l-1.84,0.15l-2.31,-0.32l-0.43,-3.74l-1.4,-0.77l-1.35,-2.38l-0.39,-2.44l0.33,-2.58l1.67,-1.85l0.47,1.86l1.92,1.57l1.81,-0.57l1.79,0.2l1.63,-1.41l1.34,-0.24l2.65,0.78l2.29,-0.59l1.44,-3.88l1.08,-0.97l0.97,-3.17l3.22,0l2.43,0.47l-1.59,2.52l2.06,2.64L805.76,458.29zM771.95,479.71l-3.1,0.06l-2.36,-2.34l-3.6,-2.28l-1.2,-1.69l-2.12,-2.27l-1.39,-2.09l-2.13,-3.9l-2.46,-2.32l-0.82,-2.39l-1.03,-2.17l-2.53,-1.75l-1.47,-2.39l-2.11,-1.56l-2.92,-3.08l-0.25,-1.42l1.81,0.11l4.34,0.54l2.48,2.73l2.17,1.89l1.55,1.16l2.66,3l2.85,0.04l2.36,1.91l1.62,2.33l2.13,1.27l-1.12,2.27l1.61,0.97l1.01,0.07l0.48,1.94l0.98,1.56l2.06,0.25l1.36,1.76l-0.7,3.47L771.95,479.71z"
+                    />
+                    <path
+                      class="land"
+                      data-code="VN"
+                      data-name="Vietnam"
+                      tabindex="0"
+                      role="button"
+                      aria-label="Vietnam"
+                      d="M778.21,401.87L774.47,404.43L772.13,407.24L771.51,409.29L773.66,412.38L776.28,416.2L778.82,417.99L780.53,420.32L781.81,425.64L781.43,430.66L779.1,432.53L775.88,434.36L773.6,436.72L770.1,439.34L769.08,437.53L769.87,435.62L767.79,434.01L770.22,432.87L773.16,432.67L771.93,430.94L776.64,428.75L776.99,425.33L776.34,423.41L776.85,420.53L776.14,418.49L774.02,416.47L772.25,413.9L769.92,410.44L766.56,408.68L767.37,407.61L769.16,406.84L768.07,404.25L764.62,404.22L763.36,401.5L761.72,399.13L763.23,398.39L765.46,398.41L768.19,398.06L770.58,396.44L771.93,397.58L774.5,398.13L774.05,399.87L775.39,401.09z"
+                    />
+                    <path
+                      class="land"
+                      data-code="CN"
+                      data-name="China"
+                      tabindex="0"
+                      role="button"
+                      aria-label="China"
+                      d="M785.88,406.27l0.63,1.13l-1.23,1.3l-0.65,1.7l-2.42,1.41l-2.3,-0.91l-0.08,-2.53l1.38,-1.34l3.06,-0.83L785.88,406.27zM849.21,309.6l-2.43,1.65l-4.26,0l-1.13,-3.95l-3.32,-3.03l-4.88,-1.38l-1.04,-4.28l-0.98,-2.73l-1.05,-1.94l-1.73,-4.61l-2.46,-1.71l-4.2,-1.39l-3.72,0.13l-3.48,0.84l-2.32,2.31l1.54,1.1l0.04,2.52l-1.56,1.45l-2.53,4.73l0.03,1.93l-3.95,2.74l-3.37,-1.63l-1.37,3.25l-1.98,4.23l0.72,1.71l1.59,-0.53l2.77,0.65l2.16,-1.54l2.25,1.33l2.54,2.89l-0.31,1.45l-2.21,-0.46l-4.07,0.54l-1.97,1.16l-2.05,2.66l-4.28,1.55l-2.79,2.1l-2.88,-0.8l-1.58,-0.36l-1.47,2.54l0.9,1.5l0.45,1.28l-1.96,1.3l-2.01,2.05l-3.28,1.34l-4.2,0.14l-4.53,1.31l-3.26,2.01l-1.24,-1.16l-3.39,0l-4.15,-2.29l-2.77,-0.57l-3.73,0.53l-5.79,-0.85l-3.09,0.09l-1.65,-2.27l-1.28,-3.57l-1.73,-0.43l-3.39,-2.45l-3.78,-0.55l-3.33,-0.68l-1.01,-1.73l1.08,-4.73l-1.93,-3.32l-4,-1.57l-2.36,-2.23l-0.74,-2.97l-1.1,0.35l-2.13,2.83l-2.33,0.39l-0.13,4.19l-1.56,1.86l-5.56,-1.35l-2.02,7.26l-1.44,0.89l-5.55,1.58l2.52,6.75l-1.92,1l0.22,2.17l-0.39,0.85l-4.42,2.03l-1,1.48l-3.6,0.44l-1.06,2.35l-2.97,-0.49l-1.94,0.72l-2.68,1.73l0.39,0.85l-0.8,0.83l0.71,3.32l0.92,-0.36l1.7,0.81l-0.1,1.38l0.42,2.01l0.5,1.01l2.07,1.63l0.83,2.66l4.42,1.33l0.14,-0.04l3.88,-1.37l2.88,1.37l-0.91,2.76l-1.6,2.23l-1.24,0.1h-0.05l-0.18,1.74l1.12,1.71l-0.09,1.69l-2.01,-0.44l0.79,3.63l2.75,2.07l3.9,2.26l1.16,-0.77l2.25,0.99l2.83,2.09l1.58,0.46l0.94,1.53l2.18,0.63l2.28,1.39l3.17,0.73l3.27,0.31l1.71,-0.66l0.24,2.48l1.85,-2.34l1.51,-0.8l2,0.73l1.48,0.08l1.23,0.85l2.26,-0.39l2.55,-2.36l3.23,-2.03l2.35,0.78l2,-1.35l1.31,1.99l-0.95,1.33l3.02,0.47l1.64,-0.24l0.94,1.86l1.22,0.75l0.08,2.4l-0.11,2.57l-2.66,2.58l-0.34,3.63l2.96,-0.51l0.67,2.8l1.78,0.59l-0.82,2.51l2.08,1.13l1.21,0.55l2.06,-0.87l0.08,1.24l0.25,0.7l1.5,0.08l-0.42,-3.43l1.45,-0.44l1.5,-0.74l2.24,0.02l2.73,-0.35l2.39,-1.62l1.35,1.14l2.56,0.55l-0.44,1.74l1.33,1.22l2.82,0.78l1.33,-0.49l3.76,0.96l-0.66,1.16l0.74,2.16l1.55,-0.17l0.96,-3.15l2.97,-0.46l3.92,-1.5l1.59,-1.5l0.97,0.98l1.71,-1.34l3.16,-0.35l3.9,-2.55l3.86,-2.82l2.6,-3.68l2.27,-4.09l2.05,-3.41l1.57,-0.28l0.71,-2.52l0.43,-2.61l-1.65,-1l-0.67,-1.73l1.76,-0.89l0.05,-2.43l-1.9,-2.53l-1.71,-3.05l-1.1,-3.31l-3.02,-1.86l1.44,-2.39l2.73,-1.73l1.31,-1.87l3.97,-0.97l-0.46,-1.84l-1.81,-0.09l-2.49,-1.37l-3.14,2.51l-2.22,-1.02l-0.09,-1.58l-2.29,-0.58l-1.48,-2.41l1.43,-1.68l2.75,-0.17l1.73,-2.34l3.17,-2.54l2.44,-1.3l1.48,1.93l-2.22,2.45l0.59,1.41l-1.49,1.67l3.02,-0.98l2.06,-1.69l3.92,-1.06l2.28,-2.35l3.09,-1.98l1.93,-2.64l1.33,1.17l2.42,0.14l-0.44,-1.97l4.33,-1.62l1.11,-2.13l1.81,2.24l-0.02,-1.93l1.43,-0.1l0.4,-4.55l-0.74,-3.36l2.41,-1.4l3.4,0.7l1.89,-3.89l0.96,-4.46l1.09,-1.51l1.47,-3.76L849.21,309.6z"
+                    />
+                    <path
+                      class="land"
+                      data-code="JP"
+                      data-name="Japan"
+                      tabindex="0"
+                      role="button"
+                      aria-label="Japan"
+                      d="M852.76,362.01l0.36,1.15l-1.58,2.03l-1.15,-1.07l-1.44,0.78l-0.74,1.95l-1.83,-0.95l0.02,-1.58l1.55,-2l1.59,0.39l1.15,-1.42L852.76,362.01zM870.53,351.73l-1.06,2.78l0.49,1.73l-1.46,2.42l-3.58,1.6l-4.93,0.21l-4,3.84l-1.88,-1.29L854,360.5l-4.88,0.75l-3.32,1.59l-3.28,0.06l2.84,2.46l-1.87,5.61l-1.81,1.37l-1.36,-1.27l0.69,-2.96l-1.77,-0.96l-1.14,-2.28l2.65,-1.03l1.47,-2.11l2.82,-1.75l2.06,-2.33l5.58,-1.02l3,0.7l2.93,-6.17l1.87,1.67l4.11,-3.51l1.59,-1.38l1.76,-4.38l-0.48,-4.1l1.18,-2.33l2.98,-0.68l1.53,5.11l-0.08,2.94l-2.59,3.6L870.53,351.73zM878.76,325.8l1.97,0.83l1.98,-1.65l0.62,4.35l-4.16,1.05l-2.46,3.76l-4.41,-2.58l-1.53,4.12l-3.12,0.06l-0.39,-3.74l1.39,-2.94l3,-0.21l0.82,-5.38l0.83,-3.09l3.29,4.12L878.76,325.8z"
+                    />
+                    <path
+                      class="land"
+                      data-code="KR"
+                      data-name="South Korea"
+                      tabindex="0"
+                      role="button"
+                      aria-label="South Korea"
+                      d="M835.13,346.53L837.55,350.71L838.24,352.98L838.26,356.96L837.21,358.84L834.67,359.5L832.43,360.91L829.9,361.2L829.59,359.35L830.11,356.78L828.87,353.18L830.95,352.59L829.03,349.59L829.2,349.27L830.46,349.39L831.55,347.79L833.53,347.62L834.72,347.39z"
+                    />
+                    <path
+                      class="land"
+                      data-code="HK"
+                      data-name="Hong Kong"
+                      tabindex="0"
+                      role="button"
+                      aria-label="Hong Kong"
+                      d="M793.7,399.8C793.7,398.9 794.4,398.5 795.4,398.5C796.3,398.5 797.1,398.9 797.1,399.8C797.1,400.7 796.3,401.1 795.4,401.1C794.4,401.1 793.7,400.7 793.7,399.8Z"
+                    />
+                    <path
+                      class="land"
+                      data-code="SG"
+                      data-name="Singapore"
+                      tabindex="0"
+                      role="button"
+                      aria-label="Singapore"
+                      d="M765.9,458.9C766.6,458.6 767.6,458.6 768.2,459.1C768.7,459.5 768.8,460.1 768.5,460.6C768.1,461.1 767.3,461.4 766.6,461.3C765.9,461.2 765.4,460.7 765.3,460.1C765.2,459.6 765.4,459.2 765.9,458.9Z"
+                    />
+                    <g class="land-labels" aria-hidden="true">
+                      <text class="land-label" x="738" y="336">CHINA</text>
+                      <text class="land-label land-label-sm" x="831" y="355.8">
+                        SOUTH KOREA
+                      </text>
+                      <text class="land-label" x="866" y="356.35">JAPAN</text>
+                      <text
+                        class="land-label land-label-sm"
+                        x="814.6"
+                        y="396.35"
+                      >
+                        TAIWAN
+                      </text>
+                      <text class="land-label" x="756" y="416.35">
+                        THAILAND
+                      </text>
+                      <text class="land-label" x="773" y="435.35">VIETNAM</text>
+                      <text class="land-label" x="815" y="430.35">
+                        PHILIPPINES
+                      </text>
+                      <text class="land-label" x="763" y="452.35">
+                        MALAYSIA
+                      </text>
+                      <text class="land-label land-label-sm" x="767" y="461.8">
+                        SINGAPORE
+                      </text>
+                      <text class="land-label" x="815" y="489.35">
+                        INDONESIA
+                      </text>
+                      <text class="land-label land-label-xs" x="795.4" y="402">HONG KONG</text>
+                    </g>
+                  </svg>
+                  <div class="map-flag-card" id="mapFlagCard">
+                    <img id="mapFlagImg" alt="" />
+                    <span id="mapFlagName"></span>
+                  </div>
+                  <div class="map-controls" aria-label="Map controls">
+                    <button
+                      type="button"
+                      class="map-zoom"
+                      id="mapZoomIn"
+                      aria-label="Zoom in"
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      class="map-zoom"
+                      id="mapZoomOut"
+                      aria-label="Zoom out"
+                    >
+                      &minus;
+                    </button>
+                    <button
+                      type="button"
+                      class="map-reset"
+                      id="mapReset"
+                      hidden
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+
+                <!-- scrapbook polaroids pasted ON the map itself, positioned
+                     relative to this frame (never to the page) -->
+                <figure class="mini-photo mini-2">
+                  <span class="tape tape-m" aria-hidden="true"></span>
+                  <img
+                    src="images/plane.jpg"
+                    alt="Extra Ordinary recognition ceremony certificate and lanyard from Sta. Rosa Laguna"
+                    loading="lazy"
+                  />
+                  <figcaption>Achievement</figcaption>
+                </figure>
+
+                <figure class="mini-photo mini-1">
+                  <span class="tape tape-m" aria-hidden="true"></span>
+                  <img
+                    src="images/profile.jpg"
+                    alt="Jarred in an aircraft cockpit simulator on Airline Day"
+                    loading="lazy"
+                  />
+                  <figcaption>Airline Day</figcaption>
+                </figure>
+
+                <!-- aviation video taped over the lower-left outer border -->
+                <figure class="video-card">
+                  <span class="tape tape-v" aria-hidden="true"></span>
+                  <div class="video-frame">
+                    <video
+                      class="hero-video"
+                      id="heroVideo"
+                      controls
+                      playsinline
+                      preload="metadata"
+                    >
+                      <source src="videos/SNK.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  <figcaption class="video-caption">
+                    <strong>Cockpit flight experience</strong>
+                    <span>My aviation video &middot; plays with sound</span>
+                  </figcaption>
+                </figure>
+              </figure>
             </div>
-            <figcaption class="video-caption">
-              <strong>Cockpit flight experience</strong>
-              <span>My aviation video &middot; plays with sound</span>
-            </figcaption>
-          </figure>
+          </div>
+        </section>
 
-          <figure class="mini-photo mini-1">
-            <span class="tape tape-m" aria-hidden="true"></span>
-            <img src="images/plane.jpg" alt="Extra Ordinary recognition ceremony certificate and lanyard from Sta. Rosa Laguna" loading="lazy">
-            <figcaption>recognition day</figcaption>
-          </figure>
+        <!-- ---- two large navigation cards ---- -->
+        <section class="home-cards" aria-label="Explore the portfolio">
+          <button
+            type="button"
+            class="hcard hcard-gallery"
+            data-nav="mygallery"
+          >
+            <span class="hcard-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M3 8.5A2.5 2.5 0 0 1 5.5 6h2L9 4h6l1.5 2h2A2.5 2.5 0 0 1 21 8.5v9A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z"
+                ></path>
+                <circle cx="12" cy="13" r="3.6"></circle>
+              </svg>
+            </span>
+            <span class="hcard-body">
+              <h2>My Gallery</h2>
+              <p>
+                Explore my personal photos, moments, and memorable experiences.
+              </p>
+            </span>
+            <span class="hcard-arrow" aria-hidden="true">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h13M13 6l6 6-6 6"></path>
+              </svg>
+            </span>
+            <span
+              class="hcard-deco hcard-deco-camera"
+              aria-hidden="true"
+            ></span>
+          </button>
 
-          <figure class="mini-photo mini-2">
-            <img src="images/profile.jpg" alt="Jarred's profile photograph taken inside an aircraft cockpit simulator" loading="lazy">
-            <figcaption>airline day</figcaption>
-          </figure>
-        </div>
+          <button
+            type="button"
+            class="hcard hcard-subjects"
+            data-nav="subjects"
+          >
+            <span class="hcard-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M12 6.5C10.6 5 8.6 4.3 4.8 4.3A1.5 1.5 0 0 0 3.3 5.8v11.1c0 .8.7 1.5 1.5 1.5 3.8 0 5.8.7 7.2 2.1 1.4-1.4 3.4-2.1 7.2-2.1.8 0 1.5-.7 1.5-1.5V5.8c0-.8-.7-1.5-1.5-1.5-3.8 0-5.8.7-7.2 2.2z"
+                ></path>
+                <path d="M12 6.5v14"></path>
+              </svg>
+            </span>
+            <span class="hcard-body">
+              <h2>Subjects</h2>
+              <p>
+                View my projects, activities, and outputs from each subject.
+              </p>
+            </span>
+            <span class="hcard-arrow" aria-hidden="true">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h13M13 6l6 6-6 6"></path>
+              </svg>
+            </span>
+            <span class="hcard-deco hcard-deco-books" aria-hidden="true"></span>
+          </button>
+        </section>
+
+        <footer class="site-footer">
+          <span class="foot-line" aria-hidden="true"></span>
+          <span class="foot-plane" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M21 15.5l-8-4.5V4.8a1.5 1.5 0 0 0-3 0v6.2l-8 4.5v1.8l8-2.6v4l-2.4 1.6v1.4l3.9-1 3.9 1v-1.4L13 18.7v-4l8 2.6z"
+              ></path>
+            </svg>
+          </span>
+          <p class="foot-text">
+            DREAM <i>&bull;</i> EXPLORE <i>&bull;</i> LEARN <i>&bull;</i> GROW
+          </p>
+          <span class="foot-line" aria-hidden="true"></span>
+        </footer>
       </div>
-    </section>
 
-    <!-- ---- two large navigation cards ---- -->
-    <section class="home-cards" aria-label="Explore the portfolio">
-      <button type="button" class="hcard hcard-gallery" data-nav="mygallery">
-        <span class="hcard-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h2L9 4h6l1.5 2h2A2.5 2.5 0 0 1 21 8.5v9A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z"></path>
-            <circle cx="12" cy="13" r="3.6"></circle>
-          </svg>
-        </span>
-        <span class="hcard-body">
+      <!-- ============ SUBJECTS VIEW ============ -->
+      <section
+        class="view subjects-view"
+        id="subjectsView"
+        aria-label="Subjects"
+      >
+        <header class="paper-banner">
+          <span class="pb-tape" aria-hidden="true"></span>
+          <span class="pb-plane" aria-hidden="true">
+            <svg viewBox="0 0 48 34" fill="none">
+              <path
+                d="M2 30c14 0 22-8 34-14"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-dasharray="1 7"
+              ></path>
+              <path
+                d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z"
+                fill="currentColor"
+                transform="translate(0 -1)"
+              ></path>
+            </svg>
+          </span>
+          <p class="pb-kicker">Second Quarter &middot; Portfolio</p>
+          <h2>My Subjects</h2>
+          <p class="pb-note">Learn today, build tomorrow.</p>
+          <p class="pb-sub">
+            Pick a subject to open its gallery of projects, activities, and
+            outputs.
+          </p>
+        </header>
+        <div class="subject-cards" id="subjectCards"></div>
+      </section>
+
+      <!-- ============ SUBJECT GALLERY VIEW ============ -->
+      <section
+        class="view gallery-page"
+        id="galleryView"
+        aria-label="Subject gallery"
+      >
+        <div class="gallery-nav">
+          <button type="button" class="btn btn-secondary btn-sm" id="backBtn">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M15 6l-6 6 6 6"></path>
+            </svg>
+            Back to Subjects
+          </button>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <button type="button" class="crumb-link" id="crumbHome">
+              Subjects
+            </button>
+            <span class="crumb-sep" aria-hidden="true">/</span>
+            <span class="crumb-current" id="crumbTitle">Subject</span>
+          </nav>
+        </div>
+
+        <header class="subject-hero">
+          <span class="sh-tape" aria-hidden="true"></span>
+          <span class="sh-plane" aria-hidden="true">
+            <svg viewBox="0 0 48 34" fill="none">
+              <path
+                d="M2 30c14 0 22-8 34-14"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-dasharray="1 7"
+              ></path>
+              <path
+                d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z"
+                fill="currentColor"
+                transform="translate(0 -1)"
+              ></path>
+            </svg>
+          </span>
+          <div class="hero-icon" id="heroIcon" aria-hidden="true"></div>
+          <div class="hero-text">
+            <p class="hero-kicker">Subject Gallery</p>
+            <h2 id="galleryTitle">Subject</h2>
+            <p class="hero-desc" id="galleryTagline"></p>
+            <p id="galleryDesc"></p>
+            <p id="galleryIntro"></p>
+          </div>
+          <div class="hero-side">
+            <span class="item-count" id="itemCount">No items yet</span>
+          </div>
+        </header>
+
+        <!-- ============ CANVA-STYLE PRESENTATION ============ -->
+        <div class="preso" id="preso">
+          <!-- ONE large presentation card: the activity details, the big
+           preview and the single View Presentation button all live in
+           this card (each subject currently holds one activity). -->
+          <div class="preso-center">
+            <div class="preso-frame" id="presoFrame">
+              <div class="preso-slide" id="presoSlide">
+                <span class="ps-tape" aria-hidden="true"></span>
+                <p class="ps-kicker" id="presoKicker">Subject</p>
+                <h3 class="ps-title" id="presoTitle"></h3>
+                <p class="ps-desc" id="presoDesc"></p>
+                <div class="ps-media" id="presoMedia">
+                  <button
+                    type="button"
+                    class="ps-zoom"
+                    id="presoZoom"
+                    aria-label="Open this presentation full size"
+                  >
+                    <img id="presoImg" alt="" />
+                    <span class="ps-hint" aria-hidden="true">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.1"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path
+                          d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8A2.5 2.5 0 0 1 17.5 17h-11A2.5 2.5 0 0 1 4 14.5z"
+                        ></path>
+                        <path
+                          d="M10.4 7.6l4.4 2.4-4.4 2.4z"
+                          fill="currentColor"
+                          stroke="none"
+                        ></path>
+                      </svg>
+                      Click to view presentation
+                    </span>
+                  </button>
+                  <video
+                    id="presoVideo"
+                    class="hidden"
+                    controls
+                    playsinline
+                    preload="metadata"
+                  ></video>
+                </div>
+                <p class="ps-type" id="presoType"></p>
+                <button type="button" class="preso-view-btn" id="presoViewBtn">
+                  View Presentation <span aria-hidden="true">&#8594;</span>
+                </button>
+                <p class="ps-foot">
+                  <span class="ps-foot-class">Grade 9 &ndash; Synergy</span>
+                </p>
+              </div>
+              <div class="preso-bar">
+                <span class="preso-count" id="presoCount">1 / 1</span>
+                <span class="preso-dots" aria-hidden="true"></span>
+                <button
+                  type="button"
+                  class="preso-arrow"
+                  id="presoPrev"
+                  aria-label="Previous slide"
+                >
+                  <svg
+                    width="17"
+                    height="17"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M15 6l-6 6 6 6"></path>
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  class="preso-arrow"
+                  id="presoNext"
+                  aria-label="Next slide"
+                >
+                  <svg
+                    width="17"
+                    height="17"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M9 6l6 6-6 6"></path>
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  class="preso-arrow preso-full"
+                  id="presoFull"
+                  aria-label="View fullscreen"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div
+              class="preso-thumbs"
+              id="presoThumbs"
+              aria-label="Slides"
+            ></div>
+          </div>
+
+          <!-- RIGHT — learning notes / scrapbook note -->
+          <aside class="preso-side preso-right" aria-label="Notes">
+            <div class="preso-note">
+              <span class="preso-note-tape" aria-hidden="true"></span>
+              <p class="preso-note-title">Scrapbook note</p>
+              <p class="preso-note-text">
+                &ldquo;Small steps lead to big dreams!&rdquo;
+              </p>
+              <span class="preso-note-plane" aria-hidden="true">
+                <svg viewBox="0 0 48 34" fill="none">
+                  <path
+                    d="M2 30c14 0 22-8 34-14"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-dasharray="1 7"
+                  ></path>
+                  <path
+                    d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z"
+                    fill="currentColor"
+                    transform="translate(0 -1)"
+                  ></path>
+                </svg>
+              </span>
+            </div>
+          </aside>
+        </div>
+
+        <div class="gallery-empty hidden" id="galleryEmpty">
+          <div class="ge-icon" aria-hidden="true">
+            <svg
+              width="36"
+              height="36"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="5" width="18" height="14" rx="3"></rect>
+              <path
+                d="M3 15l4.2-3.8a2 2 0 0 1 2.7-.1L13.5 14l1.6-1.4a2 2 0 0 1 2.7.1L21 15.5"
+              ></path>
+              <circle cx="9" cy="9.2" r="1.3"></circle>
+            </svg>
+          </div>
+          <h3>Nothing pinned here yet</h3>
+          <p>
+            This section is ready for student work. Add entries to this
+            subject's collection to fill it.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ MY GALLERY VIEW ============ -->
+      <section
+        class="view my-gallery-view"
+        id="myGalleryView"
+        aria-label="My Gallery"
+      >
+        <header class="paper-banner">
+          <span class="pb-tape" aria-hidden="true"></span>
+          <span class="pb-plane" aria-hidden="true">
+            <svg viewBox="0 0 48 34" fill="none">
+              <path
+                d="M2 30c14 0 22-8 34-14"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-dasharray="1 7"
+              ></path>
+              <path
+                d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z"
+                fill="currentColor"
+                transform="translate(0 -1)"
+              ></path>
+            </svg>
+          </span>
+          <p class="pb-kicker">Personal scrapbook</p>
           <h2>My Gallery</h2>
-          <p>Explore my personal photos, moments, and memorable experiences.</p>
-        </span>
-        <span class="hcard-arrow" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
-        </span>
-        <span class="hcard-deco hcard-deco-camera" aria-hidden="true"></span>
-      </button>
+          <p class="pb-note">Moments worth keeping.</p>
+          <p class="pb-sub">
+            Aviation, travel, music, food, films, and memories from my own
+            adventures.
+          </p>
+        </header>
 
-      <button type="button" class="hcard hcard-subjects" data-nav="subjects">
-        <span class="hcard-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 6.5C10.6 5 8.6 4.3 4.8 4.3A1.5 1.5 0 0 0 3.3 5.8v11.1c0 .8.7 1.5 1.5 1.5 3.8 0 5.8.7 7.2 2.1 1.4-1.4 3.4-2.1 7.2-2.1.8 0 1.5-.7 1.5-1.5V5.8c0-.8-.7-1.5-1.5-1.5-3.8 0-5.8.7-7.2 2.2z"></path>
-            <path d="M12 6.5v14"></path>
-          </svg>
-        </span>
-        <span class="hcard-body">
-          <h2>Subjects</h2>
-          <p>View my projects, activities, and outputs from each subject.</p>
-        </span>
-        <span class="hcard-arrow" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
-        </span>
-        <span class="hcard-deco hcard-deco-books" aria-hidden="true"></span>
-      </button>
-    </section>
+        <div class="gallery-nav">
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            id="myGalleryBackBtn"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M15 6l-6 6 6 6"></path>
+            </svg>
+            Back to Home
+          </button>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <span class="crumb-current" id="myGalleryTitle">All Memories</span>
+          </nav>
+        </div>
 
-    <footer class="site-footer">
-      <span class="foot-line" aria-hidden="true"></span>
-      <span class="foot-plane" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15.5l-8-4.5V4.8a1.5 1.5 0 0 0-3 0v6.2l-8 4.5v1.8l8-2.6v4l-2.4 1.6v1.4l3.9-1 3.9 1v-1.4L13 18.7v-4l8 2.6z"></path></svg>
-      </span>
-      <p class="foot-text">DREAM <i>&bull;</i> EXPLORE <i>&bull;</i> LEARN <i>&bull;</i> GROW</p>
-      <span class="foot-line" aria-hidden="true"></span>
-    </footer>
-  </div>
+        <div
+          class="filter-bar"
+          id="myGalleryFilters"
+          role="tablist"
+          aria-label="Gallery categories"
+        ></div>
 
-  <!-- ============ SUBJECTS VIEW ============ -->
-  <section class="view subjects-view" id="subjectsView" aria-label="Subjects">
-    <header class="paper-banner">
-      <span class="pb-tape" aria-hidden="true"></span>
-      <span class="pb-plane" aria-hidden="true">
-        <svg viewBox="0 0 48 34" fill="none">
-          <path d="M2 30c14 0 22-8 34-14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 7"></path>
-          <path d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z" fill="currentColor" transform="translate(0 -1)"></path>
+        <div class="my-gallery-grid" id="myGalleryGrid"></div>
+      </section>
+
+      <!-- ============ SEARCH VIEW ============ -->
+      <section
+        class="view search-page"
+        id="searchView"
+        aria-label="Search results"
+      >
+        <div class="gallery-nav">
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            id="searchBackBtn"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M15 6l-6 6 6 6"></path>
+            </svg>
+            Back
+          </button>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <span class="crumb-current" id="searchSummary"
+              >Matching subjects and portfolio items.</span
+            >
+          </nav>
+        </div>
+
+        <div class="search-sections">
+          <div class="search-section hidden" id="searchSubjectsSection">
+            <h3>Subjects</h3>
+            <ul class="result-list result-grid" id="searchSubjectsList"></ul>
+          </div>
+          <div class="search-section hidden" id="searchItemsSection">
+            <h3>Portfolio Items</h3>
+            <ul class="result-list result-grid" id="searchItemsList"></ul>
+          </div>
+          <div class="search-empty hidden" id="searchEmpty">
+            <svg
+              width="34"
+              height="34"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-3.4-3.4"></path>
+            </svg>
+            <p>
+              No matches found. Try a different keyword &mdash; for example
+              <strong>English</strong>, <strong>Science</strong>, or
+              <strong>project</strong>.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ UNIFIED MEDIA VIEWER (images + videos) ============ -->
+    <div
+      class="lightbox-overlay hidden"
+      id="lightboxOverlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Media viewer"
+    >
+      <div class="lightbox-backdrop" data-close></div>
+
+      <button
+        type="button"
+        class="lightbox-close"
+        id="lightboxClose"
+        aria-label="Close viewer"
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M6 6l12 12M18 6L6 18"></path>
         </svg>
-      </span>
-      <p class="pb-kicker">Second Quarter &middot; Portfolio</p>
-      <h2>My Subjects</h2>
-      <p class="pb-note">Learn today, build tomorrow.</p>
-      <p class="pb-sub">Pick a subject to open its gallery of projects, activities, and outputs.</p>
-    </header>
-    <div class="subject-cards" id="subjectCards"></div>
-  </section>
+      </button>
 
-  <!-- ============ SUBJECT GALLERY VIEW ============ -->
-  <section class="view gallery-page" id="galleryView" aria-label="Subject gallery">
-    <div class="gallery-nav">
-      <button type="button" class="btn btn-secondary btn-sm" id="backBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <button
+        type="button"
+        class="lightbox-close lightbox-full"
+        id="lightboxFull"
+        aria-label="View fullscreen"
+      >
+        <svg
+          width="19"
+          height="19"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"
+          ></path>
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        class="lightbox-nav lightbox-prev"
+        id="lightboxPrev"
+        aria-label="Previous item"
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
           <path d="M15 6l-6 6 6 6"></path>
         </svg>
-        Back to Subjects
       </button>
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <button type="button" class="crumb-link" id="crumbHome">Subjects</button>
-        <span class="crumb-sep" aria-hidden="true">/</span>
-        <span class="crumb-current" id="crumbTitle">Subject</span>
-      </nav>
-    </div>
-
-    <header class="subject-hero">
-      <span class="sh-tape" aria-hidden="true"></span>
-      <span class="sh-plane" aria-hidden="true">
-        <svg viewBox="0 0 48 34" fill="none">
-          <path d="M2 30c14 0 22-8 34-14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 7"></path>
-          <path d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z" fill="currentColor" transform="translate(0 -1)"></path>
-        </svg>
-      </span>
-      <div class="hero-icon" id="heroIcon" aria-hidden="true"></div>
-      <div class="hero-text">
-        <p class="hero-kicker">Subject Gallery</p>
-        <h2 id="galleryTitle">Subject</h2>
-        <p class="hero-desc" id="galleryDesc"></p>
-        <p id="galleryIntro"></p>
-      </div>
-      <div class="hero-side">
-        <span class="item-count" id="itemCount">No items yet</span>
-      </div>
-    </header>
-
-    <div class="gallery-grid hidden" id="galleryGrid"></div>
-
-    <div class="gallery-empty" id="galleryEmpty">
-      <div class="ge-icon" aria-hidden="true">
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="5" width="18" height="14" rx="3"></rect>
-          <path d="M3 15l4.2-3.8a2 2 0 0 1 2.7-.1L13.5 14l1.6-1.4a2 2 0 0 1 2.7.1L21 15.5"></path>
-          <circle cx="9" cy="9.2" r="1.3"></circle>
-        </svg>
-      </div>
-      <h3>Nothing pinned here yet</h3>
-      <p>This section is ready for student work. Add entries to this subject's collection to fill it.</p>
-    </div>
-  </section>
-
-  <!-- ============ MY GALLERY VIEW ============ -->
-  <section class="view my-gallery-view" id="myGalleryView" aria-label="My Gallery">
-    <header class="paper-banner">
-      <span class="pb-tape" aria-hidden="true"></span>
-      <span class="pb-plane" aria-hidden="true">
-        <svg viewBox="0 0 48 34" fill="none">
-          <path d="M2 30c14 0 22-8 34-14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 7"></path>
-          <path d="M45 6.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z" fill="currentColor" transform="translate(0 -1)"></path>
-        </svg>
-      </span>
-      <p class="pb-kicker">Personal scrapbook</p>
-      <h2>My Gallery</h2>
-      <p class="pb-note">Moments worth keeping.</p>
-      <p class="pb-sub">Aviation, travel, music, food, films, and memories from my own adventures.</p>
-    </header>
-
-    <div class="gallery-nav">
-      <button type="button" class="btn btn-secondary btn-sm" id="myGalleryBackBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M15 6l-6 6 6 6"></path>
-        </svg>
-        Back to Home
-      </button>
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <span class="crumb-current" id="myGalleryTitle">All memories</span>
-      </nav>
-    </div>
-
-    <div class="filter-bar" id="myGalleryFilters" role="tablist" aria-label="Gallery categories"></div>
-
-    <div class="my-gallery-grid" id="myGalleryGrid"></div>
-  </section>
-
-  <!-- ============ SEARCH VIEW ============ -->
-  <section class="view search-page" id="searchView" aria-label="Search results">
-    <div class="gallery-nav">
-      <button type="button" class="btn btn-secondary btn-sm" id="searchBackBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M15 6l-6 6 6 6"></path>
-        </svg>
-        Back
-      </button>
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <span class="crumb-current" id="searchSummary">Matching subjects and portfolio items.</span>
-      </nav>
-    </div>
-
-    <div class="search-sections">
-      <div class="search-section hidden" id="searchSubjectsSection">
-        <h3>Subjects</h3>
-        <ul class="result-list result-grid" id="searchSubjectsList"></ul>
-      </div>
-      <div class="search-section hidden" id="searchItemsSection">
-        <h3>Portfolio Items</h3>
-        <ul class="result-list result-grid" id="searchItemsList"></ul>
-      </div>
-      <div class="search-empty hidden" id="searchEmpty">
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
-          <circle cx="11" cy="11" r="7"></circle>
-          <path d="M20 20l-3.4-3.4"></path>
-        </svg>
-        <p>No matches found. Try a different keyword &mdash; for example <strong>English</strong>, <strong>Science</strong>, or <strong>project</strong>.</p>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ============ UNIFIED MEDIA VIEWER (images + videos) ============ -->
-<div class="lightbox-overlay hidden" id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="Media viewer">
-  <div class="lightbox-backdrop" data-close></div>
-
-  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close viewer">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M6 6l12 12M18 6L6 18"></path>
-    </svg>
-  </button>
-
-  <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous item">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
-  </button>
-
-  <div class="lightbox-content" id="lightboxContent">
-    <div class="lightbox-frame" id="lightboxFrame">
-      <img class="lightbox-image hidden" id="lightboxImage" alt="">
-      <div class="lightbox-slide hidden" id="lightboxSlide" aria-hidden="true"></div>
-    </div>
-    <video class="lightbox-video hidden" id="lightboxVideo" controls playsinline preload="metadata"></video>
-    <p class="lightbox-error hidden" id="lightboxError">This file could not be loaded.</p>
-    <div class="lightbox-meta">
-      <span class="lightbox-caption" id="lightboxCaption"></span>
-      <span class="lightbox-counter" id="lightboxCounter"></span>
-    </div>
-  </div>
-
-  <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next item">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
-  </button>
-</div>
-
-<!-- ============ COUNTRY GALLERY (opened from the world map) ============ -->
-<div class="map-gallery-overlay hidden" id="mapGalleryOverlay" role="dialog" aria-modal="true" aria-label="Country photo gallery">
-  <div class="map-gallery-backdrop" data-map-close></div>
-  <div class="map-gallery-card">
-    <div class="map-gallery-head">
-      <div>
-        <p class="map-gallery-kicker">Destination</p>
-        <div class="map-gallery-title">
-          <img class="map-gallery-flag" id="mapGalleryFlag" alt="">
-          <h3 id="mapGalleryTitle">Country</h3>
+      <div class="lightbox-content" id="lightboxContent">
+        <!-- snapshot of the outgoing photograph, pushed away by the airplane -->
+        <div class="lb-push" id="lightboxPush" aria-hidden="true"></div>
+        <div class="lightbox-frame" id="lightboxFrame">
+          <img class="lightbox-image hidden" id="lightboxImage" alt="" />
+          <div
+            class="lightbox-slide hidden"
+            id="lightboxSlide"
+            aria-hidden="true"
+          ></div>
+        </div>
+        <video
+          class="lightbox-video hidden"
+          id="lightboxVideo"
+          controls
+          playsinline
+          preload="metadata"
+        ></video>
+        <p class="lightbox-error hidden" id="lightboxError">
+          This file could not be loaded.
+        </p>
+        <div
+          class="lightbox-thumbs hidden"
+          id="lightboxThumbs"
+          aria-label="Media thumbnails"
+        ></div>
+        <div class="lightbox-meta">
+          <span class="lightbox-caption" id="lightboxCaption"></span>
+          <span class="lightbox-counter" id="lightboxCounter"></span>
         </div>
       </div>
-      <button type="button" class="map-gallery-close" id="mapGalleryClose" aria-label="Close gallery">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+
+      <button
+        type="button"
+        class="lightbox-nav lightbox-next"
+        id="lightboxNext"
+        aria-label="Next item"
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M9 6l6 6-6 6"></path>
+        </svg>
       </button>
     </div>
-    <div class="map-gallery-body" id="mapGalleryBody"></div>
-  </div>
-</div>
 
-<audio id="bgMusic" loop preload="metadata">
-    <source src="mp3/bgmusic.mp3" type="audio/mpeg">
-</audio>
+    <!-- ============ DESTINATION GALLERY (opened from the world map) ============ -->
+    <div
+      class="map-gallery-overlay hidden"
+      id="mapGalleryOverlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Destination gallery"
+    >
+      <div class="map-gallery-backdrop" data-map-close></div>
+      <!-- soft cloud details that drift behind the journal page -->
+      <span class="mg-cloud mg-cloud-a" aria-hidden="true"></span>
+      <span class="mg-cloud mg-cloud-b" aria-hidden="true"></span>
+      <span class="mg-cloud mg-cloud-c" aria-hidden="true"></span>
 
-<script src="js/main.js?v=4"></script>
-<script src="js/asia-map.js?v=1"></script>
-</body>
+      <div class="map-gallery-card">
+        <div class="map-gallery-head">
+          <div class="map-gallery-head-text">
+            <p class="map-gallery-kicker">Destination</p>
+            <div class="map-gallery-title">
+              <img class="map-gallery-flag" id="mapGalleryFlag" alt="" />
+              <h3 id="mapGalleryTitle">Country</h3>
+            </div>
+            <p class="map-gallery-sub" id="mapGallerySub"></p>
+          </div>
+          <div class="map-gallery-actions">
+            <button
+              type="button"
+              class="map-gallery-gallery"
+              id="mapGalleryMyGallery"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.9"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="3" y="5.5" width="18" height="14" rx="2.5"></rect>
+                <circle cx="9" cy="11" r="1.8"></circle>
+                <path
+                  d="M3.6 17.4l4.6-4.2a2 2 0 0 1 2.7-.05L15 15.4l1.9-1.7a2 2 0 0 1 2.7.05l.9.85"
+                ></path>
+              </svg>
+              View My Gallery
+            </button>
+            <button type="button" class="map-gallery-back" id="mapGalleryBack">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M15 6l-6 6 6 6"></path>
+              </svg>
+              Back to map
+            </button>
+            <button
+              type="button"
+              class="map-gallery-close"
+              id="mapGalleryClose"
+              aria-label="Close gallery"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M6 6l12 12M18 6L6 18"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- small airplane trailing a dotted flight path across the page -->
+        <svg
+          class="mg-flight"
+          viewBox="0 0 640 46"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 38C120 40 232 26 380 16 452 11 500 12 546 18"
+            stroke="rgba(47,134,199,0.55)"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-dasharray="1 12"
+          ></path>
+          <path
+            d="M606 12.4a2.2 2.2 0 0 0-3.1-2l-8.1 3.5-8.6-3a1.4 1.4 0 0 0-1.7.9l-1.3 3.5 6.5 3.6-.3 5 2.9 2.2.2 1.6-4.1.5-2.8 2.2.2 1.4 3.6-.5 3.3-2.3-.2-5 8.8-3.6a1.4 1.4 0 0 0 .9-1.7z"
+            fill="#24507E"
+            transform="translate(0 4)"
+          ></path>
+        </svg>
+
+        <div class="map-gallery-body" id="mapGalleryBody"></div>
+      </div>
+    </div>
+
+    <audio id="bgMusic" loop preload="metadata">
+      <source src="mp3/bgmusic.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script src="js/main.js?v=7"></script>
+    <script src="js/asia-map.js?v=2"></script>
+  </body>
 </html>

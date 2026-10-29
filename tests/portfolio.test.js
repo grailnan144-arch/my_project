@@ -146,7 +146,7 @@ test('all 8 subject cover photos load, eagerly and without scrolling', async () 
 
 /* ---------- 2. My Gallery fits whole ---------- */
 
-test('My Gallery photos always fit whole: never is-long, never scrollable', async () => {
+test('My Gallery photos stay contained, without the tall-sheet scroll layout', async () => {
   await page.click('.nav-link[data-nav="mygallery"]');
   await page.waitForSelector('#myGalleryView.is-active');
 
@@ -159,11 +159,21 @@ test('My Gallery photos always fit whole: never is-long, never scrollable', asyn
     await page.click('.my-gallery-card[data-index="' + i + '"]');
     await page.waitForSelector('#lightboxOverlay:not(.hidden)');
     await waitForLightboxImage();
+    await page.waitForFunction(function () {
+      var img = document.getElementById('lightboxImage');
+      var content = document.getElementById('lightboxContent');
+      return img.complete && img.naturalWidth > 0 &&
+        content.classList.contains('is-long') === (img.naturalHeight / img.naturalWidth > 1.3);
+    });
 
     const s = await lightboxState();
-    assert.equal(s.isLong, false, 'gallery photo ' + (i + 1) + ' must not switch to the long/scroll layout');
-    assert.equal(s.scrollable, false, 'gallery photo ' + (i + 1) + ' must not be scrollable');
-    assert.equal(s.scrollTop, 0, 'viewer must stay pinned to the top');
+    assert.equal(s.isLong, s.ratio > 1.3, 'only portrait gallery photos use the tall/scroll layout');
+    if (s.ratio <= 1.3) {
+      assert.equal(s.scrollable, false, 'landscape gallery photo ' + (i + 1) + ' should fit in the viewer');
+      assert.equal(s.scrollTop, 0, 'viewer must stay pinned to the top for a fitted photo');
+    } else {
+      assert.ok(s.scrollable, 'portrait gallery photo ' + (i + 1) + ' remains fully accessible by vertical scrolling');
+    }
     if (s.ratio > 1.3) tallSeen++;
 
     if (i === 0) await screenshot('02-my-gallery-fit-whole.png');
@@ -172,7 +182,7 @@ test('My Gallery photos always fit whole: never is-long, never scrollable', asyn
     await page.waitForSelector('#lightboxOverlay', { state: 'hidden' });
   }
 
-  assert.ok(tallSeen >= 1, 'the suite must exercise at least one tall photo, otherwise the rule is untested');
+  assert.ok(tallSeen >= 1, 'the suite must exercise at least one portrait photo');
 });
 
 /* ---------- 3. subject images keep is-long ---------- */
@@ -183,7 +193,7 @@ test('tall subject images keep the scrollable is-long layout', async () => {
   await page.waitForSelector('#galleryView.is-active');
 
   /* images/MATH/math.png is 1587x2245 — ratio 1.41 */
-  await page.click('.g-card[data-item="ma-gallery"]');
+  await page.click('#presoViewBtn');
   await page.waitForSelector('#lightboxOverlay:not(.hidden)');
   await waitForLightboxImage();
 
@@ -202,11 +212,11 @@ test('My Salad opens as a 9-slide deck with left/right navigation', async () => 
   await page.click('.subject-card[data-subject="tle"]');
   await page.waitForSelector('#galleryView.is-active');
 
-  /* the card thumbnail now points at the deck's first slide */
-  const thumb = await page.getAttribute('.g-card[data-item="tl-1"] img', 'src');
+  /* the preview now points at the deck's first slide */
+  const thumb = await page.getAttribute('#presoImg', 'src');
   assert.match(thumb, /my_salad\/2\.png$/);
 
-  await page.click('.g-card[data-item="tl-1"]');
+  await page.click('#presoViewBtn');
   await page.waitForSelector('#lightboxOverlay:not(.hidden)');
   await waitForSlide('my_salad/2.png');
   assert.equal(await page.textContent('#lightboxCounter'), '1 of 9');
@@ -244,7 +254,7 @@ test('slide 3.png carries the animated salad gif exactly over its photo, caption
   await openSubjects();
   await page.click('.subject-card[data-subject="tle"]');
   await page.waitForSelector('#galleryView.is-active');
-  await page.click('.g-card[data-item="tl-1"]');
+  await page.click('#presoViewBtn');
   await page.waitForSelector('#lightboxOverlay:not(.hidden)');
 
   await waitForSlide('2.png');
@@ -483,8 +493,8 @@ test('the homepage map shows exactly the 11 allowed locations, flags and photo g
   await page.waitForSelector('#mapGalleryOverlay:not(.hidden)');
   assert.equal(await page.textContent('#mapGalleryTitle'), 'China');
   assert.match(await page.getAttribute('#mapGalleryFlag', 'src'), /flags\/cn\.png$/);
-  assert.equal(await page.locator('#mapGalleryBody figure').count(), 2,
-    'China must show the two photos from images/MAP/CHINA');
+  assert.equal(await page.locator('#mapGalleryBody figure').count(), 4,
+    'China must show all four files from images/MAP/CHINA');
 
   await page.click('#mapGalleryClose');
   await page.waitForSelector('#mapGalleryOverlay', { state: 'hidden' });
@@ -499,18 +509,24 @@ test('the homepage map shows exactly the 11 allowed locations, flags and photo g
   await page.click('circle.land-hit[data-code="HK"]');
   await page.waitForSelector('#mapGalleryOverlay:not(.hidden)');
   assert.equal(await page.textContent('#mapGalleryTitle'), 'Hong Kong');
-  assert.equal(await page.locator('#mapGalleryBody figure').count(), 1,
-    'Hong Kong must show its photo from images/MAP/HONGKONG');
+  assert.equal(await page.locator('#mapGalleryBody figure').count(), 4,
+    'Hong Kong must show its files from images/MAP/HONGKONG');
   await page.keyboard.press('Escape');
   await page.waitForSelector('#mapGalleryOverlay', { state: 'hidden' });
 
-  /* 5. a country whose folder is still empty shows the friendly note */
+  /* 5. the Philippines folder now holds Jarred's photos — they must be
+     the only pictures shown, never another country's */
   await page.waitForSelector('circle.land-hit[data-code="PH"]');
   await page.click('circle.land-hit[data-code="PH"]');
   await page.waitForSelector('#mapGalleryOverlay:not(.hidden)');
   assert.equal(await page.textContent('#mapGalleryTitle'), 'Philippines');
-  assert.ok((await page.textContent('#mapGalleryBody')).indexOf('No photos available') !== -1,
-    'a country without photos must show the friendly note, never unrelated pictures');
+  assert.equal(await page.locator('#mapGalleryBody figure').count(), 6,
+    'the Philippines must show its own six photos from images/MAP/PHILIPPINES');
+  const phSrcs = await page.locator('#mapGalleryBody figure img').evaluateAll(function (imgs) {
+    return imgs.map(function (i) { return i.getAttribute('src'); });
+  });
+  assert.ok(phSrcs.every(function (s) { return /^images\/MAP\/PHILIPPINES\//.test(s); }),
+    'no photograph from another country may leak into this gallery');
 
   await page.keyboard.press('Escape');
   await page.waitForSelector('#mapGalleryOverlay', { state: 'hidden' });
@@ -535,8 +551,8 @@ test('Mathematics, English and Araling Panlipunan show their folder contents', a
     await page.click('.subject-card[data-subject="' + id + '"]');
     await page.waitForSelector('#galleryView.is-active');
 
-    assert.equal(await page.locator('.g-card').count(), 1, id + ' must have one gallery item');
-    await page.click('.g-card');
+    assert.equal(await page.locator('#presoViewBtn').count(), 1, id + ' must offer its one activity');
+    await page.click('#presoViewBtn');
     await page.waitForSelector('#lightboxOverlay:not(.hidden)');
     await waitForLightboxImage();
 
