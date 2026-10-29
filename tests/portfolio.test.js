@@ -161,19 +161,37 @@ test('My Gallery photos stay contained, without the tall-sheet scroll layout', a
     await waitForLightboxImage();
     await page.waitForFunction(function () {
       var img = document.getElementById('lightboxImage');
-      var content = document.getElementById('lightboxContent');
-      return img.complete && img.naturalWidth > 0 &&
-        content.classList.contains('is-long') === (img.naturalHeight / img.naturalWidth > 1.3);
+      return img.complete && img.naturalWidth > 0;
     });
 
-    const s = await lightboxState();
-    assert.equal(s.isLong, s.ratio > 1.3, 'only portrait gallery photos use the tall/scroll layout');
-    if (s.ratio <= 1.3) {
-      assert.equal(s.scrollable, false, 'landscape gallery photo ' + (i + 1) + ' should fit in the viewer');
-      assert.equal(s.scrollTop, 0, 'viewer must stay pinned to the top for a fitted photo');
-    } else {
-      assert.ok(s.scrollable, 'portrait gallery photo ' + (i + 1) + ' remains fully accessible by vertical scrolling');
-    }
+    const s = await page.evaluate(function () {
+      var img = document.getElementById('lightboxImage');
+      var content = document.getElementById('lightboxContent');
+      var overlay = document.getElementById('lightboxOverlay');
+      var r = img.getBoundingClientRect();
+      return {
+        isLong: content.classList.contains('is-long'),
+        scrollable: overlay.scrollHeight > overlay.clientHeight + 1,
+        scrollTop: overlay.scrollTop,
+        ratio: img.naturalHeight / img.naturalWidth,
+        rendered: r.height / r.width,
+        top: r.top,
+        bottom: r.bottom,
+        vh: window.innerHeight
+      };
+    });
+
+    /* My Gallery never becomes the subject's tall, scrollable sheet:
+       the complete photograph is fitted on screen, portrait or not */
+    assert.equal(s.isLong, false,
+      'My Gallery photo ' + (i + 1) + ' must not use the tall-sheet layout');
+    assert.equal(s.scrollable, false,
+      'My Gallery photo ' + (i + 1) + ' must not scroll inside the viewer');
+    assert.equal(s.scrollTop, 0, 'viewer must stay pinned to the top for a fitted photo');
+    assert.ok(Math.abs(s.rendered - s.ratio) < 0.02,
+      'My Gallery photo ' + (i + 1) + ' keeps its aspect ratio');
+    assert.ok(s.top >= 0 && s.bottom <= s.vh,
+      'My Gallery photo ' + (i + 1) + ' must fit inside the viewport');
     if (s.ratio > 1.3) tallSeen++;
 
     if (i === 0) await screenshot('02-my-gallery-fit-whole.png');

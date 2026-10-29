@@ -349,40 +349,40 @@
     { id: "school", label: "School" },
     { id: "aviation", label: "Aviation and Airplanes" },
     { id: "toyota", label: "Toyota" },
-    { id: "guitar", label: "Guitar and Musics" },
-  ];
+     { id: "guitar", label: "Guitar and Musics" },
+   ];
 
   var EMPTY_CATEGORY_NOTE = {
     school: "School memories will be pinned here soon.",
     aviation: "Aviation and airplane photos will be pinned here soon.",
     toyota: "Toyota memories will be pinned here soon.",
-    guitar: "Guitar and music photos will be pinned here soon.",
-  };
+     guitar: "Guitar and music photos will be pinned here soon.",
+   };
 
   /* each photograph keeps its own category; nothing is ever moved
      between categories or invented */
   var PROFILE_GALLERY = [
     {
       id: "pg-1",
-      title: "Aviation",
+      title: "Sputnik Aviation",
       image: "images/PROFILE_GALLERY/gallery (1).jpg",
       cat: "aviation",
     },
     {
       id: "pg-2",
-      title: "School",
+      title: "Journey of Faith",
       image: "images/PROFILE_GALLERY/gallery (2).jpg",
       cat: "school",
     },
     {
       id: "pg-3",
-      title: "Guitar",
+      title: "Casa Musica",
       image: "images/PROFILE_GALLERY/gallery (3).jpg",
       cat: "guitar",
     },
     {
       id: "pg-4",
-      title: "School",
+      title: "Journey of Faith",
       image: "images/PROFILE_GALLERY/gallery (4).jpg",
       cat: "school",
     },
@@ -399,6 +399,56 @@
       cat: "toyota",
     },
   ];
+
+  /* ---------- YouTube slides -------------------------------------
+     One slide of a subject deck is a YouTube video: the slide keeps
+     its picture, its heading and its artwork, and the video is played
+     inside the YouTube thumbnail the slide already carries. `box` is
+     that thumbnail in percent of the slide picture (measured on the
+     file itself), so the player never covers the rest of the slide. */
+  var YOUTUBE_SLIDES = {
+    "images/MAPEH/3.png": {
+      id: "kyGlFisv7Ng",
+      url: "https://youtu.be/kyGlFisv7Ng?si=G3f7emUq_HV3oI1m",
+      box: { x: 20.63, y: 26.76, w: 67.5, h: 68.24 },
+    },
+  };
+
+  function youtubeSlideFor(src) {
+    if (!src) return null;
+    return YOUTUBE_SLIDES[src] || null;
+  }
+
+  function youtubeEmbedSrc(entry) {
+    return "https://www.youtube.com/embed/" + entry.id;
+  }
+
+  /* lays the player exactly over the thumbnail the slide already
+     carries, and points the fallback link at the original URL */
+  function showYouTubeSlide(host, box, frame, link, entry) {
+    if (!host || !frame) return;
+    if (link) {
+      link.setAttribute("href", entry.url);
+      link.classList.remove("hidden");
+    }
+    if (box && entry.box) {
+      box.style.left = entry.box.x + "%";
+      box.style.top = entry.box.y + "%";
+      box.style.width = entry.box.w + "%";
+      box.style.height = entry.box.h + "%";
+    }
+    var src = youtubeEmbedSrc(entry);
+    if (frame.getAttribute("src") !== src) frame.setAttribute("src", src);
+    host.classList.remove("hidden");
+  }
+
+  /* stops playback and takes the player back out of the slide */
+  function hideYouTubeSlide(host, frame, link) {
+    if (link) link.classList.add("hidden");
+    if (!host) return;
+    host.classList.add("hidden");
+    if (frame && frame.getAttribute("src")) frame.removeAttribute("src");
+  }
 
   /* hero accent gradients per tone */
   var TONES = [
@@ -430,6 +480,9 @@
   var lbOverlayBox = null;
   /* true when the open set is a photo gallery rather than tall subject work */
   var lbWholeFit = false;
+  /* true for My Gallery: the picture alone, no thumbnails, no title
+     or counter printed under it */
+  var lbImageOnly = false;
 
   var reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
@@ -460,6 +513,11 @@
     presoType: document.getElementById("presoType"),
     presoImg: document.getElementById("presoImg"),
     presoVideo: document.getElementById("presoVideo"),
+    presoBox: document.getElementById("presoBox"),
+    presoYouTube: document.getElementById("presoYouTube"),
+    presoYouTubeBox: document.getElementById("presoYouTubeBox"),
+    presoYouTubeFrame: document.getElementById("presoYouTubeFrame"),
+    presoYouTubeLink: document.getElementById("presoYouTubeLink"),
     presoCount: document.getElementById("presoCount"),
     presoPrev: document.getElementById("presoPrev"),
     presoNext: document.getElementById("presoNext"),
@@ -504,6 +562,10 @@
     lightboxFrame: document.getElementById("lightboxFrame"),
     lightboxSlide: document.getElementById("lightboxSlide"),
     lightboxVideo: document.getElementById("lightboxVideo"),
+    lightboxYouTube: document.getElementById("lightboxYouTube"),
+    lightboxYouTubeBox: document.getElementById("lightboxYouTubeBox"),
+    lightboxYouTubeFrame: document.getElementById("lightboxYouTubeFrame"),
+    lightboxYouTubeLink: document.getElementById("lightboxYouTubeLink"),
     lightboxError: document.getElementById("lightboxError"),
     lightboxCaption: document.getElementById("lightboxCaption"),
     lightboxCounter: document.getElementById("lightboxCounter"),
@@ -833,13 +895,32 @@
 
     if (!el.presoVideo.paused) el.presoVideo.pause();
     el.presoVideo.classList.add("hidden");
-    el.presoZoom.classList.remove("hidden");
 
     presoIndex = Math.max(0, Math.min(presoIndex, slides.length - 1));
     var src = slides[presoIndex];
+    var ytSlide = youtubeSlideFor(src);
+
+    /* the slide picture always stays on screen: a video slide only
+       lays its player over the thumbnail printed on that slide */
+    el.presoBox.classList.toggle("is-video", !!ytSlide);
     el.presoImg.alt = item.title || "Presentation slide";
     if (el.presoImg.getAttribute("src") !== src)
       el.presoImg.setAttribute("src", src);
+    if (ytSlide) {
+      showYouTubeSlide(
+        el.presoYouTube,
+        el.presoYouTubeBox,
+        el.presoYouTubeFrame,
+        el.presoYouTubeLink,
+        ytSlide,
+      );
+    } else {
+      hideYouTubeSlide(
+        el.presoYouTube,
+        el.presoYouTubeFrame,
+        el.presoYouTubeLink,
+      );
+    }
 
     var single = slides.length < 2;
     el.presoCount.textContent = presoIndex + 1 + " / " + slides.length;
@@ -1162,8 +1243,14 @@
          their full usable width and the overlay itself scrolls
          vertically from top to bottom, so no part of the picture is
          ever cut off
-       - Personal photos fit proportionally, while portrait images
-         remain fully accessible through vertical scrolling
+       - Personal photos (My Gallery) always fit whole inside the
+         screen — portrait or landscape — and never scroll internally;
+         only subject work keeps the tall, scrollable sheet layout
+       - the My Gallery viewer shows the picture alone: no thumbnail
+         strip, no title and no counter printed underneath it
+       - one slide of a subject deck can be a YouTube video: the slide
+         keeps its picture and the player fills the thumbnail printed
+         on it, with a link to the original URL
        - videos keep their aspect ratio and pause on close
      ============================================================ */
   function lockPageScroll() {
@@ -1195,12 +1282,14 @@
     }
   }
 
-  function openLightbox(index, items, wholeFit) {
+  function openLightbox(index, items, wholeFit, imageOnly) {
     if (!items || !items.length) return;
     lbItems = items;
     lbIndex = Math.max(0, Math.min(index, items.length - 1));
     lbWholeFit = !!wholeFit;
+    lbImageOnly = !!imageOnly;
     el.lightboxContent.classList.toggle("is-whole-fit", lbWholeFit);
+    el.lightboxContent.classList.toggle("is-image-only", lbImageOnly);
     lbDir = 0;
     lbLastFocused = document.activeElement;
     lbScrollY = window.scrollY;
@@ -1227,8 +1316,18 @@
     lbStepToken++; /* drop any flight still in the air */
     clearPushSnapshot();
     pauseLightboxVideo();
+    hideYouTubeSlide(
+      el.lightboxYouTube,
+      el.lightboxYouTubeFrame,
+      el.lightboxYouTubeLink,
+    );
+    if (el.lightboxFrame) el.lightboxFrame.classList.remove("is-video");
     el.lightboxOverlay.classList.add("hidden");
-    el.lightboxContent.classList.remove("is-long", "is-whole-fit");
+    el.lightboxContent.classList.remove(
+      "is-long",
+      "is-whole-fit",
+      "is-image-only",
+    );
     el.lightboxImage.classList.add("hidden");
     el.lightboxFrame.classList.add("hidden");
     clearSlideOverlay();
@@ -1250,6 +1349,7 @@
     lbLastFocused = null;
     lbItems = [];
     lbWholeFit = false;
+    lbImageOnly = false;
   }
 
   function lightboxIsOpen() {
@@ -1309,6 +1409,27 @@
       return;
     }
 
+    /* a deck slide can be a YouTube video: the slide keeps its own
+       picture and artwork, the player is laid over the thumbnail the
+       slide already carries */
+    var ytSlide = youtubeSlideFor(item.image);
+    el.lightboxFrame.classList.toggle("is-video", !!ytSlide);
+    if (ytSlide) {
+      showYouTubeSlide(
+        el.lightboxYouTube,
+        el.lightboxYouTubeBox,
+        el.lightboxYouTubeFrame,
+        el.lightboxYouTubeLink,
+        ytSlide,
+      );
+    } else {
+      hideYouTubeSlide(
+        el.lightboxYouTube,
+        el.lightboxYouTubeFrame,
+        el.lightboxYouTubeLink,
+      );
+    }
+
     pauseLightboxVideo();
     el.lightboxVideo.classList.add("hidden");
     el.lightboxError.classList.add("hidden");
@@ -1320,12 +1441,14 @@
       el.lightboxImage.classList.remove("hidden");
       el.lightboxFrame.classList.remove("hidden");
       el.lightboxError.classList.add("hidden");
-      /* Portraits use the tall-image layout whether they come from a
-         subject deck or a personal photo collection. */
+      /* Portraits use the tall, scrollable layout for subject work.
+         My Gallery (and the country photos) stay in the whole-fit
+         mode set by `lbWholeFit`: the complete photo is fitted inside
+         the screen, never turned into a scrolling sheet. */
       var long =
         el.lightboxImage.naturalWidth > 0 &&
         el.lightboxImage.naturalHeight / el.lightboxImage.naturalWidth > 1.3;
-      el.lightboxContent.classList.toggle("is-long", long);
+      el.lightboxContent.classList.toggle("is-long", long && !lbWholeFit);
       el.lightboxOverlay.scrollTop = 0;
       /* slide artwork + printed caption sit exactly over the photo */
       applySlideOverlay(item);
@@ -1373,6 +1496,13 @@
   function renderLightboxThumbs() {
     var host = el.lightboxThumbs;
     if (!host) return;
+    /* the My Gallery viewer shows one picture only: no strip of the
+       other photographs underneath it (subject galleries keep theirs) */
+    if (lbImageOnly) {
+      host.classList.add("hidden");
+      host.innerHTML = "";
+      return;
+    }
     var images = lbItems.filter(function (entry) {
       return !!entry.image;
     });
@@ -2035,9 +2165,11 @@
     var card = e.target.closest("[data-index]");
     if (!card) return;
     var index = parseInt(card.getAttribute("data-index"), 10);
-    /* third argument: My Gallery always shows the whole photo */
+    /* third argument: My Gallery always shows the whole photo;
+       fourth: My Gallery opens the picture alone — no thumbnails,
+       no title, no counter under it */
     if (!isNaN(index))
-      openLightbox(index, itemsForCategory(activeCategory), true);
+      openLightbox(index, itemsForCategory(activeCategory), true, true);
   });
 
   /* viewer controls */
@@ -2069,7 +2201,7 @@
   document.addEventListener("portfolio:open-lightbox", function (e) {
     var d = e && e.detail;
     if (!d || !d.items || !d.items.length) return;
-    openLightbox(d.index || 0, d.items, !!d.wholeFit);
+    openLightbox(d.index || 0, d.items, !!d.wholeFit, !!d.imageOnly);
   });
 
   el.brandHome.addEventListener("click", goHome);

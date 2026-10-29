@@ -51,15 +51,19 @@
       "INDONESIA/indonesia (2).jpg",
       "INDONESIA/indonesia (3).jpg",
     ],
-    JP: [
-      "JAPAN/japan (1).jpg",
-      "JAPAN/japan (2).jpg",
-      "JAPAN/japan (3).jpg",
-      "JAPAN/japan (4).jpg",
-      "JAPAN/japan (5).jpg",
-      "JAPAN/japan (6).jpg",
-      "JAPAN/japan (7).mp4",
-    ],
+    /* Japan, Taiwan, Vietnam and the Philippines are printed with the
+       wide (landscape) photographs on top and the smaller, portrait or
+       square ones below them. Every file is kept, in its own folder,
+       and each group keeps its original file order. */
+     JP: [
+       "JAPAN/japan (1).jpg",
+       "JAPAN/japan (2).jpg",
+       "JAPAN/japan (3).jpg",
+       "JAPAN/japan (4).jpg",
+       "JAPAN/japan (5).jpg",
+       "JAPAN/japan (6).jpg",
+       "JAPAN/japan (7).mp4",
+     ],
     MY: [
       "MALAYSIA/malaysia (1).jpg",
       "MALAYSIA/malaysia (2).jpg",
@@ -68,9 +72,9 @@
     PH: [
       "PHILIPPINES/philippines (1).jpg",
       "PHILIPPINES/philippines (2).jpg",
+      "PHILIPPINES/philippines (5).jpg",
       "PHILIPPINES/philippines (3).jpg",
       "PHILIPPINES/philippines (4).jpg",
-      "PHILIPPINES/philippines (5).jpg",
       "PHILIPPINES/philippines (6).jpg",
     ],
     SG: [
@@ -91,12 +95,12 @@
     ],
     TW: [
       "TAIWAN/taiwan (1).jpg",
-      "TAIWAN/taiwan (2).jpg",
       "TAIWAN/taiwan (3).jpg",
+      "TAIWAN/taiwan (2).jpg",
     ],
     VN: [
-      "VIETNAM/vietnam (1).jpg",
       "VIETNAM/vietnam (2).jpg",
+      "VIETNAM/vietnam (1).jpg",
       "VIETNAM/vietnam (1).mp4",
     ],
   };
@@ -285,6 +289,9 @@
         " pinned from this destination."
       : "Nothing pinned from this destination yet.";
 
+    body.setAttribute("data-country", openCountry.code);
+    var isThreeCol = ["JP", "TW", "VN", "PH"].indexOf(openCountry.code) !== -1;
+
     body.innerHTML =
       '<div class="mg-info">' +
       '<div class="mg-note">' +
@@ -298,7 +305,7 @@
       '<span class="mg-stamp">EXPLORE <i>&bull;</i> LEARN <i>&bull;</i> GROW</span>' +
       compassMarkup() +
       "</div>" +
-      '<div class="mg-photos">' +
+      '<div class="mg-photos' + (isThreeCol ? ' is-3col' : '') + '">' +
       html +
       "</div>";
 

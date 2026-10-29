@@ -1800,6 +1800,15 @@ body {
 }
 
 /* ---------------- right column: the photographs ---------------- */
+
+/* Task 3: even 3-column country grid for JP/TW/VN/PH */
+.mg-photos.is-3col,
+.map-gallery-body[data-country="JP"] .mg-photos,
+.map-gallery-body[data-country="TW"] .mg-photos,
+.map-gallery-body[data-country="VN"] .mg-photos,
+.map-gallery-body[data-country="PH"] .mg-photos {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 .mg-photos {
   display: grid;
   /* auto-fit collapses the empty tracks: two photos sit side by side,
@@ -1996,7 +2005,12 @@ body {
     padding: 16px 13px 14px;
     transform: none;
   }
-  .mg-photos {
+  .mg-photos,
+  .mg-photos.is-3col,
+  .map-gallery-body[data-country="JP"] .mg-photos,
+  .map-gallery-body[data-country="TW"] .mg-photos,
+  .map-gallery-body[data-country="VN"] .mg-photos,
+  .map-gallery-body[data-country="PH"] .mg-photos {
     grid-template-columns: minmax(0, 1fr);
   }
   .mg-cloud-c {
@@ -3403,6 +3417,67 @@ body {
   background: #0b1b2e;
   border-radius: 6px;
 }
+/* ---- a deck slide that is a YouTube video ------------------------
+   The slide keeps its picture, heading, and artwork; the YouTube
+   player is confined exactly to the slide's printed thumbnail rect. */
+.ps-box {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+.ps-box.is-video .ps-zoom-badge {
+  display: none;
+}
+.ps-yt {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ps-yt.hidden {
+  display: none;
+}
+.ps-yt-box {
+  position: absolute;
+  pointer-events: auto;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+.ps-yt-box iframe,
+.lightbox-yt-box iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #0b1b2e;
+}
+.ps-yt-box .yt-open,
+.lightbox-yt-box .yt-open {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  z-index: 10;
+  display: block;
+  padding: 4px 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: rgba(13, 30, 48, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: background 0.2s var(--ease);
+}
+.ps-yt-box .yt-open:hover,
+.lightbox-yt-box .yt-open:hover {
+  background: var(--blue);
+}
+.yt-open.hidden {
+  display: none !important;
+}
 .ps-foot {
   display: flex;
   flex-wrap: wrap;
@@ -4184,16 +4259,28 @@ body {
   max-height: none;
   height: auto;
 }
-.lightbox-content.is-whole-fit .lightbox-image {
+
+/* Task 2: My Gallery image-only viewer (hide thumbs/title/counter, sizing) */
+.lightbox-content.is-image-only .lightbox-thumbs,
+.lightbox-content.is-image-only .lightbox-meta {
+  display: none !important;
+}
+.lightbox-content.is-image-only .lightbox-image {
   width: auto;
-  max-width: 100%;
-  max-height: min(68vh, calc(100vh - 330px));
+  max-width: min(92vw, 100%);
+  max-height: max(160px, min(86vh, 100vh - 140px));
   height: auto;
   object-fit: contain;
 }
+.lightbox-overlay:fullscreen .lightbox-content.is-image-only .lightbox-image {
+  max-height: max(160px, 100vh - 80px);
+}
+.lightbox-content.is-whole-fit .lightbox-image,
 .lightbox-content.is-whole-fit.is-long .lightbox-image {
-  width: 100%;
-  max-height: none;
+  width: auto;
+  max-width: min(90vw, 100%);
+  max-height: max(160px, min(80vh, 100vh - 300px));
+  height: auto;
   object-fit: contain;
 }
 .lightbox-video {
@@ -4236,6 +4323,25 @@ body {
 .lightbox-thumb:hover {
   transform: translateY(-2px);
 }
+/* a video slide keeps its own tile in the thumbnail row — the
+   picture it replaces is never shown again */
+.lightbox-thumb-video,
+.preso-thumb-video {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border-radius: 3px;
+  background: linear-gradient(145deg, #244e75, #0b1b2e);
+  color: #fff;
+  font-size: 15px;
+  line-height: 1;
+}
+.lightbox-thumb-video {
+  height: 100%;
+}
+.preso-thumb-video {
+  aspect-ratio: 16 / 10;
+}
 .lightbox-thumb.is-active {
   border-color: #fff;
   box-shadow: 0 0 0 2px rgba(143, 197, 232, 0.6);
@@ -4251,6 +4357,27 @@ body {
   position: relative;
   display: block;
   max-width: 100%;
+}
+
+/* a deck slide that is a YouTube video: the slide keeps its picture,
+   artwork and headings, and the player covers only the thumbnail rect */
+.lightbox-frame.is-video {
+  /* keep normal frame wrapping */
+}
+.lightbox-yt {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.lightbox-yt.hidden {
+  display: none;
+}
+.lightbox-yt-box {
+  position: absolute;
+  pointer-events: auto;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
 }
 
 /* animated artwork laid exactly over a slide's printed photo
@@ -4689,8 +4816,9 @@ body {
 .lightbox-overlay:fullscreen .lightbox-content.is-long .lightbox-image {
   max-height: none;
 }
-.lightbox-overlay:fullscreen .lightbox-content.is-whole-fit .lightbox-image {
-  max-height: calc(100vh - 250px);
+.lightbox-overlay:fullscreen .lightbox-content.is-whole-fit .lightbox-image,
+.lightbox-overlay:fullscreen .lightbox-content.is-whole-fit.is-long .lightbox-image {
+  max-height: max(160px, 100vh - 250px);
 }
 
 /* ============================================================

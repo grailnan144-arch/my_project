@@ -868,6 +868,7 @@
                 <h3 class="ps-title" id="presoTitle"></h3>
                 <p class="ps-desc" id="presoDesc"></p>
                 <div class="ps-media" id="presoMedia">
+                  <div class="ps-box" id="presoBox">
                   <button
                     type="button"
                     class="ps-zoom"
@@ -896,6 +897,29 @@
                       Click to view presentation
                     </span>
                   </button>
+                  <!-- the slide keeps its picture: this player sits on top of
+                       the YouTube thumbnail the slide already carries, and the
+                       link opens the exact original URL in a new tab -->
+                  <div class="ps-yt hidden" id="presoYouTube">
+                    <div class="ps-yt-box" id="presoYouTubeBox">
+                      <iframe
+                        id="presoYouTubeFrame"
+                        title="YouTube video"
+                        src=""
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                      ></iframe>
+                      <a
+                        class="yt-open hidden"
+                        id="presoYouTubeLink"
+                        href="https://youtu.be/kyGlFisv7Ng?si=G3f7emUq_HV3oI1m"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Open the original video</a
+                      >
+                    </div>
+                  </div>
+                  </div>
                   <video
                     id="presoVideo"
                     class="hidden"
@@ -1261,6 +1285,28 @@
             id="lightboxSlide"
             aria-hidden="true"
           ></div>
+          <!-- the slide keeps its picture: the player only covers the
+               YouTube thumbnail printed on it and keeps a link to the
+               exact original URL -->
+          <div class="lightbox-yt hidden" id="lightboxYouTube">
+            <div class="lightbox-yt-box" id="lightboxYouTubeBox">
+              <iframe
+                id="lightboxYouTubeFrame"
+                title="YouTube video"
+                src=""
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+              <a
+                class="yt-open hidden"
+                id="lightboxYouTubeLink"
+                href="https://youtu.be/kyGlFisv7Ng?si=G3f7emUq_HV3oI1m"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Open the original video</a
+              >
+            </div>
+          </div>
         </div>
         <video
           class="lightbox-video hidden"

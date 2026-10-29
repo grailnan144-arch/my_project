@@ -29,9 +29,7 @@ const CATEGORIES = [
   'School',
   'Aviation and Airplanes',
   'Toyota',
-  'Guitar and Musics',
-  'Food Adventure',
-  'Animation and Movies'
+   'Guitar and Musics',
 ];
 
 const SUBJECTS = [
