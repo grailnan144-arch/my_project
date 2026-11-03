@@ -855,10 +855,11 @@ body {
 }
 .ticket-logo {
   flex: 0 0 auto;
-  /* same proportions as thumbnail.png itself, shown as its own box */
+  /* JRCV.png banner shown as its own small box beside the class line */
   width: 72px;
   height: 40px;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 .ticket-barcode {
