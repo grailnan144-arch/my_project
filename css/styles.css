@@ -855,9 +855,10 @@ body {
 }
 .ticket-logo {
   flex: 0 0 auto;
-  width: 68px;
-  height: 38px;
-  object-fit: contain;
+  /* same proportions as thumbnail.png itself, shown as its own box */
+  width: 72px;
+  height: 40px;
+  object-fit: cover;
   display: block;
 }
 .ticket-barcode {
