@@ -62,7 +62,6 @@
        "JAPAN/japan (4).jpg",
        "JAPAN/japan (5).jpg",
        "JAPAN/japan (6).jpg",
-       "JAPAN/japan (7).mp4",
      ],
     MY: [
       "MALAYSIA/malaysia (1).jpg",
