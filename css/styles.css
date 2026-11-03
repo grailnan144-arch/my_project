@@ -855,13 +855,10 @@ body {
 }
 .ticket-logo {
   flex: 0 0 auto;
-  width: 54px;
-  height: 32px;
+  width: 68px;
+  height: 38px;
   object-fit: contain;
-  border-radius: 8px;
-  background: var(--white);
-  box-shadow: 0 1px 3px rgba(112, 70, 49, 0.28);
-  padding: 2px;
+  display: block;
 }
 .ticket-barcode {
   height: 16px;
